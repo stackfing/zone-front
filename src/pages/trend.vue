@@ -3,9 +3,9 @@
         <side-bar/>
         <el-col :span="12">
             <div class="grid-content bg-purple">
-                <p>写下当前的心情吧{{test}}</p>
+                <center><p>写下你现在的心情吧-----{{test}}</p></center>
             </div>
-            <div>
+            <div class="divtext">
                     <el-input
                         @focus="inputfocus"
                         @blur="inputblur"
@@ -15,10 +15,30 @@
                         v-model="message">
                     </el-input>
                     <transition name="fade">
-                        <el-button style="float:right" v-show="submitshow" @click="submitmessage">提交</el-button>
+                        <el-button style="float:right;margin-top:10px" v-show="submitshow" @click="submitmessage">提交</el-button>
                     </transition>
-                </div>
-                <message testmessage="123"/>
+                    <div class="clearfix"></div>
+            </div>
+                <message username="admin"
+                id="1"
+                createTime="10:22"
+                photoUrl="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"
+                content='
+                <p>你真好看</p>
+                    <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"/>
+                    <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"/>
+                '
+                />
+                <message username="admin"
+                id="1"
+                createTime="10:22"
+                photoUrl="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"
+                content='
+                <p>你真好看</p>
+                    <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"/>
+                    <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg"/>
+                '
+                />
         </el-col>
     </el-row>
 </template>
@@ -93,5 +113,17 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* .divtext{
+    min-height: 50px;
+} */
+.clearfix:after{
+    content:"";
+    height:0;
+    line-height:0;
+    display:block;
+    visibility:hidden;
+    clear:both;
 }
 </style>
