@@ -1,14 +1,14 @@
 <style>
 .comment {
-  margin-top: 20px;
-  border-top: 1px solid #ebeef5;
+  margin-top: 15px;
+  /* border-top: 1px solid #ebeef5; */
   display: flex;
   flex-direction: row;
   
   
 }
 .comment_left{
-    min-width:80%;;
+    min-width:80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,33 +40,37 @@
 .fade-leave-to {
   opacity: 0;
 }
-.in-enter-active,
-.in-leave-active{
-    transition: opacity 1s;
+
+.grow-enter,
+.grow-leave-to {
+    width: 100%;
 }
-.in-enter {
-    /* transform: translateX(500px); */
-     width: 800px;
-     height: 300px;
+.grow-enter-active,
+.grow-leave-active {
+    animation: grow_animation 0.8s reverse;
 }
-.test {
-    width: 300px;
-    height: 300px;
-    background-color: red;
+
+@keyframes grow_animation {
+    from{
+        width: 100%;
+    }
+    to {
+        width: 80%;
+    }
 }
 
 </style>
 
 <template>
-
-   
   <div class="comment">
-    <div class="comment_left" :class="{'comment_left_active':!animate_false}">
-        <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData"  placeholder="评论"></el-input>
+    <div class="comment_left">
+        <transition name="grow">
+            <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData"  placeholder="评论"></el-input>
+        </transition>
     </div>
     <div class="comment_right">
-        <transition v-if="animate_false" name="fade" mode="out-in" >
-            <el-button v-show="isClick">点击我</el-button>
+        <transition name="fade">
+            <el-button v-show="animate_false">点击我</el-button>
         </transition>
     </div>
 
