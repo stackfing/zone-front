@@ -8,12 +8,13 @@
   
 }
 .comment_left{
-    min-width:80%;
+    min-width:85%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
     /* background-color: aquamarine; */
+    transition: all 0.8s;
 }
 .comment_left_active{
     min-width:95%;
@@ -41,39 +42,18 @@
   opacity: 0;
 }
 
-.grow-enter,
-.grow-leave-to {
-    width: 100%;
-}
-.grow-enter-active,
-.grow-leave-active {
-    animation: grow_animation 0.8s reverse;
-}
-
-@keyframes grow_animation {
-    from{
-        width: 100%;
-    }
-    to {
-        width: 80%;
-    }
-}
-
 </style>
 
 <template>
   <div class="comment">
-    <div class="comment_left">
-        <transition name="grow">
-            <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData"  placeholder="评论"></el-input>
-        </transition>
+    <div class="comment_left" :class="{'comment_left_active':!animate_false}">
+        <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData" placeholder="评论"></el-input>
     </div>
     <div class="comment_right">
         <transition name="fade">
-            <el-button v-show="animate_false">点击我</el-button>
+            <el-button type="primary" v-show="animate_false" plain>回复</el-button>
         </transition>
     </div>
-
 
     <!-- <el-input class="commentInput" v-model="commentData" @focus="inputfocus" placeholder="评论"></el-input>
     <transition name="fade" mode="out-in">
@@ -96,17 +76,17 @@ export default {
   data() {
     return {
       commentData: "",
-      isClick: false,
       animate_false:false
     };
   },
   methods: {
     inputfocus() {
-      this.isClick = true;
       this.animate_false=true;
     },
     inputblur(){
-      this.animate_false=false;
+    if(this.commentData === ''|| this.commentData == null) {
+        this.animate_false = false;
+    }
     }
   }
 };
