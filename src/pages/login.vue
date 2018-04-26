@@ -77,6 +77,8 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     }
-  }
+  },
+  mounted() {
+    }
 };
 </script>

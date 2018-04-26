@@ -135,7 +135,7 @@ a:visited {
         </div>
     </div>
     <div class="content">
-            <p class="content_P">你好看</p>
+            <p class="content_P">{{content}}</p>
             <div class="img_flex">
                 <img v-if="this.images.length == 1" class='onephoto' :src=this.images[0] @click="clickphotos('123')">
                 <!-- <img v-if="2 >= this.images.length > 1" class='onephoto'> -->
@@ -156,25 +156,25 @@ a:visited {
     </div>
     
     <div class="star" v-show="showStar">
-        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span> <a href="">李四</a>、<a href="">张氏</a> 等觉得很赞</span>
+        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>1 人觉得很赞</span>
     </div>
     <docomment></docomment>
     </el-card>
 
-    <el-card class="box-card">
+    <!-- <el-card class="box-card">
     <div slot="header" class="clearfix">
         <span><a href="" class="username">1用户名</a></span>
         <br> width="50" height="50"
-        <span class="time">13:20</span>
+        <span class="time">{{createTime | formatDate}}</span>
         <el-button style="float: right; padding: 3px 0" type="text">操作</el-button>
     </div>
     <div>sadfsafd</div>
-    </el-card>
+    </el-card> -->
   </div>
 </template>
 
 <script>
-import docomment from '@/components/docomment'
+import docomment from "@/components/docomment";
 export default {
   data() {
     return {
