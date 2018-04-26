@@ -6,7 +6,7 @@
                 <center><p>写下你现在的心情吧-----{{test}}</p></center>
             </div>
             <div class="divtext">
-                    <el-input
+              <el-input
                         @focus="inputfocus"
                         @blur="inputblur"
                         type="textarea"
@@ -14,6 +14,14 @@
                         placeholder="请输入内容"
                         v-model="message">
                     </el-input>
+                    <at :members="members" name-key="name">
+                      <template slot="item" slot-scope="s">
+                        <img width="27" :src="s.item.avatar">
+                        <span v-text="s.item.name"></span>
+                      </template>
+                       <div style="height:50px" class="el-textarea__inner" contenteditable>{{message}}</div>
+                    </at>
+                    
                     <transition name="el-zoom-in-top">
                       <div v-show="submitshow" class="transition-box">
                         <el-button style="float:right;margin-top:10px" v-show="submitshow" @click="submitmessage">提交</el-button>
@@ -53,8 +61,6 @@
                   :images=item.url
                   />
                 </div>
-
-
         </el-col>
     </el-row>
 </template>
@@ -62,10 +68,21 @@
 <script>
 import sideBar from "@/components/sideBar";
 import message from "@/components/message";
+import At from 'vue-at'
 export default {
   data() {
     return {
       test: "test",
+      members: [
+        {
+          avatar: "https://randomuser.me/api/portraits/men/2.jpg",
+          name: "myrtie"
+        },
+        {
+          avatar: "https://randomuser.me/api/portraits/men/8.jpg",
+          name: "a"
+        }
+      ],
       message: "",
       submitshow: false,
       mydata: [
@@ -124,7 +141,8 @@ export default {
   },
   components: {
     sideBar,
-    message
+    message,
+    At
   },
   methods: {
     inputfocus() {
