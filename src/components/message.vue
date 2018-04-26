@@ -23,8 +23,7 @@ a:visited {
   font-size: 13px;
   padding-top: 10px;
 }
-.photo {
-}
+
 .photo img {
   height: 50px;
   width: 50px;
@@ -49,7 +48,7 @@ a:visited {
   min-height: 80px;
 }
 .photo {
-  flex: 2;
+  flex: 1;
   /* width: 40px; */
   min-height: 80px;
   /* background-color: aquamarine; */
@@ -77,7 +76,7 @@ a:visited {
   flex-direction: column;
 }
 .do_message_action {
-  flex: 2;
+  flex: 1;
   /* width: 80px; */
   min-height: 80px;
   display: flex;

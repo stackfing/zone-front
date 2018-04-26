@@ -14,7 +14,7 @@
     align-items: center;
     height: 50px;
     /* background-color: aquamarine; */
-    transition: all 0.8s;
+    transition: all 0.3s;
 }
 .comment_left_active{
     min-width:95%;
@@ -35,7 +35,7 @@
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.8s;
+  transition: opacity 0.3s;
 }
 .fade-enter,
 .fade-leave-to {
