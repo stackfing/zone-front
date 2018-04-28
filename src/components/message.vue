@@ -109,9 +109,28 @@ a:visited {
   /* height:100%; */
 }
 .morephoto img {
-  width: 30%;
-  margin-right: 3px;
-  /* height:; */
+  width: 180px;
+  margin-left: 3px;
+}
+img{  
+    width: auto;  
+    height: auto;  
+    max-width: 100%;  
+    max-height: 100%;     
+}  
+.fui-icon {
+   width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    font-size: 0;
+    overflow: hidden;
+    display: inline-block;
+}
+.feed-v9,
+.icon-op-praise {
+      background-image: url(../assets/jpgs.png);
+    /* background-position: -458px -260px; */
+    background-position: -458px -286px
 }
 </style>
 
@@ -121,7 +140,7 @@ a:visited {
     <div slot="header" class="clearfix">
         <div class="divcontent">
             <div class="photo">
-                <img class="a_img" :src="photoUrl"/>
+                <img class="a_img" :src="headPhoto"/>
             </div>
             <div class="username_and_time">
                 <div class="b_contant">
@@ -157,11 +176,12 @@ a:visited {
     
     <div class="star" v-show="showStar">
         <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>1 人觉得很赞</span>
+        <i class="fui-icon icon-op-praise"></i>
     </div>
     <docomment></docomment>
     </el-card>
 
-    <!-- <el-card class="box-card">
+    <el-card class="box-card">
     <div slot="header" class="clearfix">
         <span><a href="" class="username">1用户名</a></span>
         <br> width="50" height="50"
@@ -169,7 +189,8 @@ a:visited {
         <el-button style="float: right; padding: 3px 0" type="text">操作</el-button>
     </div>
     <div>sadfsafd</div>
-    </el-card> -->
+    </el-card>
+    
   </div>
 </template>
 
@@ -187,9 +208,8 @@ export default {
   },
   props: [
     "username",
-    "id",
     "createTime",
-    "photoUrl",
+    "headPhoto",
     "content",
     "starUser",
     "images"

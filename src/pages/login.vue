@@ -38,7 +38,7 @@
 </style>
 
 <template>
-    <div>
+    <div style="padding-top:20px;">
         <el-upload
         action="http://localhost:8888/photos/upload"
         list-type="picture-card"
@@ -49,6 +49,7 @@
         <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
+        <router-view/>
     </div>
 </template>
 

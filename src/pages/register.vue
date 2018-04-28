@@ -5,7 +5,7 @@
 <template>
         <el-row :gutter="20">
             <el-col :span="12" :offset="6">
-                <div class="grid-content bg-purple">
+                <div class="grid-content">
                     <el-steps :active="active" finish-status="success">
                             <el-step title="填写基本信息"></el-step>
                             <el-step title="邮箱验证"></el-step>
@@ -14,10 +14,13 @@
                     <template>
                       <div v-if="active == 0">
                         填写信息
-                        <input>
+                        <input v-model="nickname">
+                      </div>
+                      <div v-if="active == 1">
+                        我们已经发送邮件给您
                       </div>
                       <div v-if="active == 2">
-                        我们已经发送邮件给您
+                        邮箱验证成功
                       </div>
                       <div v-if="active == 3">
                         注册成功
@@ -34,13 +37,18 @@
 export default {
   data() {
     return {
-      active: 1
+      active: 0,
+      nickname: ''
     };
   },
   // props: ['active'],
   methods: {
     next() {
-      if (this.active++ > 2) this.active = 0;
+      if(this.nickname === '') {
+        
+      } else {
+        if (this.active++ > 2) this.active = 0;
+      }
     }
   }
 };
