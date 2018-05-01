@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Trend from '@/pages/trend'
 import Upload from '@/components/upload'
 import Register from '@/pages/register'
 import Login from '@/pages/login'
 import Exit from '@/pages/exit'
+import index from '@/pages/index'
+import Setting from '@/pages/setting'
 
 Vue.use(Router)
 
@@ -13,23 +14,33 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: Trend,
+      component: index,
+      redirect: "/trend",
       meta: {
         requiredAuths: true
-      }
+      },
+      children: [
+        {
+          path: '/settings',
+          component: Setting
+        },
+        {
+          path: '/register',
+          component: Register
+        },
+        {
+          path: '/trend',
+          component: Trend
+        }
+      ]
     },
-    {
-      path: '/upload',
-      component: Upload,
-      meta: {
-        requiredAuths: true
-      }
-    },
-    {
-      path: '/register',
-      component: Register
-    },
+    // {
+    //   path: '/upload',
+    //   component: Upload,
+    //   meta: {
+    //     requiredAuths: true
+    //   }
+    // },
     {
       path: '/login',
       component: Login
@@ -40,6 +51,6 @@ export default new Router({
       meta: {
         requiredAuths: true
       }
-    }
+    },
   ]
 })

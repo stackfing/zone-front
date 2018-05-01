@@ -1,19 +1,19 @@
 <style>
 .grid_content {
-  /* width: 1000px; */
-  /* background-image: none; */
-  /* min-height: 500px; */
   padding-bottom: 100px;
-      width: 592px;
-    /* margin: 230px auto; */
-    margin: 0 auto;
-    padding-top: 200px;
+  width: 592px;
+  margin: 0 auto;
+  padding-top: 100px;
 }
 .form_box {
-  margin-top: 30px;
+  margin-top: 50px;
+  box-shadow: 0px 0px 30px rgb(214, 214, 214);
+  background-color: #f9f9f9;
+  padding: 50px;
+  border-radius: 7px;
+  border: 1px solid #eee;
 }
 .sendEmail_container {
-
 }
 </style>
 
@@ -43,7 +43,8 @@
           <el-form-item label="确认密码">
             <el-input type="password" ></el-input>
           </el-form-item>
-          <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+          <el-button style="margin-top: 12px;float:right" @click="next">下一步</el-button>
+          <div class="clearfix"></div>
         </el-form>
       </div>
       <div v-if="active == 1">
@@ -54,7 +55,7 @@
       </div>
       <div v-if="active == 2">
         <p>您的邮箱已经验证通过</p>
-        <el-button style="margin-top:30px;" @click="next">下一步</el-button>
+        <el-button style="margin-top:30px;float:right" @click="next">下一步</el-button>
       </div>
       <div v-if="active == 3">
         注册成功

@@ -4,34 +4,32 @@
   /* border-top: 1px solid #ebeef5; */
   display: flex;
   flex-direction: row;
-  
-  
 }
-.comment_left{
-    min-width:85%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    /* background-color: aquamarine; */
-    transition: all 0.3s;
+.comment_left {
+  min-width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  /* background-color: aquamarine; */
+  transition: all 0.3s;
 }
-.comment_left_active{
-    min-width:95%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    /* background-color: aquamarine; */
+.comment_left_active {
+  min-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  /* background-color: aquamarine; */
 }
-.comment_right{
-    min-width:80px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background-color: rgb(209, 87, 193); */
-    margin-left: 10px;
+.comment_right {
+  min-width: 80px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(209, 87, 193); */
+  margin-left: 10px;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -41,7 +39,6 @@
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>
 
 <template>
@@ -54,39 +51,25 @@
             <el-button type="primary" v-show="animate_false" plain>评论</el-button>
         </transition>
     </div>
-
-    <!-- <el-input class="commentInput" v-model="commentData" @focus="inputfocus" placeholder="评论"></el-input>
-    <transition name="fade" mode="out-in">
-       <el-button v-show="isClick">点击我</el-button>
-    </transition> -->
-<!-- 
-    <transition name="in">
-        <div class="test" v-show="isClick"></div>
-    </transition>
-    <transition name="out">
-        <div class="tt" v-show="!isClick"></div>
-    </transition> -->
    </div>
-
 </template>
-
 
 <script>
 export default {
   data() {
     return {
       commentData: "",
-      animate_false:false
+      animate_false: false
     };
   },
   methods: {
     inputfocus() {
-      this.animate_false=true;
+      this.animate_false = true;
     },
-    inputblur(){
-    if(this.commentData === ''|| this.commentData == null) {
+    inputblur() {
+      if (this.commentData === "" || this.commentData == null) {
         this.animate_false = false;
-    }
+      }
     }
   }
 };

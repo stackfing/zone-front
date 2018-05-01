@@ -26,12 +26,18 @@
             <template slot="prepend">密码</template>  
         </el-input>  
     </el-col>  
- </el-row>  
+ </el-row>
  <el-row>  
     <el-col :span="8">  
         <el-button id="login" v-on:click="check" style="width:100%" type="primary">登录</el-button>  
-    </el-col>  
- </el-row>  
+    </el-col>
+ </el-row>
+ <el-row>
+    <el-col :span="8">
+        <span style="font-size:12px;float:right">忘了密码？</span>
+        <div class="clearfix"></div>
+     </el-col>
+ </el-row>
 </div>
 </template>
 
@@ -66,7 +72,7 @@ export default {
           if (res.status == 200) {
             if (res.body.code == 200) {
               localStorage.setItem("jwts", res.body.data);
-              this.$router.push('/')
+              this.$router.replace("/");
             } else {
               this.$message({
                 message: res.body.msg,
@@ -74,19 +80,14 @@ export default {
               });
             }
           }
-        })
-        // .catch(
-        //   this.$message({
-        //     message: "网络错误，请稍后再试",
-        //     type: "error"
-        //   }))
-        ;
-
-      // if(account === 'a' && password === 'a') {
-      //     localStorage.setItem("jwts", "eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuW8oOS4iSIsImlkIjoxLCJleHAiOjE1MjUxOTU1MjUsImlhdCI6MTUyNTE0MTUyNX0.HFKHQluhUg-jsolSAyn8eU1402Hk_EVN7tn1y22XDQs");
-      //     this.$router.push('/')
-      // }
+        });
     }
+  },
+  mounted() {
+      //可能有修改过localStorage，会出现无限跳转
+      if(localStorage.getItem("jwts") != null) {
+          this.$router.replace("/")
+      }
   }
 };
 </script>
