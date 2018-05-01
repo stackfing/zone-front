@@ -16,6 +16,7 @@ a:visited {
 .time {
   font-size: 13px;
   margin-top: 5px;
+  color: rgba(0, 0, 0, 0.7);
 }
 .star {
   margin-top: 20px;
@@ -67,7 +68,7 @@ a:visited {
   min-height: 80px;
   /* background-color: rgb(148, 255, 127); */
   display: flex;
-
+  margin-left: 15px;
   justify-content: flex-start;
   align-items: center;
 }
@@ -86,13 +87,13 @@ a:visited {
 }
 .content_P {
   margin-left: 10px;
+  margin-bottom: 20px;
 }
 .img_flex {
   float: left;
   /* margin-left: 10px; */
   width: 100%;
 }
-
 .img_conten {
   width: 32%;
   height: 34%;
@@ -112,25 +113,28 @@ a:visited {
   width: 180px;
   margin-left: 3px;
 }
-img{  
-    width: auto;  
-    height: auto;  
-    max-width: 100%;  
-    max-height: 100%;     
-}  
+img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
 .fui-icon {
-   width: 24px;
-    height: 24px;
-    background-repeat: no-repeat;
-    font-size: 0;
-    overflow: hidden;
-    display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  font-size: 0;
+  overflow: hidden;
+  display: inline-block;
 }
 .feed-v9,
 .icon-op-praise {
-      background-image: url(../assets/jpgs.png);
-    /* background-position: -458px -260px; */
-    background-position: -458px -286px
+  background-image: url(../assets/jpgs.png);
+  /* background-position: -458px -260px; */
+  background-position: -458px -286px;
+}
+.comment_item {
+
 }
 </style>
 
@@ -144,8 +148,8 @@ img{
             </div>
             <div class="username_and_time">
                 <div class="b_contant">
-                    <span><a href="" class="username">{{username}}</a></span>
-                    <span class="time">{{createTime}}</span>
+                    <span><a href="" class="username">{{nickName}}</a></span>
+                    <span class="time">{{createTime|myDate}}</span>
                 </div>
             </div>
             <div class="do_message_action">
@@ -155,22 +159,10 @@ img{
     </div>
     <div class="content">
             <p class="content_P">{{content}}</p>
-            <div class="img_flex">
-                <img v-if="this.images.length == 1" class='onephoto' :src=this.images[0] @click="clickphotos('123')">
-                <!-- <img v-if="2 >= this.images.length > 1" class='onephoto'> -->
-                
-                <div v-if="this.images.length == 2" class='twophoto'>
-                    <img v-for="item of this.images" :src="item">
-                </div>
-
-                <div v-if="this.images.length >= 3" class='morephoto'>
-                    <img v-for="item of this.images" :src="item">
-                </div>
-                
-                <div v-if="this.images.length >= 9" class='morephoto'>
-                    <img v-for="item of this.images" :src="item">
-                </div>
-            </div>
+            <template>
+              <img v-for="item in images" :src="item"/>
+            </template>
+           
             <div  class="clearfix"> </div>
     </div>
     
@@ -178,24 +170,72 @@ img{
         <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>1 人觉得很赞</span>
         <i class="fui-icon icon-op-praise"></i>
     </div>
+    <template v-for="item in commentList">
+      <div class="comment_item">
+        <div class="comment_item_photo">
+            {{item.nickName}}
+        </div>
+        <div class="comment_item_content">
+            {{item.comment}}
+        </div>
+      </div>
+    </template>
     <docomment></docomment>
     </el-card>
 
-    <el-card class="box-card">
+    <!-- <el-card class="box-card">
     <div slot="header" class="clearfix">
         <span><a href="" class="username">1用户名</a></span>
         <br> width="50" height="50"
-        <span class="time">{{createTime | formatDate}}</span>
         <el-button style="float: right; padding: 3px 0" type="text">操作</el-button>
     </div>
     <div>sadfsafd</div>
-    </el-card>
+    </el-card> -->
     
   </div>
 </template>
 
 <script>
+
 import docomment from "@/components/docomment";
+import Vue from "vue";
+Vue.filter("myDate", function(time) {
+  var date2 = new Date();
+  var date1 = new Date(time);
+
+  var date3 = date2.getTime() - new Date(date1).getTime(); //时间差的毫秒数
+
+  //------------------------------
+
+  //计算出相差天数
+  var days = Math.floor(date3 / (24 * 3600 * 1000));
+
+  //计算出小时数
+
+  var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+
+  var hours = Math.floor(leave1 / (3600 * 1000));
+  //计算相差分钟数
+  var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+  var minutes = Math.floor(leave2 / (60 * 1000));
+  //计算相差秒数
+  var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+  var seconds = Math.round(leave3 / 1000);
+  // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
+  var oDate = new Date(time);
+ 
+  if(days == 0) {
+    return "今天" + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
+  } 
+  if(days==1) {
+    return "昨天" + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
+  } 
+  if(days!=1||days!=0){
+    return oDate.getMonth() + "-" + oDate.getDate() + "  " + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
+  }
+
+});
+
 export default {
   data() {
     return {
@@ -207,15 +247,16 @@ export default {
     docomment
   },
   props: [
-    "username",
+    "nickName",
     "createTime",
     "headPhoto",
     "content",
-    "starUser",
-    "images"
+    "starnum",
+    "images",
+    "commentList"
   ],
   mounted() {
-    console.log(this.images.length);
+    console.log(this.images)
   },
   methods: {
     clickphotos(url) {

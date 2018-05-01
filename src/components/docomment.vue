@@ -51,7 +51,7 @@
     </div>
     <div class="comment_right">
         <transition name="fade">
-            <el-button type="primary" v-show="animate_false" plain>回复</el-button>
+            <el-button type="primary" v-show="animate_false" plain>评论</el-button>
         </transition>
     </div>
 
