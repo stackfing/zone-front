@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .setting_container {
   /* width: 100%;
     border: 1px solid #ebeef5;

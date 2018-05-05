@@ -131,10 +131,20 @@ img {
 .icon-op-praise {
   background-image: url(../assets/jpgs.png);
   /* background-position: -458px -260px; */
-  background-position: -458px -286px;
+  background-position: -458px -286px ;
 }
-.comment_item {
-
+.img_2{
+  
+}
+.img_one{
+  margin-left: 5%;;
+}
+.img_two{
+  margin-left: -2px;
+  /* margin:  auto auto; */
+}
+.img_more{
+  margin-left: 25px;
 }
 </style>
 
@@ -160,7 +170,20 @@ img {
     <div class="content">
             <p class="content_P">{{content}}</p>
             <template>
-              <img v-for="item in images" :src="item"/>
+              <div class="img_one" v-if="images.length==1">
+                  <img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item"/>
+              </div>
+              <div v-else-if="images.length==2">
+                <div class="img_two">
+                  <img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item"/>
+                </div>
+              </div>
+              
+              <div v-else>
+                <div class="img_more">
+                  <img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item"/>
+                </div>
+              </div>
             </template>
            
             <div  class="clearfix"> </div>
@@ -168,9 +191,13 @@ img {
     
     <div class="star" v-show="showStar">
         <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>1 人觉得很赞</span>
-        <i class="fui-icon icon-op-praise"></i>
+        <div style="margin:right;display:inline">
+          <i class="fui-icon icon-op-praise"></i>
+        </div>
+        <div class="clearfix"></div>
     </div>
     <template v-for="item in commentList">
+      
       <div class="comment_item">
         <div class="comment_item_photo">
             {{item.nickName}}
@@ -180,7 +207,7 @@ img {
         </div>
       </div>
     </template>
-    <docomment></docomment>
+    <docomment :friendList="friendList"></docomment>
     </el-card>
 
     <!-- <el-card class="box-card">
@@ -194,6 +221,8 @@ img {
     
   </div>
 </template>
+
+
 
 <script>
 
@@ -253,15 +282,17 @@ export default {
     "content",
     "starnum",
     "images",
-    "commentList"
+    "commentList",
+    "friendList"
   ],
   mounted() {
     console.log(this.images)
+    console.log(this.friendList)
   },
   methods: {
     clickphotos(url) {
       alert(url);
-    }
+    },
   }
 };
 </script>

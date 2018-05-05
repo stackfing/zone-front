@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .grid_content {
   padding-bottom: 100px;
   width: 592px;
@@ -24,7 +24,6 @@
             <el-step title="邮箱验证"></el-step>
             <el-step title="注册成功"></el-step>
     </el-steps>
-    <template>
       <div v-if="active == 0">
         <el-form class="form_box">
           <span>请填写您的基本信息</span>
@@ -61,8 +60,6 @@
         注册成功
         您的地址是：http://baidu.com
       </div>
-    </template>
-    
 </div>
 </template>
 

@@ -16,14 +16,10 @@ Vue.use(ElementUI);
 Vue.prototype.HOST = '/api'
 
 Vue.http.interceptors.push((request, next) => {
-  //request.credentials = true; // 接口每次请求会跨域携带cookie
-  //request.method= 'POST'; // 请求方式（get,post）
-  //request.headers.set('token','111') // 请求headers携带参数
-  // request.headers.set("jwts", "eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuW8oOS4iSIsImlkIjoxLCJleHAiOjE1MjUxOTU1MjUsImlhdCI6MTUyNTE0MTUyNX0.HFKHQluhUg-jsolSAyn8eU1402Hk_EVN7tn1y22XDQs")
-  request.headers.set("jwts", localStorage.getItem("jwts"))
+ request.headers.set("jwt", localStorage.getItem("jwt"))
   
   next(function (response) {
-    if (response.status == 403) {
+    if (response.status == 403 || response.status == 500) {
       this.$router.push('/login')
     }
     return response;
@@ -32,13 +28,13 @@ Vue.http.interceptors.push((request, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiredAuths) { // 判断该路由是否需要登录权限
-    if (localStorage.getItem("jwts") != null) {
+    if (localStorage.getItem("jwt") != null) {
       next();
     }
     else {
       next({
         path: '/login',
-        query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        // query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
     }
   }

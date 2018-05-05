@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <div style="position:fixed;">
+    <!-- <div style="position:fixed;">
       <router-link to="/">Home</router-link>
       <router-link to="register">Register</router-link>
       <router-link to="exit">Exit</router-link>
-    </div>
+    </div> -->
       <transition name='fade' mode="out-in">
        <router-view></router-view>
       </transition>
@@ -38,7 +38,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
-
   /* margin-top: 60px; */
 }
 </style>

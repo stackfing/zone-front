@@ -1,3 +1,7 @@
+<style scope="scope">
+
+</style>
+
 <template>
   
 </template>
@@ -6,12 +10,8 @@
 export default {
   data() {
       return {
-
+          
       }
-  },
-  created() {
-      localStorage.removeItem("jwts")
-      this.$router.push('login')
   }
 }
 </script>

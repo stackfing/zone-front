@@ -69,6 +69,8 @@ export default {
     inputblur() {
       if (this.commentData === "" || this.commentData == null) {
         this.animate_false = false;
+      } else {
+        //做ajax请求
       }
     }
   }

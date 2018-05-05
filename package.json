@@ -12,11 +12,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@xkeshi/vue-qrcode": "^0.3.0",
     "axios": "^0.18.0",
     "element-ui": "^2.3.6",
     "textarea-caret": "^3.1.0",
     "vue": "^2.5.2",
     "vue-at": "^2.3.2",
+    "vue-qart": "^2.1.1",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1"
   },

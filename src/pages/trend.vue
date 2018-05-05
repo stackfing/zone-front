@@ -1,9 +1,9 @@
-<style scope="scope">
-
+<style scoped>
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
-      background-color: #e2e8ee;
+  /* background-color: #e2e8ee; */
+  background-color: #87CEFF;
 }
 .row-bg {
   padding: 10px 0;
@@ -34,6 +34,7 @@
 }
 .send_message_box {
   width: 592px;
+  /* width: 100%; */
   margin: 0 auto;
 }
 .btn_upload {
@@ -57,32 +58,23 @@
       <div class="grid-content bg-purple">
           <center><span>写下你现在的心情吧</span></center>
       </div>
-      
-        <!-- <el-input
-                  @focus="inputfocus"
-                  @blur="inputblur"
-                  type="textarea"
-                  :rows="2"
-                  placeholder="请输入内容"
-                  v-model="message">
-              </el-input> -->
-        <at :members="members" name-key="name" >
-          <template slot="item" slot-scope="s">
+
+    <at-ta :members="members" name-key="name">
+    <template slot="item" slot-scope="s">
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
             <span v-text="s.item.name"></span>
-          </template>
-
-          <div style="height:50px"
-              @click="testToast"
+    </template>
+    <textarea
+    v-model="message"
+    @click="clickTextArea"
               class="el-textarea__inner"
-              contenteditable>{{message}}
-          </div>
-        </at>
+              contenteditable></textarea>
+  </at-ta>
               
         <transition name="el-zoom-in-top">
           <div v-show="submitshow" class="transition-box">
             <div class="transition_left">
-                <upload @getURL="loginURL"></upload>
+                <upload @getURL="getPhotoUrl"></upload>
             </div>
             <div class="transition_right">
                 <el-button class="btn_upload" style="" v-show="submitshow" @click="submitmessage">提交</el-button>
@@ -100,6 +92,7 @@
         :images=item.images
         :starnum=item.starnum
         :commentList=item.commentList
+        :friendList=friendList
         />
       </div>
     </div>
@@ -111,7 +104,7 @@
 import sideBar from "@/components/sideBar";
 import message from "@/components/message";
 import upload from "@/components/upload";
-import At from "vue-at";
+import AtTa from "vue-at/dist/vue-at-textarea";
 export default {
   data() {
     return {
@@ -120,32 +113,17 @@ export default {
       submitshow: false,
       mydata: [],
       friendList: [],
-      dass: 'message'
+      dass: "message"
     };
   },
   components: {
     sideBar,
     message,
-    At,
+    AtTa,
     upload
   },
   methods: {
-    inputfocus() {
-      this.test = "焦点进入ipnut";
-      this.submitshow = true;
-      console.log("焦点进入input");
-    },
-    inputblur() {
-      if (this.message === "") {
-        this.test = "没有输入内容";
-        this.submitshow = false;
-        return;
-      }
-      this.test = "焦点进入ipnut";
-    },
     submitmessage() {
-      console.log("请输入内容请输入内容请输入内容请输入内容请输入内容");
-
       if (this.message === "") {
         this.submitshow = true;
         console.log("请输入内容");
@@ -157,24 +135,25 @@ export default {
         console.log();
       }
     },
-    testToast() {
+    clickTextArea() {
       // console.log("sdd");
       this.submitshow = true;
     },
-    loginURL(...e) {
-      console.log("loginURL --- " + e);
+    getPhotoUrl(...e) {
+      // console.log("getPhotoUrl --- " + e);
+      console.log(e);
     }
   },
   created() {
     this.$http
-      .get("http://localhost:8888/message")
+      .get("http://localhost:8888/api/message")
       .then(res => {
         this.mydata = res.body.data;
         console.log(this.mydata);
       })
       .catch(res => {});
     this.$http
-      .get("http://localhost:8888/user/firendList")
+      .get("http://localhost:8888/api/user/firendList")
       .then(res => {
         this.members = res.body.data;
         console.log(this.members);

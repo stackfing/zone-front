@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .el-row {
   margin-bottom: 20px;
   &:last-child {
@@ -64,14 +64,15 @@ export default {
       //ajax
 
       this.$http
-        .post("http://localhost:8888/user/login", {
+        .post("http://localhost:8888/api/user/login", {
           account: account,
           password: password
         })
         .then(res => {
           if (res.status == 200) {
             if (res.body.code == 200) {
-              localStorage.setItem("jwts", res.body.data);
+              localStorage.setItem("jwt", res.body.data);
+
               this.$router.replace("/");
             } else {
               this.$message({
@@ -84,10 +85,9 @@ export default {
     }
   },
   mounted() {
-      //可能有修改过localStorage，会出现无限跳转
-      if(localStorage.getItem("jwts") != null) {
-          this.$router.replace("/")
-      }
+    if (localStorage.getItem("jwt") != null) {
+      this.$router.replace("/trend");
+    }
   }
 };
 </script>
