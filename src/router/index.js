@@ -9,7 +9,7 @@ import Setting from '@/pages/setting'
 import Find from '@/pages/find'
 import Related from '@/pages/related'
 import About from '@/pages/about'
-import Link from '@/pages/link'
+import Doc from '@/pages/doc'
 import test from '@/pages/test'
 import UserDetail from '@/pages/userdetail'
 
@@ -28,19 +28,31 @@ export default new Router({
       children: [
         {
           path: '/settings',
-          component: Setting
+          component: Setting,
+          meta: {
+            requiredAuths: true
+          }
         },
         {
           path: '/trend',
-          component: Trend
+          component: Trend,
+          meta: {
+            requiredAuths: true
+          }
         },
         {
           path: '/find',
-          component: Find
+          component: Find,
+          meta: {
+            requiredAuths: true
+          }
         },
         {
           path: '/related',
-          component: Related
+          component: Related,
+          meta: {
+            requiredAuths: true
+          }
         },
         {
           path: '/about',
@@ -57,8 +69,8 @@ export default new Router({
       component: Register
     },
     {
-      path: '/link',
-      component: Link
+      path: '/doc',
+      component: Doc
     },
     {
       path: '/test',
@@ -71,9 +83,6 @@ export default new Router({
     {
       path: '/user/:nickname',
       component: UserDetail,
-      meta: {
-        requiredAuths: false
-      }
     }
   ]
 })

@@ -82,7 +82,7 @@
   height: 40px;
   /* background-color: #007bff!important; */
   background-color: #87CEFF;
-  z-index: 99999;
+  z-index: 3;
 }
 .friend_list_header {
   border-top-left-radius: 4px;
@@ -150,7 +150,7 @@
                     <router-link tag="li" to="/find" >发现世界</router-link>
                     <router-link tag="li" to="/settings" >系统设置</router-link>
                     <router-link tag="li" to="/about" >关于我</router-link>
-                    <router-link tag="li" to="/link" >友情链接</router-link>
+                    <router-link tag="li" to="/doc" >文档</router-link>
                 </ul>
             </div>
             <div class="center_container">
@@ -199,7 +199,7 @@ import setting from "@/pages/setting"
 import register from "@/pages/register"
 import find from "@/pages/find"
 import related from "@/pages/related"
-import link from "@/pages/link"
+import doc from "@/pages/doc"
 export default {
   data() {
     return {
@@ -212,7 +212,7 @@ export default {
     register,
     find,
     related,
-    link
+    doc
   },
   methods: {
     toggleSlide(item) {

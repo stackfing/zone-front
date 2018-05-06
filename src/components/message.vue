@@ -126,12 +126,18 @@ img {
   font-size: 0;
   overflow: hidden;
   display: inline-block;
+  cursor: pointer;
 }
 .feed-v9,
 .icon-op-praise {
   background-image: url(../assets/jpgs.png);
   /* background-position: -458px -260px; */
   background-position: -458px -286px ;
+}
+.icon-op-praise-hidden {
+  background-image: url(../assets/jpgs.png);
+  /* background-position: -458px -260px; */
+  background-position: -458px -260px ;
 }
 .img_2{
   
@@ -171,28 +177,27 @@ img {
             <p class="content_P">{{content}}</p>
             <template>
               <div class="img_one" v-if="images.length==1">
-                  <img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item"/>
+                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item"/>
               </div>
               <div v-else-if="images.length==2">
                 <div class="img_two">
-                  <img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item"/>
+                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item"/>
                 </div>
               </div>
               
               <div v-else>
                 <div class="img_more">
-                  <img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item"/>
+                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item"/>
                 </div>
               </div>
             </template>
            
             <div  class="clearfix"> </div>
     </div>
-    
     <div class="star" v-show="showStar">
-        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>1 人觉得很赞</span>
-        <div style="margin:right;display:inline">
-          <i class="fui-icon icon-op-praise"></i>
+        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>{{starnum}} 人觉得很赞</span>
+        <div style="float:right;display:inline">
+          <i class="fui-icon" @click="star" :class="starE?'icon-op-praise':'icon-op-praise-hidden'" style="margin-top:-3px;"></i>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -223,11 +228,13 @@ img {
 </template>
 
 
-
 <script>
-
 import docomment from "@/components/docomment";
 import Vue from "vue";
+// import Vue from 'vue';
+import VueImg from 'v-img';
+
+Vue.use(VueImg);
 Vue.filter("myDate", function(time) {
   var date2 = new Date();
   var date1 = new Date(time);
@@ -269,11 +276,13 @@ export default {
   data() {
     return {
       showStar: true,
-      commentData: ""
+      commentData: "",
+      starE:false
     };
   },
   components: {
-    docomment
+    docomment,
+    VueImg
   },
   props: [
     "nickName",
@@ -293,6 +302,14 @@ export default {
     clickphotos(url) {
       alert(url);
     },
+    star() {
+      this.starE = !this.starE;
+      if(this.starE == true) {
+        this.starnum ++;
+      } else {
+        this.starnum --;
+      }
+    }
   }
 };
 </script>

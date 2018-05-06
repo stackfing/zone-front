@@ -12,24 +12,24 @@
 </style>
 
 <template>
-  <div class="login-box" id="app" >  
+  <div class="login-box" id="app" >
  <el-row>  
     <el-col :span="8">  
-        <el-input id="account"  v-model="account" placeholder="请输入帐号">  
+        <el-input id="account"  v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">  
             <template slot="prepend">帐号</template>  
         </el-input>   
     </el-col>  
  </el-row>  
  <el-row>  
     <el-col :span="8">  
-        <el-input id="password" v-model="password" type="password" placeholder="请输入密码">  
-            <template slot="prepend">密码</template>  
+        <el-input id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">  
+            <template slot="prepend">密码</template>
         </el-input>  
     </el-col>  
  </el-row>
  <el-row>  
     <el-col :span="8">  
-        <el-button id="login" v-on:click="check" style="width:100%" type="primary">登录</el-button>  
+        <el-button id="login" @click="login" style="width:100%" type="primary" >登录</el-button>  
     </el-col>
  </el-row>
  <el-row>
@@ -37,6 +37,11 @@
         <span style="font-size:12px;float:right">忘了密码？</span>
         <div class="clearfix"></div>
      </el-col>
+ </el-row>
+ <el-row>
+   <el-col :span="8">
+     <center style="font-size:13px;color:#999;">腾讯云提供计算. Vue.js 强力驱动</center>
+   </el-col>
  </el-row>
 </div>
 </template>
@@ -50,7 +55,7 @@ export default {
     };
   },
   methods: {
-    check: function(event) {
+    login: function(event) {
       //获取值
       var account = this.account;
       var password = this.password;
@@ -64,7 +69,7 @@ export default {
       //ajax
 
       this.$http
-        .post("http://localhost:8888/api/user/login", {
+        .post("http://10.102.174.142:8888/api/user/login", {
           account: account,
           password: password
         })

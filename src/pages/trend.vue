@@ -146,14 +146,14 @@ export default {
   },
   created() {
     this.$http
-      .get("http://localhost:8888/api/message")
+      .get("http://10.102.174.142:8888/api/message")
       .then(res => {
         this.mydata = res.body.data;
         console.log(this.mydata);
       })
       .catch(res => {});
     this.$http
-      .get("http://localhost:8888/api/user/firendList")
+      .get("http://10.102.174.142:8888/api/user/firendList")
       .then(res => {
         this.members = res.body.data;
         console.log(this.members);

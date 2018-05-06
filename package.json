@@ -5,7 +5,7 @@
   "author": "stackfing <stackfing@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 10.102.174.142",
     "start": "npm run dev",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run e2e",
@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "element-ui": "^2.3.6",
     "textarea-caret": "^3.1.0",
+    "v-img": "^0.2.0",
     "vue": "^2.5.2",
     "vue-at": "^2.3.2",
     "vue-qart": "^2.1.1",

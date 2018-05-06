@@ -17,9 +17,9 @@ Vue.prototype.HOST = '/api'
 
 Vue.http.interceptors.push((request, next) => {
  request.headers.set("jwt", localStorage.getItem("jwt"))
-  
+
   next(function (response) {
-    if (response.status == 403 || response.status == 500) {
+    if (response.status == 403) {
       this.$router.push('/login')
     }
     return response;
@@ -32,6 +32,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
     else {
+      console.log('asdfs')
       next({
         path: '/login',
         // query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由

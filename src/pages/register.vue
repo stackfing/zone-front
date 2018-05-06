@@ -13,8 +13,7 @@
   border-radius: 7px;
   border: 1px solid #eee;
 }
-.sendEmail_container {
-}
+
 </style>
 
 <template>
@@ -25,40 +24,39 @@
             <el-step title="注册成功"></el-step>
     </el-steps>
       <div v-if="active == 0">
-        <el-form class="form_box">
+        <el-form class="form_box" :model="form">
           <span>请填写您的基本信息</span>
           <el-form-item label="用户名">
-            <el-input></el-input>
+            <el-input v-model="form.account"></el-input>
           </el-form-item>
           <el-form-item label="昵称">
-            <el-input v-model="nickname"></el-input>
+            <el-input v-model="form.nickName"></el-input>
           </el-form-item>
           <el-form-item label="邮箱">
-            <el-input type="email"></el-input>
+            <el-input v-model="form.email" type="email"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input type="password" ></el-input>
+            <el-input v-model="form.password" type="password" ></el-input>
           </el-form-item>
           <el-form-item label="确认密码">
             <el-input type="password" ></el-input>
           </el-form-item>
-          <el-button style="margin-top: 12px;float:right" @click="next">下一步</el-button>
+          <el-button style="float:right" @click="next">下一步</el-button>
           <div class="clearfix"></div>
         </el-form>
       </div>
       <div v-if="active == 1">
         <div class="sendEmail_container">
-          
-          <el-button style="margin-top:30px;" @click="next">点击进入邮箱</el-button>
+          <p style="margin-top:30px;">我们已经发送邮件在您的邮箱，请进入邮箱点击链接以激活您的账号。</p>
+          <el-button style="margin-top:30px;" @click="toEmail">点击进入邮箱</el-button>
         </div>
       </div>
       <div v-if="active == 2">
-        <p>您的邮箱已经验证通过</p>
+        <p style="margin-top:30px;">您的邮箱已经验证通过</p>
         <el-button style="margin-top:30px;float:right" @click="next">下一步</el-button>
       </div>
       <div v-if="active == 3">
-        注册成功
-        您的地址是：http://baidu.com
+        <p style="margin-top:30px;">注册成功，后台正在紧张的为您生成初始化数据，生成完毕即将跳转至首页</p>
       </div>
 </div>
 </template>
@@ -68,16 +66,49 @@ export default {
   data() {
     return {
       active: 0,
-      nickname: "2"
+      nickname: "2",
+      username:"",
+      form: {},
     };
   },
   // props: ['active'],
   methods: {
     next() {
+      if(this.active == 0) {
+        this.register();
+        return;
+      }
       if (this.nickname === "") {
       } else {
         if (this.active++ > 2) this.active = 0;
       }
+      if(this.username){}
+    },
+    toEmail() {
+      open("http://mail.qq.com");
+    },
+    register() {
+      this.$http.post('http://10.102.174.142:8888/api/user/register',this.form).then(res=>{
+        if(res.body.data == true) {
+          this.active++;
+        }
+      })
+    }
+  },
+  created() {
+    var mid =  this.$route.query.mid;
+    if(mid != null || mid != undefined) {
+      this.$http.get('http://10.102.174.142:8888/api/user/register?id=' + mid).then(res=>{
+        // console.log(res.body.data == false)
+        if(res.body.data == true) {
+          console.log('没有验证')
+          this.active = 2;
+          // this.active = 2;
+        } else {
+          console.log('已经验证过')
+          this.active = 3;
+        }
+      })
     }
   }
 };
