@@ -224,47 +224,47 @@ body {
 
 <template>
   <div class="mycontainer">
-	<div class="head">
-		<div class="bio">
-    	<img src="../assets/up.jpg" alt="background" class="bg">
-			<div class="desc">
-				<h3>@Richer</h3>
-				<p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
-			</div>
-		</div>
-		<div class="avatarcontainer">
-			<img src="../assets/photo.jpg" alt="avatar" class="avatar">
-			<div class="hover">
-				<div class="icon-twitter"></div>
-			</div>
-		</div>
-	</div>
-	<div class="content">
-		<div class="data">
-			<ul>
-				<li>
-					1122
-					<span>帖子</span>
-				</li>
-				<li>
-					62
-					<span>朋友</span>
-				</li>
-				<li>
-					20
-					<span>关注</span>
-				</li>
-			</ul>
-		</div>
-		<!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
-        <div class="qrcode_container">
-            <center><vue-qrcode :value=value :options="{size:100}"></vue-qrcode></center>
+    <div class="head">
+      <div class="bio">
+        <img src="../assets/up.jpg" alt="background" class="bg">
+        <div class="desc">
+          <h3>@Richer</h3>
+          <p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
         </div>
-	</div>
-    
-            
-        
-</div>
+      </div>
+      <div class="avatarcontainer">
+        <img src="../assets/photo.jpg" alt="avatar" class="avatar">
+        <div class="hover">
+          <div class="icon-twitter"></div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="data">
+        <ul>
+          <li>
+            1122
+            <span>帖子</span>
+          </li>
+          <li>
+            62
+            <span>朋友</span>
+          </li>
+          <li>
+            20
+            <span>关注</span>
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
+      <div class="qrcode_container">
+        <center>
+          <vue-qrcode :value=value :options="{size:100}"></vue-qrcode>
+        </center>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>

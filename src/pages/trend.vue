@@ -3,7 +3,7 @@
   border-radius: 4px;
   min-height: 36px;
   /* background-color: #e2e8ee; */
-  background-color: #87CEFF;
+  background-color: #87ceff;
 }
 .row-bg {
   padding: 10px 0;
@@ -50,54 +50,43 @@
 
 
 <template>
-<div class="">
-  <div class="clearfix"></div>
-  <!-- <component :is="dass" keep-alive></component> -->
-  <div>
-    <div class="send_message_box">
-      <div class="grid-content bg-purple">
-          <center><span>写下你现在的心情吧</span></center>
-      </div>
+  <div class="">
+    <div class="clearfix"></div>
+    <!-- <component :is="dass" keep-alive></component> -->
+    <div>
+      <div class="send_message_box">
+        <div class="grid-content bg-purple">
+          <center>
+            <span>写下你现在的心情吧</span>
+          </center>
+        </div>
 
-    <at-ta :members="members" name-key="name">
-    <template slot="item" slot-scope="s">
+        <at-ta :members="members" name-key="name">
+          <template slot="item" slot-scope="s">
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
             <span v-text="s.item.name"></span>
-    </template>
-    <textarea
-    v-model="message"
-    @click="clickTextArea"
-              class="el-textarea__inner"
-              contenteditable></textarea>
-  </at-ta>
-              
+          </template>
+          <textarea v-model="message" @click="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
+        </at-ta>
+
         <transition name="el-zoom-in-top">
           <div v-show="submitshow" class="transition-box">
             <div class="transition_left">
-                <upload @getURL="getPhotoUrl"></upload>
+              <upload @getURL="getPhotoUrl"></upload>
             </div>
             <div class="transition_right">
-                <el-button class="btn_upload" style="" v-show="submitshow" @click="submitmessage">提交</el-button>
+              <el-button class="btn_upload" style="" v-show="submitshow" @click="submitmessage">提交</el-button>
             </div>
           </div>
         </transition>
         <div class="clearfix"></div>
 
-      <div v-for="item of mydata">
-        <message
-        :createTime=item.createTime
-        :headPhoto=item.headphoto
-        :content=item.content
-        :nickName=item.nickName
-        :images=item.images
-        :starnum=item.starnum
-        :commentList=item.commentList
-        :friendList=friendList
-        />
+        <div v-for="item of mydata">
+          <message :createTime=item.createTime :headPhoto=item.headphoto :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -105,6 +94,7 @@ import sideBar from "@/components/sideBar";
 import message from "@/components/message";
 import upload from "@/components/upload";
 import AtTa from "vue-at/dist/vue-at-textarea";
+import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
@@ -113,7 +103,8 @@ export default {
       submitshow: false,
       mydata: [],
       friendList: [],
-      dass: "message"
+      dass: "message",
+      photos: []
     };
   },
   components: {
@@ -133,6 +124,7 @@ export default {
         // 这里添加提交代码
         console.log("提交内容是： " + this.message);
         console.log();
+        this.sendMessage();
       }
     },
     clickTextArea() {
@@ -141,19 +133,40 @@ export default {
     },
     getPhotoUrl(...e) {
       // console.log("getPhotoUrl --- " + e);
-      console.log(e);
+      this.photos = e;
+      console.log(photos);
+    },
+    sendMessage() {
+      this.$http
+        .post({ BASE_URL }.BASE_URL + "api/message/sendMessage", {
+          content: this.message,
+          photos: this.photos
+        })
+        .then(res => {
+          if (res.body.data == true) {
+            this.$message({
+              message: "发表成功",
+              type: "success"
+            });
+            this.cleanForm();
+          }
+        });
+    },
+    cleanForm() {
+      this.photos = "";
+      this.message = "";
     }
   },
   created() {
     this.$http
-      .get("http://10.102.174.142:8888/api/message")
+      .get({ BASE_URL }.BASE_URL + "api/message")
       .then(res => {
         this.mydata = res.body.data;
         console.log(this.mydata);
       })
       .catch(res => {});
     this.$http
-      .get("http://10.102.174.142:8888/api/user/firendList")
+      .get({ BASE_URL }.BASE_URL + "api/user/friendList")
       .then(res => {
         this.members = res.body.data;
         console.log(this.members);

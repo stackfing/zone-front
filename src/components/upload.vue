@@ -38,24 +38,19 @@
 </style>
 
 <template>
-    <div style="padding-top:20px;">
-        <el-upload
-            action="http://localhost:8888/photos/upload"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            @click="imgClick"
-            :on-success="successMethod"
-            :on-remove="handleRemove">
-            <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
-        <router-view/>
-    </div>
+  <div style="padding-top:20px;">
+    <el-upload action='http://localhost:8080/api/api/photos/upload' list-type="picture-card" :on-preview="handlePictureCardPreview" @click="imgClick" :on-success="successMethod" :on-remove="handleRemove">
+      <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
+    <router-view/>
+  </div>
 </template>
 
 <script>
+import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
@@ -66,11 +61,9 @@ export default {
   },
   methods: {
     inputblur() {
-      console.log("sdf");
       this.isCl = false;
     },
     inputfocus() {
-      console.log("sddsds");
       this.isCl = true;
     },
     handleRemove(file, fileList) {
@@ -79,17 +72,16 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-      this.$emit("getURL",file.url);
+      this.$emit("getURL", file.url);
     },
-    imgClick(){
-      this.$emit("getURL",this.dialogImageUrl);
+    imgClick() {
+      this.$emit("getURL", this.dialogImageUrl);
     },
     successMethod(response, file, fileList) {
-      console.log("文件上次成功" + response.data)
-      this.$emit("getURL", response.data)
+      console.log("文件上次成功" + response.data);
+      this.$emit("getURL", response.data);
     }
   },
-  mounted() {
-    }
+  mounted() {}
 };
 </script>

@@ -29,10 +29,10 @@
 
 <template>
   <div class="setting_container">
-      <div class="title">
-        <p>系统设置</p>
-      </div>
-      <div class="hr"></div>
+    <div class="title">
+      <p>设置</p>
+    </div>
+    <div class="hr"></div>
   </div>
 </template>
 

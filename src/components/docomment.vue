@@ -44,14 +44,14 @@
 <template>
   <div class="comment">
     <div class="comment_left" :class="{'comment_left_active':!animate_false}">
-        <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData" placeholder="评论"></el-input>
+      <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData" placeholder="评论"></el-input>
     </div>
     <div class="comment_right">
-        <transition name="fade">
-            <el-button type="primary" v-show="animate_false" plain>评论</el-button>
-        </transition>
+      <transition name="fade">
+        <el-button type="primary" v-show="animate_false" plain>评论</el-button>
+      </transition>
     </div>
-   </div>
+  </div>
 </template>
 
 <script>

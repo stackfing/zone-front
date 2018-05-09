@@ -16,10 +16,11 @@ Vue.use(ElementUI);
 Vue.prototype.HOST = '/api'
 
 Vue.http.interceptors.push((request, next) => {
- request.headers.set("jwt", localStorage.getItem("jwt"))
+ request.headers.set("token", localStorage.getItem("token"))
 
   next(function (response) {
     if (response.status == 403) {
+      console.log()
       this.$router.push('/login')
     }
     return response;
@@ -28,14 +29,13 @@ Vue.http.interceptors.push((request, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiredAuths) { // 判断该路由是否需要登录权限
-    if (localStorage.getItem("jwt") != null) {
+    if (localStorage.getItem("token") != null) {
       next();
     }
     else {
-      console.log('asdfs')
       next({
         path: '/login',
-        // query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        query: { redirect: to.fullPath } // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
     }
   }

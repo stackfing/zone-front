@@ -44,53 +44,52 @@
     flex: 1;  
 } */
 .header {
-    width: 100%;
-    background-color: red;
-    height: 3rem;
-    
+  width: 100%;
+  background-color: red;
+  height: 3rem;
 }
 .body {
-    width: 100%;
-    height: 3rem;
-    display: flex;
-    flex-direction: row;
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
 }
 .left {
-    display: flex;
-    flex: 1;
-    background-color: aqua;
+  display: flex;
+  flex: 1;
+  background-color: aqua;
 }
 .center {
-    display: flex;
-    flex: 1;
-    background-color: rgb(101, 243, 58);
+  display: flex;
+  flex: 1;
+  background-color: rgb(101, 243, 58);
 }
 .right {
-    display: flex;
-    flex: 1;
-    background-color: rgb(218, 174, 31);
+  display: flex;
+  flex: 1;
+  background-color: rgb(218, 174, 31);
 }
 </style>
 
 <template>
- 
-  <div class="container">
-      <div class="header">
-          
-      </div>
-      <div class="body">
-          <div class="left">
-            sdf
-          </div>
-          <div class="center">
-sdf
-          </div>
-          <div class="right">
-sfd
-          </div>
-      </div>
-  </div>
-   <!-- <div class="container">
+
+    <div class="container">
+        <div class="header">
+
+        </div>
+        <div class="body">
+            <div class="left">
+                sdf
+            </div>
+            <div class="center">
+                sdf
+            </div>
+            <div class="right">
+                sfd
+            </div>
+        </div>
+    </div>
+    <!-- <div class="container">
       <div class="header">
 
       </div>
@@ -114,9 +113,7 @@ sfd
 <script>
 export default {
   data() {
-      return {
-
-      }
+    return {};
   }
-}
+};
 </script>

@@ -132,24 +132,23 @@ img {
 .icon-op-praise {
   background-image: url(../assets/jpgs.png);
   /* background-position: -458px -260px; */
-  background-position: -458px -286px ;
+  background-position: -458px -286px;
 }
 .icon-op-praise-hidden {
   background-image: url(../assets/jpgs.png);
   /* background-position: -458px -260px; */
-  background-position: -458px -260px ;
+  background-position: -458px -260px;
 }
-.img_2{
-  
+.img_2 {
 }
-.img_one{
-  margin-left: 5%;;
+.img_one {
+  margin-left: 5%;
 }
-.img_two{
+.img_two {
   margin-left: -2px;
   /* margin:  auto auto; */
 }
-.img_more{
+.img_more {
   margin-left: 25px;
 }
 </style>
@@ -157,62 +156,65 @@ img {
 <template>
   <div class="message">
     <el-card class="box-card">
-    <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix">
         <div class="divcontent">
-            <div class="photo">
-                <img class="a_img" :src="headPhoto"/>
+          <div class="photo">
+            <img class="a_img" :src="headPhoto" />
+          </div>
+          <div class="username_and_time">
+            <div class="b_contant">
+              <span>
+                <a :href="'/user/' + nickName" class="username">{{nickName}}</a>
+              </span>
+              <span class="time">{{createTime|myDate}}</span>
             </div>
-            <div class="username_and_time">
-                <div class="b_contant">
-                    <span><a href="" class="username">{{nickName}}</a></span>
-                    <span class="time">{{createTime|myDate}}</span>
-                </div>
-            </div>
-            <div class="do_message_action">
-                <el-button  style="" type="text">操作</el-button>
-            </div>
+          </div>
+          <div class="do_message_action">
+            <el-button style="" type="text">操作</el-button>
+          </div>
         </div>
-    </div>
-    <div class="content">
-            <p class="content_P">{{content}}</p>
-            <template>
-              <div class="img_one" v-if="images.length==1">
-                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item"/>
-              </div>
-              <div v-else-if="images.length==2">
-                <div class="img_two">
-                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item"/>
-                </div>
-              </div>
-              
-              <div v-else>
-                <div class="img_more">
-                  <img v-img="{ title: 'sadfsadfsfd'}" style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item"/>
-                </div>
-              </div>
-            </template>
-           
-            <div  class="clearfix"> </div>
-    </div>
-    <div class="star" v-show="showStar">
-        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;<span>{{starnum}} 人觉得很赞</span>
+      </div>
+      <div class="content">
+        <p class="content_P">{{content}}</p>
+        <template>
+          <div class="img_one" v-if="images.length==1">
+            <img v-img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item" />
+          </div>
+          <div v-else-if="images.length==2">
+            <div class="img_two">
+              <img v-img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item" />
+            </div>
+          </div>
+
+          <div v-else>
+            <div class="img_more">
+              <img v-img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item" />
+            </div>
+          </div>
+        </template>
+
+        <div class="clearfix"> </div>
+      </div>
+      <div class="star" v-show="showStar">
+        <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;
+        <span>{{starnum}} 人觉得很赞</span>
         <div style="float:right;display:inline">
           <i class="fui-icon" @click="star" :class="starE?'icon-op-praise':'icon-op-praise-hidden'" style="margin-top:-3px;"></i>
         </div>
         <div class="clearfix"></div>
-    </div>
-    <template v-for="item in commentList">
-      
-      <div class="comment_item">
-        <div class="comment_item_photo">
-            {{item.nickName}}
-        </div>
-        <div class="comment_item_content">
-            {{item.comment}}
-        </div>
       </div>
-    </template>
-    <docomment :friendList="friendList"></docomment>
+      <template v-for="item in commentList">
+
+        <div class="comment_item">
+          <div class="comment_item_photo">
+            {{item.nickName}}
+          </div>
+          <div class="comment_item_content">
+            {{item.comment}}
+          </div>
+        </div>
+      </template>
+      <docomment :friendList="friendList"></docomment>
     </el-card>
 
     <!-- <el-card class="box-card">
@@ -223,7 +225,7 @@ img {
     </div>
     <div>sadfsafd</div>
     </el-card> -->
-    
+
   </div>
 </template>
 
@@ -232,7 +234,7 @@ img {
 import docomment from "@/components/docomment";
 import Vue from "vue";
 // import Vue from 'vue';
-import VueImg from 'v-img';
+import VueImg from "v-img";
 
 Vue.use(VueImg);
 Vue.filter("myDate", function(time) {
@@ -259,17 +261,40 @@ Vue.filter("myDate", function(time) {
   var seconds = Math.round(leave3 / 1000);
   // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
   var oDate = new Date(time);
- 
-  if(days == 0) {
-    return "今天" + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
-  } 
-  if(days==1) {
-    return "昨天" + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
-  } 
-  if(days!=1||days!=0){
-    return oDate.getMonth() + "-" + oDate.getDate() + "  " + oDate.getHours()+":"+oDate.getMinutes()+":"+oDate.getSeconds();
-  }
 
+  if (days == 0) {
+    return (
+      "今天" +
+      oDate.getHours() +
+      ":" +
+      oDate.getMinutes() +
+      ":" +
+      oDate.getSeconds()
+    );
+  }
+  if (days == 1) {
+    return (
+      "昨天" +
+      oDate.getHours() +
+      ":" +
+      oDate.getMinutes() +
+      ":" +
+      oDate.getSeconds()
+    );
+  }
+  if (days != 1 || days != 0) {
+    return (
+      oDate.getMonth() +
+      "-" +
+      oDate.getDate() +
+      "  " +
+      oDate.getHours() +
+      ":" +
+      oDate.getMinutes() +
+      ":" +
+      oDate.getSeconds()
+    );
+  }
 });
 
 export default {
@@ -277,7 +302,7 @@ export default {
     return {
       showStar: true,
       commentData: "",
-      starE:false
+      starE: false
     };
   },
   components: {
@@ -291,12 +316,12 @@ export default {
     "content",
     "starnum",
     "images",
-    "commentList",
-    "friendList"
+    "commentList"
+    // "friendList"
   ],
   mounted() {
-    console.log(this.images)
-    console.log(this.friendList)
+    console.log(this.images);
+    console.log(this.friendList);
   },
   methods: {
     clickphotos(url) {
@@ -304,10 +329,10 @@ export default {
     },
     star() {
       this.starE = !this.starE;
-      if(this.starE == true) {
-        this.starnum ++;
+      if (this.starE == true) {
+        this.starnum++;
       } else {
-        this.starnum --;
+        this.starnum--;
       }
     }
   }
