@@ -215,9 +215,9 @@
     </div>
     <div class="body">
       <div class="body_top">
-        <div class="head_avatar">
-          <img class="head_avatar_img" width="128px" height="128px" src="//qlogo1.store.qq.com/qzone/33404292/33404292/100?1525442215" />
-        </div>
+        <!-- <div class="head_avatar">
+          <img class="head_avatar_img" width="128px" height="128px" src="../assets/smiler.png" />
+        </div> -->
       </div>
       <div class="body_bottom">
         <div class="body_container">

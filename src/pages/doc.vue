@@ -156,11 +156,11 @@ p {
           <li title="Docs ">
             <a href="#">Docs</a>
           </li>
-          <li title="WTFPL">
+          <!-- <li title="WTFPL">
             <a href="#license">License</a>
-          </li>
+          </li> -->
           <li title="GitHub">
-            <a href="http://github.com/imfing">GitHub</a>
+            <a href="http://github.com/imfing/zone-front">GitHub</a>
           </li>
           <li title="About">
             <a href="http://www.stackfing.com/about">About</a>
@@ -210,8 +210,14 @@ p {
       <p>server
         <a href="http://118.89.41.65:3000/stackfing/zone">http://118.89.41.65:3000/stackfing/zone</a>
       </p>
-      <p>Github not yet open</p>
-      <h1 name="license">License</h1>
+      <p>Github</p>
+      <p>front
+        <a href="http://118.89.41.65:3000/stackfing/zone-front">http://118.89.41.65:3000/stackfing/zone-front</a>
+      </p>
+      <p>server
+      </p>
+      <h3>not open yet</h3>
+      <!-- <h1 name="license">License</h1>
       <div class="hr"></div>
       WTFPL
       <br>
@@ -227,7 +233,7 @@ as the name is changed.
   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
  0. You just DO WHAT THE FUCK YOU WANT TO.</span>
-</pre>
+</pre> -->
     </div>
 
     <div class="footer">
@@ -237,5 +243,4 @@ as the name is changed.
 </template>
 
 <style>
-
 </style>

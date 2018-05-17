@@ -2,9 +2,16 @@
 
 > zone front
 
-# Todo List
+zone 是一个模仿 QQ 空间的项目，使用 vue 全家桶，此为前端项目，后端项目见另一个仓库
 
-注册发送邮件后直接跳转到注册成功页面
+![首页](./docs/index.png)
+
+![首页移动版](./docs/index_mobile1.png)
+
+![设置](./docs/settings.png)
+
+![关于](./docs/about.png)
+
 
 ## Build Setup
 

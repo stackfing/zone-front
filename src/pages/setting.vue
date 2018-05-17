@@ -80,8 +80,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        nickname: "托尼",
-        email: "33404292@qq.com",
+        nickname: "stackfing",
+        email: "stackfing@gmail.com",
         sex: "男",
         zoneopen: "1",
         findme: "2"

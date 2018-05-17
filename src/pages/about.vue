@@ -265,13 +265,11 @@ body {
         </center>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 import VueQrcode from "@xkeshi/vue-qrcode";
-let Base64 = require('js-base64').Base64;
 export default {
   data() {
     return {

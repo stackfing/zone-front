@@ -40,7 +40,6 @@
   opacity: 0;
 }
 </style>
-
 <template>
   <div class="comment">
     <div class="comment_left" :class="{'comment_left_active':!animate_false}">
