@@ -261,7 +261,7 @@ body {
       <!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
       <div class="qrcode_container">
         <center>
-          <vue-qrcode :value=value :options="{size:100}"></vue-qrcode>
+          <vue-qrcode :value=qrvalue :options="{size:100}"></vue-qrcode>
         </center>
       </div>
     </div>
@@ -271,12 +271,13 @@ body {
 
 <script>
 import VueQrcode from "@xkeshi/vue-qrcode";
+let Base64 = require('js-base64').Base64;
 export default {
   data() {
     return {
       test: "粉我",
       followed: false,
-      value: "http://www.stackfing.com",
+      qrvalue: "http://www.stackfing.com",
       friendSize: 0
     };
   },
@@ -287,11 +288,12 @@ export default {
   methods: {
     followMe() {
       this.followed = true;
-    }
+    },
   },
   mounted() {
     // console.log(this.userInfo)
     this.friendSize = this.$store.state.friendInfo.length
+    this.qrvalue = window.location.protocol + "//" + window.location.host + "/user/" + encodeURI(this.$store.state.userInfo.nickname)
   }
 };
 </script>

@@ -4,7 +4,7 @@ Vue.use(vuex);
 
 export default new vuex.Store({
     state: {
-        nickname: 'afds',
+        nickname: null,
         age: 12
     },
     mutations: {

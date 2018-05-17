@@ -64,7 +64,8 @@
   background-position: center top;
   background-attachment: fixed;
   background-color: #e9e9e9;
-  padding-top: 200px;
+  padding-top: 50px;
+  padding-top: 250px;
   display: flex;
   justify-content: center;
   min-width: 1160px;
@@ -159,6 +160,31 @@
 .friend_li:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
+.body_top {
+  /* height: 200px; */
+  padding-top: 40px;
+  display: flex;
+  /* background-color: red; */
+}
+.body_bottom {
+  /* height: 200px; */
+  flex-direction: column;
+  display: flex;
+}
+.head_avatar {
+  width: 100px;
+  height: 100px;
+  /* background-color: gray; */
+  position: absolute;
+  left: 300px;
+  top: 200px;
+  border-radius: 3px;
+  border: #d9d9d9 1px solid;
+}
+.head_avatar_img {
+  border-radius: 2px;
+  border: #fff 3px solid;
+}
 </style>
 
 <template>
@@ -169,8 +195,8 @@
       </div>
       <!-- <router-link to="/exit" style="float:right">退出</router-link> -->
       <!-- <a href="javascript:void(0)" style="float:right" @click="exit">退出</a> -->
-      <el-dropdown trigger="click" style="float:right"  @command="handleTopCommand">
-        <span class="el-dropdown-link">
+      <el-dropdown trigger="click" style="float:right" @command="handleTopCommand">
+        <span class="el-dropdown-link" style="line-height:40px">
           我的
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -179,7 +205,7 @@
             <!-- <router-link to="/related">查看评论</router-link> -->评论
           </el-dropdown-item>
           <el-dropdown-item command="related">我的消息</el-dropdown-item>
-          <el-dropdown-item command="settings">设置</el-dropdown-item>          
+          <el-dropdown-item command="settings">设置</el-dropdown-item>
           <el-dropdown-item divided>
             <span @click="exit">注销</span>
           </el-dropdown-item>
@@ -188,55 +214,62 @@
       <div class="clearfix"></div>
     </div>
     <div class="body">
-      <div class="body_container">
-        <!-- <div style="width:200px;height:200px;background-color:red;"></div> -->
-        <div class="left_slide_container slide_container">
-          <ul class="action_list">
-            <router-link tag="li" to="/trend">朋友动态</router-link>
-            <router-link tag="li" to="/related" @click.native="cancelBadge">
-              <el-badge :value="12" :max="3" :hidden="badgeHidden">
-                <!-- <el-button size="small">评论</el-button> -->
-                <span>与我相关</span>
-              </el-badge>
-            </router-link>
-            <router-link tag="li" to="/find">
-              <el-badge is-dot class="item">发现世界</el-badge>
-            </router-link>
-            <router-link tag="li" to="/settings">设置</router-link>
-            <router-link tag="li" to="/about">关于</router-link>
-            <router-link tag="li" to="/doc">文档</router-link>
-          </ul>
+      <div class="body_top">
+        <div class="head_avatar">
+          <img class="head_avatar_img" width="128px" height="128px" src="//qlogo1.store.qq.com/qzone/33404292/33404292/100?1525442215" />
         </div>
-        <div class="center_container">
-          <transition mode="out-in" name="fade">
-            <router-view></router-view>
-          </transition>
-        </div>
-        <div class="right_slide_container slide_container">
-          <div class="friend_list_header">
-            <center>好友列表</center>
-          </div>
-          <div class="friend_list_body">
-            <ul>
-              <!-- <router-link tag="li" to="/trend"></router-link> -->
-              <div v-for="item in $store.state.friendInfo">
-                <router-link tag="li" :to="{path: '/user/' + item.nickname}" class="friend_li">
-                  <div class="friend_list_item">
-                    <div class="friend_list_item_left">
-                      <img :src='item.avatar' class="friend_list_item_photo" />
-                    </div>
-                    <div class="friend_list_item_right">
-                      <div class="friend_list_item_nickname">
-                        <span>{{item.nickname}}</span>
-                      </div>
-                      <div class="friend_list_item_personsign">
-                        <span style="overflow:hidden;">个性签名即将上线，敬请期待!</span>
-                      </div>
-                    </div>
-                  </div>
-                </router-link>
-              </div>
+      </div>
+      <div class="body_bottom">
+        <div class="body_container">
+          <!-- <div style="width:200px;height:200px;background-color:red;"></div> -->
+          <div class="left_slide_container slide_container">
+            <ul class="action_list">
+              <router-link tag="li" to="/trend">朋友动态</router-link>
+              <router-link tag="li" to="/related" @click.native="cancelBadge">
+                <el-badge :value="12" :max="3" :hidden="badgeHidden">
+                  <!-- <el-button size="small">评论</el-button> -->
+                  <span>与我相关</span>
+                </el-badge>
+              </router-link>
+              <router-link tag="li" to="/find">
+                <el-badge is-dot class="item">发现世界</el-badge>
+              </router-link>
+              <router-link tag="li" to="/settings">设置</router-link>
+              <router-link tag="li" to="/about">关于</router-link>
+              <router-link tag="li" to="/doc">文档</router-link>
             </ul>
+          </div>
+          <div class="center_container">
+            <transition mode="out-in" name="fade">
+              <router-view></router-view>
+            </transition>
+          </div>
+          <div class="right_slide_container slide_container">
+            <div class="friend_list_header">
+              <center>好友列表</center>
+            </div>
+            <div class="friend_list_body">
+              <ul>
+                <!-- <router-link tag="li" to="/trend"></router-link> -->
+                <div v-for="item in $store.state.friendInfo">
+                  <router-link tag="li" :to="{path: '/user/' + item.nickname}" class="friend_li">
+                    <div class="friend_list_item">
+                      <div class="friend_list_item_left">
+                        <img :src='item.avatar' class="friend_list_item_photo" />
+                      </div>
+                      <div class="friend_list_item_right">
+                        <div class="friend_list_item_nickname">
+                          <span>{{item.nickname}}</span>
+                        </div>
+                        <div class="friend_list_item_personsign">
+                          <span style="overflow:hidden;">个性签名即将上线，敬请期待!</span>
+                        </div>
+                      </div>
+                    </div>
+                  </router-link>
+                </div>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -324,7 +357,7 @@ export default {
       this.badgeHidden = true;
     },
     handleTopCommand(command) {
-      this.$router.push({path: '/' + command})
+      this.$router.push({ path: "/" + command });
     }
   },
   created() {

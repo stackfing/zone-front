@@ -20,10 +20,10 @@ Vue.http.interceptors.push((request, next) => {
  request.headers.set("token", localStorage.getItem("token"))
 
   next(function (response) {
-    if (response.status == 403) {
-      console.log()
-      this.$router.push('/login')
-    }
+    // if (response.status == 403) {
+    //   console.log()
+    //   this.$router.push('/login')
+    // }
     return response;
   });
 })

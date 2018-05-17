@@ -48,23 +48,22 @@
 }
 </style>
 
-
 <template>
   <div class="">
     <div class="clearfix"></div>
-    <!-- <component :is="dass" keep-alive></component> -->
     <div>
       <div class="send_message_box">
+
         <div class="grid-content bg-purple">
           <center>
-            <span>写下你现在的心情吧</span>
+            <span style="line-height:36px">写下你现在的心情吧</span>
           </center>
         </div>
 
-        <at-ta :members="$store.state.friendInfo" name-key="name">
+        <at-ta :members="members" name-key="name">
           <template slot="item" slot-scope="s">
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
-            <span v-text="s.item.name"></span>
+            <span v-text="s.item.nickname"></span>
           </template>
           <textarea v-model="message" @click="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
         </at-ta>
@@ -79,10 +78,11 @@
             </div>
           </div>
         </transition>
+
         <div class="clearfix"></div>
 
         <div v-for="item of mydata">
-          <message :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          <message @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
           <!-- <message :messageId="1"
           :createTime=""
           :avatar="1"
@@ -103,7 +103,10 @@ import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
-      // members: [{name: 'zs', avatar: 'asfd'}],
+      members: [
+        { name: "zs", avatar: "" },
+        { name: "asfdasfd", avatar: "asfasdf" }
+      ],
       message: "",
       submitshow: false,
       mydata: [],
@@ -122,9 +125,9 @@ export default {
       if (this.message === "") {
         this.submitshow = true;
         this.$message({
-              message: "请输入内容",
-              type: "warning"
-            });
+          message: "请输入内容",
+          type: "warning"
+        });
         return false;
       } else {
         this.submitshow = false;
@@ -163,26 +166,34 @@ export default {
       this.photos = "";
       this.message = "";
     },
-    cls() {
-      var info = { name: "zs" };
-      this.$store.commit("getUserInfo");
+    shows(data) {
+      // this.$http
+      //   .post("/api/message/star?tag=1&id=" + data)
+      //   .then(res => {
+      //     if (res.body.data == true) {
+      //       // this.starnum++;
+      //       // this.starE = !this.starE;
+      //     }
+      //   });
     }
   },
   created() {
-    // this.members = this.$store.state.friendInfo
-    // console.log(this.$store.state.friendInfo)
-    this.$http
-      .get({ BASE_URL }.BASE_URL + "/api/message")
-      .then(res => {
-        this.mydata = res.body.data;
-      })
-      .catch(res => {});
-    this.$http
-      .get({ BASE_URL }.BASE_URL + "/api/user/friendList")
-      .then(res => {
-        this.members = res.body.data;
-      })
-      .catch(res => {});
+    if (this.$store.state.userInfo != null) {
+      this.$http
+        .get({ BASE_URL }.BASE_URL + "/api/message")
+        .then(res => {
+          this.mydata = res.body.data;
+        })
+        .catch(res => {});
+      this.$http
+        .get({ BASE_URL }.BASE_URL + "/api/user/friendList")
+        .then(res => {
+          if (res.ok == true) {
+            this.members = res.body.data;
+          }
+        })
+        .catch(res => {});
+    }
   }
 };
 </script>

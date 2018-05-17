@@ -50,10 +50,7 @@ a:visited {
   min-height: 80px;
 }
 .photo {
-  flex: 1;
-  /* width: 40px; */
   min-height: 80px;
-  /* background-color: aquamarine; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,9 +62,7 @@ a:visited {
 }
 .username_and_time {
   flex: 8;
-  /* width: 40px; */
   min-height: 80px;
-  /* background-color: rgb(148, 255, 127); */
   display: flex;
   margin-left: 15px;
   justify-content: flex-start;
@@ -147,15 +142,11 @@ img {
   /* margin-left: 5%; */
 }
 .img_two {
-  /* margin-left: -2px; */
-  /* margin:  auto auto; */
 }
 .img_more {
-  /* margin-left: 25px; */
 }
 .comment_item {
   margin-top: 10px;
-  padding-left: 10px;
 }
 .comment_item_content {
   font-size: 14px;
@@ -183,7 +174,7 @@ img {
           </div>
           <div class="do_message_action">
             <el-dropdown @command="handleCommand" trigger="click">
-              <el-button style="" type="text">操作</el-button>
+              <el-button style="" type="text" v-if="$store.state.userInfo.nickname != null">操作</el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="share">分享</el-dropdown-item>
                 <el-dropdown-item command="collect">收藏</el-dropdown-item>
@@ -218,7 +209,7 @@ img {
 
           <div class="img_more" v-else-if="images.length>9">
             <template v-for="(item,index) in images">
-              <img v-img style="max-width:32.5555%;padding:2px;" :src="item" v-if="index <= 7" />
+              <img v-img style="max-width:32%;padding:2px;" :src="item" v-if="index <= 7" />
             </template>
             <img style="max-width:30%;padding:2px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526534584432&di=cdf8cc286ce2068a9d35efc317be62b5&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180508%2Fdbd23d6048a6425bbc520ff1eeec321b.jpeg" />
           </div>
@@ -228,9 +219,10 @@ img {
       </div>
       <div class="star" v-show="showStar">
         <span class="el-icon-star-on" style="font-size:15px;color:#409EFF"></span>&nbsp;
-        <span>{{starnum}} 人觉得很赞</span>
+        <span v-if="starnum > 0">{{starnum}} 人觉得很赞</span>
+        <span v-else-if="starnum == 0" style="color: gray">暂时没人点赞哦，快给好友点第一个赞吧！</span>
         <div style="float:right;display:inline">
-          <i class="fui-icon" @click="star" :class="starE?'icon-op-praise':'icon-op-praise-hidden'" style="margin-top:-3px;"></i>
+          <i class="fui-icon" @click="star" v-if="$store.state.userInfo.nickname != null" :class="starE?'icon-op-praise':'icon-op-praise-hidden'" style="margin-top:-3px;"></i>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -239,12 +231,13 @@ img {
           <div class="comment_item_photo">
           </div>
           <div class="comment_item_content">
-            <a href="/user/">{{item.user.nickName}}</a> :
+            <a :href="'/user/' + item.user.nickName" class="username">{{item.user.nickName}}</a>  :
+            <!-- <a href="/user/">{{item.user.nickName}}</a> : -->
             <span>{{item.comment}}</span>
           </div>
         </div>
       </div>
-      <docomment :friendList="friendList" :messageId="messageId"></docomment>
+      <docomment :friendList="friendList" :messageId="messageId" v-if="$store.state.userInfo.nickname != null"></docomment>
     </el-card>
 
     <!-- <el-card class="box-card">
@@ -288,42 +281,67 @@ Vue.filter("myDate", function(time) {
   //计算相差秒数
   var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
   var seconds = Math.round(leave3 / 1000);
-  // alert(" 相差 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒")
   var oDate = new Date(time);
 
+  var Y = oDate.getFullYear() + "-";
+  var M =
+    (oDate.getMonth() + 1 < 10
+      ? "0" + (oDate.getMonth() + 1)
+      : oDate.getMonth() + 1) + "-";
+  var D =
+    (oDate.getDate() < 10 ? "0" + oDate.getDate() : oDate.getDate()) + " ";
+  var h =
+    (oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours()) + ":";
+  var m =
+    (oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes()) +
+    ":";
+  var s =
+    oDate.getSeconds() < 10 ? "0" + oDate.getSeconds() : oDate.getSeconds();
+
   if (days == 0) {
-    return (
-      "今天" +
-      oDate.getHours() +
-      ":" +
-      oDate.getMinutes() +
-      ":" +
-      oDate.getSeconds()
-    );
+    return "今天  " + h + m + s;
   }
+
   if (days == 1) {
-    return (
-      "昨天" +
-      oDate.getHours() +
-      ":" +
-      oDate.getMinutes() +
-      ":" +
-      oDate.getSeconds()
-    );
+    return "昨天" + h + m + s;
   }
   if (days != 1 || days != 0) {
-    return (
-      oDate.getMonth() +
-      "-" +
-      oDate.getDate() +
-      "  " +
-      oDate.getHours() +
-      ":" +
-      oDate.getMinutes() +
-      ":" +
-      oDate.getSeconds()
-    );
+    return M + D + h + m + s;
   }
+
+  // if (days == 0) {
+  //   return (
+  //     "今天" +
+  //     oDate.getHours() +
+  //     ":" +
+  //     oDate.getMinutes() +
+  //     ":" +
+  //     oDate.getSeconds()
+  //   );
+  // }
+  // if (days == 1) {
+  //   return (
+  //     "昨天" +
+  //     oDate.getHours() +
+  //     ":" +
+  //     oDate.getMinutes() +
+  //     ":" +
+  //     oDate.getSeconds()
+  //   );
+  // }
+  // if (days != 1 || days != 0) {
+  //   return (
+  //     oDate.getMonth() +
+  //     "-" +
+  //     oDate.getDate() +
+  //     "  " +
+  //     oDate.getHours() +
+  //     ":" +
+  //     oDate.getMinutes() +
+  //     ":" +
+  //     oDate.getSeconds()
+  //   );
+  // }
 });
 
 export default {
@@ -331,7 +349,8 @@ export default {
     return {
       showStar: true,
       commentData: "",
-      starE: false
+      starE: false,
+      friendList: []
     };
   },
   components: {
@@ -346,17 +365,16 @@ export default {
     "content",
     "starnum",
     "images",
-    "commentList",
-    "friendList"
+    "commentList"
+    // "friendList"
   ],
-  mounted() {
-    console.log(this.messageId + "--------");
-  },
+  mounted() {},
   methods: {
     clickphotos(url) {
       alert(url);
     },
     star() {
+      this.$emit("sendmsg", this.messageId);
       if (this.starE == false) {
         this.$http
           .post("/api/message/star?tag=1&id=" + this.messageId)
@@ -379,6 +397,7 @@ export default {
       }
     },
     handleCommand(command) {
+      alert(this.$store.state.userInfo);
       this.$message("click on item " + command);
     }
   }
