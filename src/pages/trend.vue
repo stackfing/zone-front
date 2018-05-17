@@ -61,7 +61,7 @@
           </center>
         </div>
 
-        <at-ta :members="members" name-key="name">
+        <at-ta :members="$store.state.friendInfo" name-key="name">
           <template slot="item" slot-scope="s">
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
             <span v-text="s.item.name"></span>
@@ -82,7 +82,13 @@
         <div class="clearfix"></div>
 
         <div v-for="item of mydata">
-          <message :createTime=item.createTime :headPhoto=item.headphoto :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          <message :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          <!-- <message :messageId="1"
+          :createTime=""
+          :avatar="1"
+          :centent="123"
+          :nickName=""
+          :images='' :starnum='1' :commentList='' :friendList=''></message> -->
         </div>
       </div>
     </div>
@@ -90,7 +96,6 @@
 </template>
 
 <script>
-import sideBar from "@/components/sideBar";
 import message from "@/components/message";
 import upload from "@/components/upload";
 import AtTa from "vue-at/dist/vue-at-textarea";
@@ -98,7 +103,7 @@ import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
-      members: [],
+      // members: [{name: 'zs', avatar: 'asfd'}],
       message: "",
       submitshow: false,
       mydata: [],
@@ -108,7 +113,6 @@ export default {
     };
   },
   components: {
-    sideBar,
     message,
     AtTa,
     upload
@@ -117,7 +121,10 @@ export default {
     submitmessage() {
       if (this.message === "") {
         this.submitshow = true;
-        console.log("请输入内容");
+        this.$message({
+              message: "请输入内容",
+              type: "warning"
+            });
         return false;
       } else {
         this.submitshow = false;
@@ -155,21 +162,25 @@ export default {
     cleanForm() {
       this.photos = "";
       this.message = "";
+    },
+    cls() {
+      var info = { name: "zs" };
+      this.$store.commit("getUserInfo");
     }
   },
   created() {
+    // this.members = this.$store.state.friendInfo
+    // console.log(this.$store.state.friendInfo)
     this.$http
-      .get({ BASE_URL }.BASE_URL + "api/message")
+      .get({ BASE_URL }.BASE_URL + "/api/message")
       .then(res => {
         this.mydata = res.body.data;
-        console.log(this.mydata);
       })
       .catch(res => {});
     this.$http
-      .get({ BASE_URL }.BASE_URL + "api/user/friendList")
+      .get({ BASE_URL }.BASE_URL + "/api/user/friendList")
       .then(res => {
         this.members = res.body.data;
-        console.log(this.members);
       })
       .catch(res => {});
   }

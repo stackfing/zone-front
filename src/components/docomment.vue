@@ -62,6 +62,7 @@ export default {
       animate_false: false
     };
   },
+  props: ["messageId"],
   methods: {
     inputfocus() {
       this.animate_false = true;
@@ -70,7 +71,22 @@ export default {
       if (this.commentData === "" || this.commentData == null) {
         this.animate_false = false;
       } else {
-        //做ajax请求
+        //提交评论
+        this.$http
+          .post("/api/comment/" + this.messageId + "/send", {
+            id: this.messageId,
+            comment: this.commentData
+          })
+          .then(res => {
+            console.log(res.body.msg);
+            if (res.body.data == true) {
+              this.commentData = "";
+              this.$message({
+                message: "评论成功",
+                type: "success"
+              });
+            }
+          });
       }
     }
   }

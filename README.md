@@ -2,6 +2,10 @@
 
 > zone front
 
+# Todo List
+
+注册发送邮件后直接跳转到注册成功页面
+
 ## Build Setup
 
 ``` bash

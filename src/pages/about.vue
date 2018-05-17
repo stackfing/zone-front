@@ -126,7 +126,8 @@ body {
   padding: 0;
 }
 .data li {
-  width: 32%;
+  /* width: 32%; */
+  width: 48%;
   text-align: center;
   display: inline-block;
   font-size: 1.5em;
@@ -228,11 +229,12 @@ body {
       <div class="bio">
         <img src="../assets/up.jpg" alt="background" class="bg">
         <div class="desc">
-          <h3>@Richer</h3>
+          <h3>@{{$store.state.userInfo.nickname}}</h3>
           <p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
         </div>
       </div>
       <div class="avatarcontainer">
+        <!-- <img :src="$store.state.userInfo.avatar" alt="avatar" class="avatar">         -->
         <img src="../assets/photo.jpg" alt="avatar" class="avatar">
         <div class="hover">
           <div class="icon-twitter"></div>
@@ -244,16 +246,16 @@ body {
         <ul>
           <li>
             1122
-            <span>帖子</span>
+            <span>日记</span>
           </li>
           <li>
-            62
+            {{friendSize}}
             <span>朋友</span>
           </li>
-          <li>
+          <!-- <li>
             20
             <span>关注</span>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
@@ -274,18 +276,22 @@ export default {
     return {
       test: "粉我",
       followed: false,
-      value: "http://www.stackfing.com"
+      value: "http://www.stackfing.com",
+      friendSize: 0
     };
   },
+  props: ['userInfo'],
   components: {
     VueQrcode
   },
   methods: {
     followMe() {
       this.followed = true;
-      console.log("asdasd");
     }
   },
-  mounted() {}
+  mounted() {
+    // console.log(this.userInfo)
+    this.friendSize = this.$store.state.friendInfo.length
+  }
 };
 </script>

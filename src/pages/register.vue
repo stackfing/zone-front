@@ -23,21 +23,21 @@
       <el-step title="注册成功"></el-step>
     </el-steps>
     <div v-if="active == 0">
-      <el-form class="form_box" :model="form">
+      <el-form class="form_box" label-width="100px" :rules="rules" :model="form" label-position="right">
         <span>请填写您的基本信息</span>
-        <el-form-item label="用户名">
+        <el-form-item label="用户名" prop="account">
           <el-input v-model="form.account"></el-input>
         </el-form-item>
-        <el-form-item label="昵称">
+        <el-form-item label="昵称" prop="nickname">
           <el-input v-model="form.nickName"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" type="email"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="form.password" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码">
+        <el-form-item label="确认密码" prop="checkpassword">
           <el-input type="password"></el-input>
         </el-form-item>
         <el-button style="float:right" @click="next">下一步</el-button>
@@ -68,7 +68,24 @@ export default {
       active: 0,
       nickname: "2",
       username: "",
-      form: {}
+      form: {},
+      rules: {
+        account: [{ required: true, trigger: "blur", message: "请输入用户名" }],
+        password: [{ required: true, trigger: "blur", message: "请输入密码" }],
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: "blur"
+          }
+        ],
+        nickname: [{ required: true, trigger: "blur", message: "请输入用户名" }]
+        // nickname: [{ required: true, trigger: "blur", message: "请输入昵称" }],
+        // checkpassword: [
+        //   { required: true, trigger: "blur", message: "密码输入一直" }
+        // ]
+      }
     };
   },
   // props: ['active'],
@@ -90,7 +107,7 @@ export default {
     },
     register() {
       this.$http
-        .post({ BASE_URL }.BASE_URL + "api/user/register", this.form)
+        .post({ BASE_URL }.BASE_URL + "/api/user/register", this.form)
         .then(res => {
           if (res.body.data == true) {
             this.active++;
@@ -100,9 +117,9 @@ export default {
   },
   created() {
     var mid = this.$route.query.mid;
-    if (mid != null || mid != undefined) {
+    if (mid != null && mid != undefined) {
       this.$http
-        .get({ BASE_URL }.BASE_URL + "api/user/register?id=" + mid)
+        .get({ BASE_URL }.BASE_URL + "/api/user/register?id=" + mid)
         .then(res => {
           // console.log(res.body.data == false)
           if (res.body.data == true) {

@@ -3,6 +3,7 @@
   margin-top: 20px;
 }
 a {
+  color: #000000;
   vertical-align: middle;
   text-decoration: none;
 }
@@ -142,14 +143,25 @@ img {
 .img_2 {
 }
 .img_one {
-  margin-left: 5%;
+  margin: 0 auto;
+  /* margin-left: 5%; */
 }
 .img_two {
-  margin-left: -2px;
+  /* margin-left: -2px; */
   /* margin:  auto auto; */
 }
 .img_more {
-  margin-left: 25px;
+  /* margin-left: 25px; */
+}
+.comment_item {
+  margin-top: 10px;
+  padding-left: 10px;
+}
+.comment_item_content {
+  font-size: 14px;
+}
+.comment_item_content span {
+  color: gray;
 }
 </style>
 
@@ -159,7 +171,7 @@ img {
       <div slot="header" class="clearfix">
         <div class="divcontent">
           <div class="photo">
-            <img class="a_img" :src="headPhoto" />
+            <img class="a_img" :src="avatar" />
           </div>
           <div class="username_and_time">
             <div class="b_contant">
@@ -170,26 +182,45 @@ img {
             </div>
           </div>
           <div class="do_message_action">
-            <el-button style="" type="text">操作</el-button>
+            <el-dropdown @command="handleCommand" trigger="click">
+              <el-button style="" type="text">操作</el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="share">分享</el-dropdown-item>
+                <el-dropdown-item command="collect">收藏</el-dropdown-item>
+                <el-dropdown-item command="neverseeit">不再看此动态</el-dropdown-item>
+                <el-dropdown-item command="shield" divided>屏蔽此人</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </div>
         </div>
       </div>
       <div class="content">
         <p class="content_P">{{content}}</p>
-        <template>
+        <template v-if="images != null">
           <div class="img_one" v-if="images.length==1">
-            <img v-img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item" />
+            <!-- <img v-img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item" />
+             -->
+            <img v-img style="max-width:100%" v-for="item in images" :src="item" />
+
           </div>
           <div v-else-if="images.length==2">
             <div class="img_two">
-              <img v-img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item" />
+              <!-- <img v-img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item" /> -->
+              <img v-img style="padding: 3px;max-width:48%" v-for="item in images" :src="item" />
+            </div>
+          </div>
+          <div v-else-if="images.length>=3&&images.leng<=9">
+            <div class="img_more">
+              <!-- <img v-img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item" /> -->
+              <img v-img style="max-width:32%;padding:2px;" v-for="item in images" :src="item" />
             </div>
           </div>
 
-          <div v-else>
-            <div class="img_more">
-              <img v-img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item" />
-            </div>
+          <div class="img_more" v-else-if="images.length>9">
+            <template v-for="(item,index) in images">
+              <img v-img style="max-width:32.5555%;padding:2px;" :src="item" v-if="index <= 7" />
+            </template>
+            <img style="max-width:30%;padding:2px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526534584432&di=cdf8cc286ce2068a9d35efc317be62b5&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180508%2Fdbd23d6048a6425bbc520ff1eeec321b.jpeg" />
           </div>
         </template>
 
@@ -203,18 +234,17 @@ img {
         </div>
         <div class="clearfix"></div>
       </div>
-      <template v-for="item in commentList">
-
+      <div v-for="item in commentList">
         <div class="comment_item">
           <div class="comment_item_photo">
-            {{item.nickName}}
           </div>
           <div class="comment_item_content">
-            {{item.comment}}
+            <a href="/user/">{{item.user.nickName}}</a> :
+            <span>{{item.comment}}</span>
           </div>
         </div>
-      </template>
-      <docomment :friendList="friendList"></docomment>
+      </div>
+      <docomment :friendList="friendList" :messageId="messageId"></docomment>
     </el-card>
 
     <!-- <el-card class="box-card">
@@ -225,7 +255,6 @@ img {
     </div>
     <div>sadfsafd</div>
     </el-card> -->
-
   </div>
 </template>
 
@@ -310,30 +339,47 @@ export default {
     VueImg
   },
   props: [
+    "messageId",
     "nickName",
     "createTime",
-    "headPhoto",
+    "avatar",
     "content",
     "starnum",
     "images",
-    "commentList"
-    // "friendList"
+    "commentList",
+    "friendList"
   ],
   mounted() {
-    console.log(this.images);
-    console.log(this.friendList);
+    console.log(this.messageId + "--------");
   },
   methods: {
     clickphotos(url) {
       alert(url);
     },
     star() {
-      this.starE = !this.starE;
-      if (this.starE == true) {
-        this.starnum++;
+      if (this.starE == false) {
+        this.$http
+          .post("/api/message/star?tag=1&id=" + this.messageId)
+          .then(res => {
+            if (res.body.data == true) {
+              this.starnum++;
+              this.starE = !this.starE;
+            }
+          });
       } else {
-        this.starnum--;
+        this.$http
+          .post("/api/message/star?tag=2&id=" + this.messageId)
+          .then(res => {
+            if (res.body.data == true) {
+              this.starnum--;
+              this.starE = !this.starE;
+            }
+          });
+        // this.starnum--;
       }
+    },
+    handleCommand(command) {
+      this.$message("click on item " + command);
     }
   }
 };

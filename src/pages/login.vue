@@ -17,6 +17,9 @@ a:visited {
   color: #555;
   text-decoration: none;
 }
+#app {
+  /* background-image: url(../assets/login_background.png); */
+}
 </style>
 
 <template>
@@ -42,8 +45,12 @@ a:visited {
     </el-row>
     <el-row>
       <el-col :span="8">
-        <span style="font-size:12px;float:left"><a href="/register">立即注册</a></span>
-        <span style="font-size:12px;float:right"><a href="#">忘了密码？</a></span>
+        <span style="font-size:12px;float:left">
+          <a href="/register">立即注册</a>
+        </span>
+        <span style="font-size:12px;float:right">
+          <a href="#">忘了密码？</a>
+        </span>
         <div class="clearfix"></div>
       </el-col>
     </el-row>
@@ -56,7 +63,7 @@ a:visited {
 </template>
 
 <script>
-import { BASE_URL } from '@/components/api'
+import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
@@ -79,7 +86,7 @@ export default {
       //ajax
 
       this.$http
-        .post({BASE_URL}.BASE_URL + 'api/user/login', {
+        .post({ BASE_URL }.BASE_URL + "/api/user/login", {
           account: account,
           password: password
         })
@@ -87,10 +94,10 @@ export default {
           if (res.status == 200) {
             if (res.body.code == 200) {
               localStorage.setItem("token", res.body.data);
-              if(this.$route.query.redirect == null) {
-                this.$router.replace("/")
+              if (this.$route.query.redirect == null) {
+                this.$router.replace("/");
               } else {
-                this.$router.replace(this.$route.query.redirect);                
+                this.$router.replace(this.$route.query.redirect);
               }
             } else {
               this.$message({
@@ -103,9 +110,20 @@ export default {
     }
   },
   mounted() {
-    console.log()
     if (localStorage.getItem("token") != null) {
-      this.$router.replace("/trend");
+      //如果有token，但是失效或者错误信息，需要与后台比对。
+      this.$http
+        .post("/api/user/checkToken?token=" + localStorage.getItem("token"))
+        .then(res => {
+          if (res.body.data == true) {
+            this.$router.replace("/trend");
+          } else {
+            this.$message({
+              message: "您的信息已经过期，请重新登录",
+              type: "error"
+            });
+          }
+        });
     }
   }
 };

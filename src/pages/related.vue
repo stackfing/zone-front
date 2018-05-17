@@ -1,9 +1,7 @@
 <style scope="scope">
-
 </style>
 
 <template>
-
 </template>
 
 <script>

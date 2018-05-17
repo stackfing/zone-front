@@ -4,28 +4,20 @@
 
 <template>
   <div class="container">
-    <div class="" v-for="item in datas">
-      <message 
-      :createTime=item.createTime 
-      :headPhoto=item.headphoto 
-      :content=item.content 
-      :nickName=item.nickName 
-      :images=item.images 
-      :starnum=item.starnum 
-      :commentList=item.commentList 
-      />
-    </div>
+    <div v-for="item of mydata">
+          <message :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList />
+        </div>
   </div>
 </template>
 
 <script>
 import message from "@/components/message";
-import { BASE_URL } from '@/components/api'
+// import { BASE_URL } from '@/components/api'
 export default {
   data() {
     return {
       nickname: "",
-      datas: {}
+      mydata: {}
     };
   },
   components: {
@@ -37,11 +29,11 @@ export default {
   mounted() {
     this.$http
       .get(
-        {BASE_URL}.BASE_URL + "api/user/detail/" + this.$route.params.nickname
+        "/api/user/detail/" + this.$route.params.nickname
       )
       .then(res => {
         console.log(res.body.data);
-        this.datas = res.body.data;
+        this.mydata = res.body.data;
       });
   }
 };

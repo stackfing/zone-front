@@ -64,7 +64,7 @@
   background-position: center top;
   background-attachment: fixed;
   background-color: #e9e9e9;
-  padding-top: 300px;
+  padding-top: 200px;
   display: flex;
   justify-content: center;
   min-width: 1160px;
@@ -153,30 +153,64 @@
   padding-left: 5px;
   color: gray;
 }
+.el-dropdown-link {
+  cursor: pointer;
+}
+.friend_li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 </style>
 
 <template>
   <div class="container">
     <div class="header">
-      <div></div>
+      <div>
+        <!-- 您好 {{userInfo.nickname}} -->
+      </div>
       <!-- <router-link to="/exit" style="float:right">退出</router-link> -->
-      <a href="javascript:void(0)" style="float:right" @click="exit">退出</a>
+      <!-- <a href="javascript:void(0)" style="float:right" @click="exit">退出</a> -->
+      <el-dropdown trigger="click" style="float:right"  @command="handleTopCommand">
+        <span class="el-dropdown-link">
+          我的
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="related">
+            <!-- <router-link to="/related">查看评论</router-link> -->评论
+          </el-dropdown-item>
+          <el-dropdown-item command="related">我的消息</el-dropdown-item>
+          <el-dropdown-item command="settings">设置</el-dropdown-item>          
+          <el-dropdown-item divided>
+            <span @click="exit">注销</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <div class="clearfix"></div>
     </div>
     <div class="body">
       <div class="body_container">
+        <!-- <div style="width:200px;height:200px;background-color:red;"></div> -->
         <div class="left_slide_container slide_container">
           <ul class="action_list">
             <router-link tag="li" to="/trend">朋友动态</router-link>
-            <router-link tag="li" to="/related">与我相关</router-link>
-            <router-link tag="li" to="/find">发现世界</router-link>
+            <router-link tag="li" to="/related" @click.native="cancelBadge">
+              <el-badge :value="12" :max="3" :hidden="badgeHidden">
+                <!-- <el-button size="small">评论</el-button> -->
+                <span>与我相关</span>
+              </el-badge>
+            </router-link>
+            <router-link tag="li" to="/find">
+              <el-badge is-dot class="item">发现世界</el-badge>
+            </router-link>
             <router-link tag="li" to="/settings">设置</router-link>
-            <router-link tag="li" to="/about">关于我</router-link>
+            <router-link tag="li" to="/about">关于</router-link>
             <router-link tag="li" to="/doc">文档</router-link>
           </ul>
         </div>
         <div class="center_container">
-          <router-view></router-view>
+          <transition mode="out-in" name="fade">
+            <router-view></router-view>
+          </transition>
         </div>
         <div class="right_slide_container slide_container">
           <div class="friend_list_header">
@@ -184,31 +218,30 @@
           </div>
           <div class="friend_list_body">
             <ul>
-              <li v-for="item in friendSlide">
-                <li>
+              <!-- <router-link tag="li" to="/trend"></router-link> -->
+              <div v-for="item in $store.state.friendInfo">
+                <router-link tag="li" :to="{path: '/user/' + item.nickname}" class="friend_li">
                   <div class="friend_list_item">
                     <div class="friend_list_item_left">
-                      <!-- <div class="friend_list_item_photo"> -->
-                      <img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=5aaf6d85a8014c080d3620f76b12696d/d4628535e5dde7112364a3daa6efce1b9d16616c.jpg" class="friend_list_item_photo" />
-                      <!-- </div> -->
+                      <img :src='item.avatar' class="friend_list_item_photo" />
                     </div>
                     <div class="friend_list_item_right">
                       <div class="friend_list_item_nickname">
-                        <span>敏子</span>
+                        <span>{{item.nickname}}</span>
                       </div>
                       <div class="friend_list_item_personsign">
-                        <span>个性签名..........</span>
+                        <span style="overflow:hidden;">个性签名即将上线，敬请期待!</span>
                       </div>
                     </div>
                   </div>
-                </li>
+                </router-link>
+              </div>
             </ul>
           </div>
         </div>
       </div>
     </div>
     <div class="footer">
-
     </div>
   </div>
 </template>
@@ -220,11 +253,14 @@ import register from "@/pages/register";
 import find from "@/pages/find";
 import related from "@/pages/related";
 import doc from "@/pages/doc";
+import userInfo from "../store/userInfo";
 
 export default {
   data() {
     return {
-      comp: "trend"
+      userInfo: {},
+      friendList: {},
+      badgeHidden: false
     };
   },
   components: {
@@ -240,7 +276,60 @@ export default {
     exit() {
       localStorage.removeItem("token");
       this.$router.replace("/login");
+    },
+    getUserInfo() {
+      this.$http.get("/api/user/userInfo").then(res => {
+        if (res.status == 200) {
+          this.userInfo = res.data.data;
+          this.$store.commit("setUserInfo", this.userInfo);
+          if (this.userInfo.status == 0) {
+            this.$message({
+              message: "您的账号还未激活，请验证邮箱以激活账号。",
+              type: "warning"
+            });
+            this.$confirm(
+              "您的账号还未激活，请验证邮箱以激活账号，点击确定将发送激活邮件。",
+              "提示",
+              {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+              }
+            )
+              .then(() => {
+                //请求后台发送邮件
+                this.$message({
+                  type: "success",
+                  message: "我们已经发送激活链接在您的邮箱中，请注意查收!"
+                });
+              })
+              .catch(() => {
+                this.$message({
+                  type: "info",
+                  message: "账号未激活各种功能将受到限制。"
+                });
+              });
+          }
+          //添加用户其他状态
+        }
+      });
+    },
+    getFriendList() {
+      this.$http.get("/api/user/friendList").then(res => {
+        this.friendList = res.body.data;
+        this.$store.commit("setFriendInfo", this.friendList);
+      });
+    },
+    cancelBadge() {
+      this.badgeHidden = true;
+    },
+    handleTopCommand(command) {
+      this.$router.push({path: '/' + command})
     }
+  },
+  created() {
+    this.getUserInfo();
+    this.getFriendList();
   }
 };
 </script>
