@@ -32,7 +32,9 @@
         <div class="clearfix"></div>
 
         <div v-for="(item, index) of mydata">
-          <message :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          <transition-group name="list" mode="in-out">
+            <message :key="item.id" :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          </transition-group>
         </div>
       </div>
     </div>
@@ -83,27 +85,24 @@ export default {
       this.submitshow = true;
     },
     getPhotoUrl(...e) {
-      // console.log("getPhotoUrl --- " + e);
       this.photos = e;
-      console.log(photos);
     },
     sendMessage() {
-      var _this = this;
       this.$http
         .post({ BASE_URL }.BASE_URL + "api/message/sendMessage", {
           content: this.message,
           photos: this.photos
         })
         .then(res => {
-          console.log(res.body.data);
-          _this.mydata.push(res.body.data);
+          console.log(res.data.data);
+          this.mydata.unshift(res.data.data);
           this.cleanForm();
-          // if (res.body.data == true) {
-          //   this.$message({
-          //     message: "发表成功",
-          //     type: "success"
-          //   });
-          // }
+          if (res.data.state == 200) {
+            this.$message({
+              message: "发表成功",
+              type: "success"
+            });
+          }
         });
     },
     cleanForm() {
@@ -121,7 +120,6 @@ export default {
       //   });
     },
     deleteMessageContainer(data) {
-      console.log(data);
       this.mydata.splice(data, 1);
     }
   },
@@ -130,7 +128,7 @@ export default {
       this.$http
         .get({ BASE_URL }.BASE_URL + "/api/message")
         .then(res => {
-          this.mydata = res.body.data;
+          this.mydata = res.data.data;
         })
         .catch(res => {});
       this.$http
@@ -148,6 +146,27 @@ export default {
 </script>
 
 <style scoped>
+
+/* .list-item {
+  display: inline-block;
+  margin-right: 10px;
+} */
+
+.list-leave-active {
+  /* transition: all 0.5s; */
+  transition: all 0.8s;
+  transform: translate3d(0, 0, 0)
+}
+
+.list-move {
+  transition: transform 1;
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0)
+}
+
 .grid-content {
   border-radius: 4px;
   min-height: 36px;

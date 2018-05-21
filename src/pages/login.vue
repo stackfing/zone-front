@@ -68,8 +68,8 @@ export default {
         })
         .then(res => {
           if (res.status == 200) {
-            if (res.body.code == 200) {
-              localStorage.setItem("token", res.body.data);
+            if (res.data.code == 200) {
+              localStorage.setItem("token", res.data.data);
               if (this.$route.query.redirect == null) {
                 this.$router.replace("/");
               } else {
@@ -77,7 +77,7 @@ export default {
               }
             } else {
               this.$message({
-                message: res.body.msg,
+                message: res.data.msg,
                 type: "error"
               });
             }
@@ -91,7 +91,7 @@ export default {
       this.$http
         .post("/api/user/checkToken?token=" + localStorage.getItem("token"))
         .then(res => {
-          if (res.body.data == true) {
+          if (res.data.data == true) {
             this.$router.replace("/trend");
           } else {
             this.$message({

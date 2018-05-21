@@ -77,8 +77,8 @@ export default {
             comment: this.commentData
           })
           .then(res => {
-            this.$emit('updateComment', res.body.data)
-            if (res.body.data == true) {
+            this.$emit('updateComment', res.data.data)
+            if (res.data.data == true) {
               this.commentData = "";
               this.$message({
                 message: "评论成功",

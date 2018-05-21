@@ -35,7 +35,7 @@ export default {
     this.$http
       .get("/api/message/detail/" + this.$route.params.nickname)
       .then(res => {
-        this.mydata = res.body.data;
+        this.mydata = res.data.data;
       })
       .catch(res => {});
     this.nickname = this.$route.params.nickname;

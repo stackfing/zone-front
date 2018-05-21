@@ -173,7 +173,7 @@ export default {
     },
     getFriendList() {
       this.$http.get("/api/user/friendList").then(res => {
-        this.friendList = res.body.data;
+        this.friendList = res.data.data;
         this.$store.commit("setFriendInfo", this.friendList);
       });
     },

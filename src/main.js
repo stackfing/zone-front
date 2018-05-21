@@ -3,32 +3,34 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import VueResource from 'vue-resource'
+import ElementUI from 'element-ui'
 import store from '@/store/index'
+import axios from 'axios'
+import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(VueResource)
-
+Vue.prototype.$http = axios
+// Vue.use(VueResource)
 Vue.config.productionTip = false
-
 Vue.use(ElementUI);
-
 Vue.prototype.HOST = '/api'
 
-Vue.http.interceptors.push((request, next) => {
-  request.headers.set("token", localStorage.getItem("token"))
-
-  next(function (response) {
-    // if (response.status == 403) {
-    //   console.log()
-    //   this.$router.push('/login')
-    // }
-    return response;
-  });
-})
+axios.interceptors.request.use(function (config) {
+  config.headers.token = localStorage.getItem('token')
+  // 在发送请求之前做些什么
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
 
 router.beforeEach((to, from, next) => {
+  if (localStorage.getItem("token") != null) {
+    if (store.state.userInfo.nickname == null || store.state.userInfo.nickname == undefined) {
+      axios.get('/api/user/userInfo').then(res => {
+          store.commit("setUserInfo", res.data.data)
+      })
+    }
+  }
   if (to.meta.title) {
     document.title = to.meta.title + '- Zone'
   }

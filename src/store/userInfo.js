@@ -3,10 +3,7 @@ import vuex from 'vuex'
 Vue.use(vuex);
 
 export default new vuex.Store({
-    state: {
-        nickname: null,
-        age: 12
-    },
+    state: null,
     mutations: {
         // getUserInfo(state) {
         // //   state.userInfo = userInfo;

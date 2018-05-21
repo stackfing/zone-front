@@ -54,19 +54,23 @@ export default {
       friendSize: 0
     };
   },
-  props: ['userInfo'],
+  props: ["userInfo"],
   components: {
     VueQrcode
   },
   methods: {
     followMe() {
       this.followed = true;
-    },
+    }
   },
   mounted() {
-    // console.log(this.userInfo)
-    this.friendSize = this.$store.state.friendInfo.length
-    this.qrvalue = window.location.protocol + "//" + window.location.host + "/user/" + encodeURI(this.$store.state.userInfo.nickname)
+    this.friendSize = this.$store.state.friendInfo.length;
+    this.qrvalue =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      "/user/" +
+      encodeURI(this.$store.state.userInfo.nickname);
   }
 };
 </script>

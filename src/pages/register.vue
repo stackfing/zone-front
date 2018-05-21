@@ -92,7 +92,7 @@ export default {
       this.$http
         .post({ BASE_URL }.BASE_URL + "/api/user/register", this.form)
         .then(res => {
-          if (res.body.data == true) {
+          if (res.data.data == true) {
             this.active++;
           }
         });
@@ -105,7 +105,7 @@ export default {
         .get({ BASE_URL }.BASE_URL + "/api/user/register?id=" + mid)
         .then(res => {
           // console.log(res.body.data == false)
-          if (res.body.data == true) {
+          if (res.data.data == true) {
             console.log("没有验证");
             this.active = 2;
             // this.active = 2;

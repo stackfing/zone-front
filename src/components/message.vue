@@ -223,7 +223,7 @@ export default {
         this.$http
           .post("/api/message/star?tag=1&id=" + this.messageId)
           .then(res => {
-            if (res.body.data == true) {
+            if (res.data.data == true) {
               this.starnum++;
               this.starE = !this.starE;
             }
@@ -232,7 +232,7 @@ export default {
         this.$http
           .post("/api/message/star?tag=2&id=" + this.messageId)
           .then(res => {
-            if (res.body.data == true) {
+            if (res.data.data == true) {
               this.starnum--;
               this.starE = !this.starE;
             }
@@ -260,6 +260,10 @@ export default {
     },
     updateComment(data) {
       this.commentList.push(data);
+    },
+    loadImg() {
+      console.log("loading");
+      console.log("loaded");
     }
   }
 };

@@ -13,7 +13,6 @@ export default new vuex.Store({
     mutations: {
         setUserInfo(state, userInfo) {
             state.userInfo = userInfo
-            console.log('用户信息为: ' + state.userInfo)
         },
         setFriendInfo(state, friendInfo) {
             state.friendInfo = friendInfo
