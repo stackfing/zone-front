@@ -1,34 +1,3 @@
-<style scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 18px;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-.avatar_img {
-  position: absolute;
-  bottom: -30px;
-  left: 20px;
-  background-color: gray;
-  width: 100px;
-  height: 100px;
-  border-radius: 2px;
-  border: #fff 3px solid;
-}
-.bodys {
-  margin-top: 50px;
-}
-</style>
-
 <template>
   <div class="container">
     <!-- <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526568051728&di=366eebc77658020cb72a29bf511ac00b&imgtype=0&src=http%3A%2F%2Ft1.niutuku.com%2F960%2F44%2F44-418743.jpg"/> -->
@@ -79,3 +48,34 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+.avatar_img {
+  position: absolute;
+  bottom: -30px;
+  left: 20px;
+  background-color: gray;
+  width: 100px;
+  height: 100px;
+  border-radius: 2px;
+  border: #fff 3px solid;
+}
+.bodys {
+  margin-top: 50px;
+}
+</style>

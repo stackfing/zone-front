@@ -23,66 +23,106 @@ export default new Router({
       component: index,
       redirect: "/trend",
       meta: {
-        requiredAuths: true
+        requiredAuths: true,
+        title: '动态'
       },
       children: [
         {
           path: '/settings',
           component: Setting,
           meta: {
-            requiredAuths: true
+            requiredAuths: true,
+            title: '设置'
           }
         },
         {
           path: '/trend',
           component: Trend,
           meta: {
-            requiredAuths: true
+            requiredAuths: true,
+            title: '动态'
           }
         },
         {
           path: '/find',
           component: Find,
           meta: {
-            requiredAuths: true
+            requiredAuths: true,
+            title: '发现世界'
           }
         },
         {
           path: '/related',
           component: Related,
           meta: {
-            requiredAuths: true
+            requiredAuths: true,
+            title: '与我相关'
           }
         },
         {
           path: '/about',
-          component: About
+          component: About,
+          meta: {
+            requiredAuths: true,
+            title: '关于'
+          }
         }
       ]
     },
     {
       path: '/login',
-      component: Login
+      component: Login,
+      meta: {
+        requiredAuths: false,
+        title: '关于'
+      }
     },
     {
       path: '/register',
-      component: Register
+      component: Register,
+      meta: {
+        requiredAuths: false,
+        title: '关于'
+      }
     },
     {
       path: '/doc',
-      component: Doc
+      component: Doc,
+      meta: {
+        requiredAuths: false,
+        title: '关于'
+      }
     },
     {
       path: '/test',
-      component: test
+      component: test,
+      meta: {
+        requiredAuths: false,
+        title: '关于'
+      }
     },
     {
       path: '/trends',
-      component: Trend
+      component: Trend,
+      meta: {
+        requiredAuths: false,
+        title: '关于'
+      }
     },
     {
       path: '/user/:nickname',
       component: UserDetail,
-    }
+      meta: {
+        requiredAuths: false,
+        title: '详情'
+      }
+    },
+    {
+      path: '/find',
+      component: Find,
+      // meta: {
+      //   requiredAuths: true
+      // }
+    },
   ]
 })

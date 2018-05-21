@@ -1,27 +1,3 @@
-<style scoped>
-.el-row {
-  margin-bottom: 20px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.login-box {
-  padding-top: 20%;
-  margin-left: 40%;
-}
-a {
-  color: #555;
-  text-decoration: none;
-}
-a:visited {
-  color: #555;
-  text-decoration: none;
-}
-#app {
-  /* background-image: url(../assets/login_background.png); */
-}
-</style>
-
 <template>
   <div class="login-box" id="app">
     <el-row>
@@ -128,3 +104,27 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.login-box {
+  padding-top: 20%;
+  margin-left: 40%;
+}
+a {
+  color: #555;
+  text-decoration: none;
+}
+a:visited {
+  color: #555;
+  text-decoration: none;
+}
+#app {
+  /* background-image: url(../assets/login_background.png); */
+}
+</style>

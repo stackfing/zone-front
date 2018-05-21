@@ -1,20 +1,3 @@
-<style scoped>
-.grid_content {
-  padding-bottom: 100px;
-  width: 592px;
-  margin: 0 auto;
-  padding-top: 100px;
-}
-.form_box {
-  margin-top: 50px;
-  box-shadow: 0px 0px 30px rgb(214, 214, 214);
-  background-color: #f9f9f9;
-  padding: 50px;
-  border-radius: 7px;
-  border: 1px solid #eee;
-}
-</style>
-
 <template>
   <div class="grid_content">
     <el-steps :active="active" finish-status="success">
@@ -135,3 +118,20 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.grid_content {
+  padding-bottom: 100px;
+  width: 592px;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+.form_box {
+  margin-top: 50px;
+  box-shadow: 0px 0px 30px rgb(214, 214, 214);
+  background-color: #f9f9f9;
+  padding: 50px;
+  border-radius: 7px;
+  border: 1px solid #eee;
+}
+</style>

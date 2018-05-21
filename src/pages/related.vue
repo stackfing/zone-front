@@ -1,6 +1,3 @@
-<style scope="scope">
-</style>
-
 <template>
 </template>
 
@@ -11,3 +8,6 @@ export default {
   }
 };
 </script>
+
+<style scope="scope">
+</style>

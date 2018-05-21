@@ -1,53 +1,3 @@
-<style scoped>
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-  /* background-color: #e2e8ee; */
-  background-color: #87ceff;
-}
-.row-bg {
-  padding: 10px 0;
-}
-
-.clearfix:after {
-  content: "";
-  height: 0;
-  line-height: 0;
-  display: block;
-  visibility: hidden;
-  clear: both;
-}
-
-.transition-box {
-  display: flex;
-  background-color: white;
-}
-.transition_left {
-  width: 800px;
-  padding-bottom: 20px;
-  padding-left: 30px;
-}
-.transition_right {
-  width: 200px;
-  float: left;
-  position: relative;
-}
-.send_message_box {
-  width: 592px;
-  /* width: 100%; */
-  margin: 0 auto;
-}
-.btn_upload {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-.small_img {
-  width: 27px;
-  height: 27px;
-}
-</style>
-
 <template>
   <div class="">
     <div class="clearfix"></div>
@@ -81,8 +31,8 @@
 
         <div class="clearfix"></div>
 
-        <div v-for="item of mydata">
-          <message @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+        <div v-for="(item, index) of mydata">
+          <message :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
           <!-- <message :messageId="1"
           :createTime=""
           :avatar="1"
@@ -147,19 +97,22 @@ export default {
       console.log(photos);
     },
     sendMessage() {
+      var _this = this;
       this.$http
         .post({ BASE_URL }.BASE_URL + "api/message/sendMessage", {
           content: this.message,
           photos: this.photos
         })
         .then(res => {
-          if (res.body.data == true) {
-            this.$message({
-              message: "发表成功",
-              type: "success"
-            });
-            this.cleanForm();
-          }
+          console.log(res.body.data);
+          _this.mydata.push(res.body.data);
+          this.cleanForm();
+          // if (res.body.data == true) {
+          //   this.$message({
+          //     message: "发表成功",
+          //     type: "success"
+          //   });
+          // }
         });
     },
     cleanForm() {
@@ -175,6 +128,10 @@ export default {
       //       // this.starE = !this.starE;
       //     }
       //   });
+    },
+    deleteMessageContainer(data) {
+      console.log(data);
+      this.mydata.splice(data, 1);
     }
   },
   created() {
@@ -198,3 +155,52 @@ export default {
 };
 </script>
 
+<style scoped>
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+  /* background-color: #e2e8ee; */
+  background-color: #87ceff;
+}
+.row-bg {
+  padding: 10px 0;
+}
+
+.clearfix:after {
+  content: "";
+  height: 0;
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.transition-box {
+  display: flex;
+  background-color: white;
+}
+.transition_left {
+  width: 800px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+}
+.transition_right {
+  width: 200px;
+  float: left;
+  position: relative;
+}
+.send_message_box {
+  width: 592px;
+  /* width: 100%; */
+  margin: 0 auto;
+}
+.btn_upload {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.small_img {
+  width: 27px;
+  height: 27px;
+}
+</style>

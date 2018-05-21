@@ -17,7 +17,7 @@ Vue.use(ElementUI);
 Vue.prototype.HOST = '/api'
 
 Vue.http.interceptors.push((request, next) => {
- request.headers.set("token", localStorage.getItem("token"))
+  request.headers.set("token", localStorage.getItem("token"))
 
   next(function (response) {
     // if (response.status == 403) {
@@ -29,6 +29,9 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title + '- QZone'
+  }
   if (to.meta.requiredAuths) { // 判断该路由是否需要登录权限
     if (localStorage.getItem("token") != null) {
       next();

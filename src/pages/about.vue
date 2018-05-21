@@ -1,3 +1,76 @@
+<template>
+  <div class="mycontainer">
+    <div class="head">
+      <div class="bio">
+        <img src="../assets/up.jpg" alt="background" class="bg">
+        <div class="desc">
+          <h3>@{{$store.state.userInfo.nickname}}</h3>
+          <p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
+        </div>
+      </div>
+      <div class="avatarcontainer">
+        <!-- <img :src="$store.state.userInfo.avatar" alt="avatar" class="avatar">         -->
+        <img src="../assets/photo.jpg" alt="avatar" class="avatar">
+        <div class="hover">
+          <div class="icon-twitter"></div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="data">
+        <ul>
+          <li>
+            1122
+            <span>日记</span>
+          </li>
+          <li>
+            {{friendSize}}
+            <span>朋友</span>
+          </li>
+          <!-- <li>
+            20
+            <span>关注</span>
+          </li> -->
+        </ul>
+      </div>
+      <!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
+      <div class="qrcode_container">
+        <center>
+          <vue-qrcode :value=qrvalue :options="{size:100}"></vue-qrcode>
+        </center>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import VueQrcode from "@xkeshi/vue-qrcode";
+export default {
+  data() {
+    return {
+      test: "粉我",
+      followed: false,
+      qrvalue: "http://www.stackfing.com",
+      friendSize: 0
+    };
+  },
+  props: ['userInfo'],
+  components: {
+    VueQrcode
+  },
+  methods: {
+    followMe() {
+      this.followed = true;
+    },
+  },
+  mounted() {
+    // console.log(this.userInfo)
+    this.friendSize = this.$store.state.friendInfo.length
+    this.qrvalue = window.location.protocol + "//" + window.location.host + "/user/" + encodeURI(this.$store.state.userInfo.nickname)
+  }
+};
+</script>
+
 <style scoped>
 * {
   -webkit-box-sizing: border-box;
@@ -222,76 +295,3 @@ body {
   margin-top: 30px;
 }
 </style>
-
-<template>
-  <div class="mycontainer">
-    <div class="head">
-      <div class="bio">
-        <img src="../assets/up.jpg" alt="background" class="bg">
-        <div class="desc">
-          <h3>@{{$store.state.userInfo.nickname}}</h3>
-          <p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
-        </div>
-      </div>
-      <div class="avatarcontainer">
-        <!-- <img :src="$store.state.userInfo.avatar" alt="avatar" class="avatar">         -->
-        <img src="../assets/photo.jpg" alt="avatar" class="avatar">
-        <div class="hover">
-          <div class="icon-twitter"></div>
-        </div>
-      </div>
-    </div>
-    <div class="content">
-      <div class="data">
-        <ul>
-          <li>
-            1122
-            <span>日记</span>
-          </li>
-          <li>
-            {{friendSize}}
-            <span>朋友</span>
-          </li>
-          <!-- <li>
-            20
-            <span>关注</span>
-          </li> -->
-        </ul>
-      </div>
-      <!-- <div class="follow" @click="followMe" :class="followed ? 'followed' : ''"><div class="icon-twitter" ></div> {{test}}</div> -->
-      <div class="qrcode_container">
-        <center>
-          <vue-qrcode :value=qrvalue :options="{size:100}"></vue-qrcode>
-        </center>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-import VueQrcode from "@xkeshi/vue-qrcode";
-export default {
-  data() {
-    return {
-      test: "粉我",
-      followed: false,
-      qrvalue: "http://www.stackfing.com",
-      friendSize: 0
-    };
-  },
-  props: ['userInfo'],
-  components: {
-    VueQrcode
-  },
-  methods: {
-    followMe() {
-      this.followed = true;
-    },
-  },
-  mounted() {
-    // console.log(this.userInfo)
-    this.friendSize = this.$store.state.friendInfo.length
-    this.qrvalue = window.location.protocol + "//" + window.location.host + "/user/" + encodeURI(this.$store.state.userInfo.nickname)
-  }
-};
-</script>

@@ -1,3 +1,50 @@
+<template>
+
+    <div class="container">
+        <div class="header">
+
+        </div>
+        <div class="body">
+            <div class="left">
+                sdf
+            </div>
+            <div class="center">
+                sdf
+            </div>
+            <div class="right">
+                sfd
+            </div>
+        </div>
+    </div>
+    <!-- <div class="container">
+      <div class="header">
+
+      </div>
+      <div class="body">
+          <div class="slide a">
+              <div class="slide_left">
+                  <div class="slide_left_a">
+                      4444
+                  </div>
+                  <div class="slide_left_b">
+                      454
+                  </div>
+              </div>
+          </div>
+          <div class="slide b">421124</div>
+          <div class="slide c">4121124</div>
+      </div>
+  </div> -->
+</template>
+
+<script>
+export default {
+  data() {
+    return {};
+  }
+};
+</script>
+
 <style scoped>
 /* .container {
 }
@@ -70,50 +117,3 @@
   background-color: rgb(218, 174, 31);
 }
 </style>
-
-<template>
-
-    <div class="container">
-        <div class="header">
-
-        </div>
-        <div class="body">
-            <div class="left">
-                sdf
-            </div>
-            <div class="center">
-                sdf
-            </div>
-            <div class="right">
-                sfd
-            </div>
-        </div>
-    </div>
-    <!-- <div class="container">
-      <div class="header">
-
-      </div>
-      <div class="body">
-          <div class="slide a">
-              <div class="slide_left">
-                  <div class="slide_left_a">
-                      4444
-                  </div>
-                  <div class="slide_left_b">
-                      454
-                  </div>
-              </div>
-          </div>
-          <div class="slide b">421124</div>
-          <div class="slide c">4121124</div>
-      </div>
-  </div> -->
-</template>
-
-<script>
-export default {
-  data() {
-    return {};
-  }
-};
-</script>

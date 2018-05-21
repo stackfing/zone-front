@@ -77,7 +77,7 @@ export default {
             comment: this.commentData
           })
           .then(res => {
-            console.log(res.body.msg);
+            this.$emit('updateComment', res.body.data)
             if (res.body.data == true) {
               this.commentData = "";
               this.$message({
