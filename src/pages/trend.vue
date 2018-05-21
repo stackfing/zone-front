@@ -10,10 +10,10 @@
           </center>
         </div>
 
-        <at-ta :members="members" name-key="name">
+        <at-ta :members="$store.state.friendInfo" name-key="nickname">
           <template slot="item" slot-scope="s">
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
-            <span v-text="s.item.nickname"></span>
+            <span style="margin-left:5px;" v-text="s.item.nickname"></span>
           </template>
           <textarea v-model="message" @click="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
         </at-ta>
@@ -33,12 +33,6 @@
 
         <div v-for="(item, index) of mydata">
           <message :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
-          <!-- <message :messageId="1"
-          :createTime=""
-          :avatar="1"
-          :centent="123"
-          :nickName=""
-          :images='' :starnum='1' :commentList='' :friendList=''></message> -->
         </div>
       </div>
     </div>
@@ -53,10 +47,7 @@ import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
-      members: [
-        { name: "zs", avatar: "" },
-        { name: "asfdasfd", avatar: "asfasdf" }
-      ],
+      members: [],
       message: "",
       submitshow: false,
       mydata: [],
@@ -146,7 +137,8 @@ export default {
         .get({ BASE_URL }.BASE_URL + "/api/user/friendList")
         .then(res => {
           if (res.ok == true) {
-            this.members = res.body.data;
+            // this.members = res.body.data;
+            // console.log(res.body.data)
           }
         })
         .catch(res => {});

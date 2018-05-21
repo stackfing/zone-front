@@ -30,6 +30,8 @@ export default {
     message
   },
   created() {
+    
+    document.title = this.$route.params.nickname + '的资料 - Zone'
     this.$http
       .get("/api/message/detail/" + this.$route.params.nickname)
       .then(res => {

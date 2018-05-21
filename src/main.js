@@ -30,7 +30,7 @@ Vue.http.interceptors.push((request, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    document.title = to.meta.title + '- QZone'
+    document.title = to.meta.title + '- Zone'
   }
   if (to.meta.requiredAuths) { // 判断该路由是否需要登录权限
     if (localStorage.getItem("token") != null) {

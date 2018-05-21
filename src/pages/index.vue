@@ -17,8 +17,8 @@
           </el-dropdown-item>
           <el-dropdown-item command="related">我的消息</el-dropdown-item>
           <el-dropdown-item command="settings">设置</el-dropdown-item>
-          <el-dropdown-item divided>
-            <span @click="exit">注销</span>
+          <el-dropdown-item divided @click.native="exit">
+            <span >注销</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -132,7 +132,7 @@ export default {
     toggleSlide(item) {},
     exit() {
       localStorage.removeItem("token");
-      this.$router.replace("/login");
+      this.$router.replace('/login')
     },
     getUserInfo() {
       this.$http.get("/api/user/userInfo").then(res => {

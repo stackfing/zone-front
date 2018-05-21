@@ -15,8 +15,8 @@
             </div>
           </div>
           <div class="do_message_action">
-            <el-dropdown @command="handleCommand" trigger="click">
-              <el-button style="" type="text" v-if="$store.state.userInfo.nickname != null">操作</el-button>
+            <el-dropdown @command="handleCommand" trigger="click" v-if="$store.state.userInfo.nickname != null">
+              <el-button style="" type="text">操作</el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="share">分享</el-dropdown-item>
                 <el-dropdown-item command="collect">收藏</el-dropdown-item>
@@ -250,10 +250,11 @@ export default {
         case "neverseeit":
           //屏蔽动态
           this.$emit("delete", this.index);
-          this.$message("click on item " + command);
+          // this.$message("您已经屏蔽此动态");
           break;
         case "shield":
           this.$message("click on item " + command);
+          //屏蔽用户 ajax
           break;
       }
     },
