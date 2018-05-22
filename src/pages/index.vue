@@ -234,10 +234,10 @@ export default {
   height: 50px;
   text-align: center;
   line-height: 50px;
+  transition: all .8s;
 }
 
 .action_list li:hover {
-  transition: all 0.8s;
   background-color: #87ceff;
   cursor: pointer;
 }

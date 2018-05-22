@@ -271,7 +271,7 @@ export default {
 
 <style>
 .box-card {
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 a {
   color: #000000;

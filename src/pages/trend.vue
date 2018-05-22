@@ -30,12 +30,12 @@
         </transition>
 
         <div class="clearfix"></div>
-
-        <div v-for="(item, index) of mydata">
-          <transition-group name="list" mode="in-out">
-            <message :key="item.id" :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
-          </transition-group>
-        </div>
+        <ul style="margin-top:20px">
+          <li v-for="(item, index) of mydata" ref="list" style="transition: all .4s;list-style:none;margin-bottom:20px">
+            <message :key="index" :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+          </li>
+        </ul>
+        </ul>
       </div>
     </div>
   </div>
@@ -120,7 +120,36 @@ export default {
       //   });
     },
     deleteMessageContainer(data) {
-      this.mydata.splice(data, 1);
+      const childNodes = this.$refs.list;
+      const el = childNodes[data];
+      const offsetHeight = window
+        .getComputedStyle(el)
+        .getPropertyValue("height");
+      const marginBottom = window
+        .getComputedStyle(el)
+        .getPropertyValue("margin-bottom");
+      const totalHeight = parseInt(offsetHeight) + parseInt(marginBottom);
+      const matrix = this.getTransformMatrix(el);
+      el.style.transform = `translate(100%, ${
+        matrix[1] ? Number(matrix[1]) : 0
+      }px)`;
+      el.style.opacity = "0";
+      setTimeout(() => {
+        for (let i = data + 1; i < childNodes.length; i++) {
+          if (childNodes[i].style.transform) {
+            const matrix = this.getTransformMatrix(childNodes[i]);
+            childNodes[i].style.transform = `translate(0, ${Number(matrix[1]) -
+              totalHeight}px)`;
+          } else {
+            childNodes[i].style.transform = `translate(0, -${totalHeight}px)`;
+          }
+        }
+      }, 500);
+      // this.mydata.splice(data, 1);
+    },
+    getTransformMatrix(el) {
+      if (!el) return false;
+      return el.style.transform.replace(/[^0-9\-.,]/g, "").split(",");
     }
   },
   created() {
@@ -146,7 +175,6 @@ export default {
 </script>
 
 <style scoped>
-
 /* .list-item {
   display: inline-block;
   margin-right: 10px;
@@ -155,7 +183,7 @@ export default {
 .list-leave-active {
   /* transition: all 0.5s; */
   transition: all 0.8s;
-  transform: translate3d(0, 0, 0)
+  transform: translate3d(0, 0, 0);
 }
 
 .list-move {
@@ -164,7 +192,7 @@ export default {
 
 .list-leave-to {
   opacity: 0;
-  transform: translate3d(100%, 0, 0)
+  transform: translate3d(100%, 0, 0);
 }
 
 .grid-content {
