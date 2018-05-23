@@ -32,16 +32,29 @@
 
         <!-- 这里开始 -->
 
-        <div class="one_img_container">
-          <template v-for="add in 1">
-            <!-- <img src="https://img-blog.csdn.net/20160706133938957"/> -->
-            <img src="../assets/userdetail.jpg" />
-            <!-- <img src="../assets/userdetail.jpg"/> -->
-            <!-- <img src="../assets/userdetail.jpg"/> -->
-          </template>
-        </div>
+        <template v-if="images.length == 1">
+          <div class="one_img_container">
+            <img v-img :src="images[0]" />
+          </div>
+        </template>
 
-        
+        <template v-if="images.length == 2">
+          <div class="two_img_container" ref="imgs">
+            <template v-for="item in images">
+              <img v-img:messageId :src="item" />
+            </template>
+          </div>
+        </template>
+
+        <template v-if="images.length >= 3">
+          <div class="more_img_container img_container" ref="moreimgs">
+            <template v-for="(item, index) in images">
+              <template v-if="index < 9">
+                <img v-img:messageId :src="item" />
+              </template>
+            </template>
+          </div>
+        </template>
 
         <!-- 这里结束 -->
         <div class="clearfix"> </div>
@@ -200,10 +213,14 @@ export default {
     // "friendList"
   ],
   mounted() {
-      const childNodes = this.$refs.imgs
-      for(var i = 0; i < childNodes.childNodes.length; i++) {
-        childNodes.childNodes[i].style.height = childNodes.childNodes[i].width + 'px';
-      }
+    const childNodes = this.$refs.imgs;
+    const nodes = this.$refs.moreimgs;
+    if (this.$refs.imgs != null || this.$refs.imgs != undefined) this.changeImgSize(childNodes);
+    if (this.$refs.moreimgs != null || this.$refs.moreimgs != undefined) this.changeImgSize(nodes);
+
+    window.addEventListener("resize", function() {
+      console.log("asdf");
+    });
   },
   methods: {
     clickphotos(url) {
@@ -253,9 +270,12 @@ export default {
     updateComment(data) {
       this.commentList.push(data);
     },
-    loadImg() {
-      console.log("loading");
-      console.log("loaded");
+    changeImgSize(nodes) {
+      for (var i = 0; i < nodes.childNodes.length; i++) {
+        if(i <= 8) {
+          nodes.childNodes[i].style.height = nodes.childNodes[i].width + "px";
+        }
+      }
     }
   }
 };
@@ -350,9 +370,8 @@ a:visited {
   /* margin-left: 10px; */
   /* margin-bottom: 20px; */
 }
-.img_flex {
+/* .img_flex {
   float: left;
-  /* margin-left: 10px; */
   width: 100%;
 }
 .img_conten {
@@ -368,18 +387,18 @@ a:visited {
 .twophoto img {
   margin-right: 2%;
   width: 48%;
-  /* height:100%; */
 }
 .morephoto img {
   width: 180px;
   margin-left: 3px;
 }
+
 img {
   width: auto;
   height: auto;
   max-width: 100%;
   max-height: 100%;
-}
+} */
 .fui-icon {
   width: 24px;
   height: 24px;
@@ -406,6 +425,10 @@ img {
   justify-content: center;
 }
 
+.img_container img {
+  object-fit: cover;
+}
+
 .one_img_container img {
   object-fit: cover;
   max-height: 600px;
@@ -415,30 +438,22 @@ img {
 
 .two_img_container {
   display: flex;
-  /* justify-content: center; */
   flex-direction: row;
 }
 .two_img_container img {
   display: flex;
-  object-fit: cover;
   width: 50%;
   margin-left: 2px;
 }
-.more_container {
-  display: flex;
-  overflow: hidden;
+.more_img_container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.more_container img {
+.more_img_container img {
   display: flex;
-  flex: 1;
-  object-fit: cover;
-  height: 180px;
-  width: 180px;
-  margin-left: 2px;
-  margin-bottom: 2px;
+  width: 33%;
+  margin-left: 1px;
 }
 .comment_item {
   margin-top: 10px;
