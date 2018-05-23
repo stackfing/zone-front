@@ -280,7 +280,6 @@ export default {
   background-attachment: fixed;
   background-color: #e9e9e9;
   padding-top: 50px;
-  padding-top: 250px;
   display: flex;
   justify-content: center;
   min-width: 1160px;
@@ -399,5 +398,16 @@ export default {
 .head_avatar_img {
   border-radius: 2px;
   border: #fff 3px solid;
+}
+@media screen and (min-width: 320px) and (max-width: 480px){
+  .left_slide_container,.slide_container{
+    display: none;
+  }
+  .container {
+    min-width: 0;
+  }
+  .body_container {
+    min-width: 0;
+  }
 }
 </style>

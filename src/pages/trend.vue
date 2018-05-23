@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="trend">
     <div class="clearfix"></div>
     <div>
       <div class="send_message_box">
@@ -24,7 +24,7 @@
               <upload @getURL="getPhotoUrl"></upload>
             </div>
             <div class="transition_right">
-              <el-button class="btn_upload" style="" v-show="submitshow" @click="submitmessage">提交</el-button>
+              <el-button class="btn_upload" v-show="submitshow" @click="submitmessage">提交</el-button>
             </div>
           </div>
         </transition>
@@ -175,11 +175,6 @@ export default {
 </script>
 
 <style scoped>
-/* .list-item {
-  display: inline-block;
-  margin-right: 10px;
-} */
-
 .list-leave-active {
   /* transition: all 0.5s; */
   transition: all 0.8s;
@@ -217,6 +212,9 @@ export default {
 .transition-box {
   display: flex;
   background-color: white;
+  width: 100%;
+  /* width: 592px; */
+  /* width: 100%; */
 }
 .transition_left {
   width: 800px;
@@ -229,7 +227,7 @@ export default {
   position: relative;
 }
 .send_message_box {
-  width: 592px;
+  /* width: 592px; */
   /* width: 100%; */
   margin: 0 auto;
 }

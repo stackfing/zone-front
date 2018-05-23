@@ -1,40 +1,29 @@
 <template>
-  <div class="login-box" id="app">
-    <el-row>
-      <el-col :span="8">
-        <el-input id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
-          <template slot="prepend">帐号</template>
-        </el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <el-input id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">
-          <template slot="prepend">密码</template>
-        </el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <el-button id="login" @click="login" style="width:100%" type="primary">登录</el-button>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <span style="font-size:12px;float:left">
+  <div class="login">
+    <div class="header">
+      <div class="logo"><span> ZONE </span></div>
+    </div>
+    <div class="form">
+      <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
+        <template slot="prepend">帐号</template>
+      </el-input>
+      <el-input style="margin-bottom:20px;" id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">
+        <template slot="prepend">密码</template>
+      </el-input>
+      <el-button id="login" @click="login" style="width:100%;margin-bottom:20px;" type="primary">登录</el-button>
+      <div class="reg">
+        <span style="font-size:12px" class="register">
           <a href="/register">立即注册</a>
         </span>
-        <span style="font-size:12px;float:right">
-          <a href="#">忘了密码？</a>
+        <span style="font-size:12px" class="forget">
+          <a href="/">忘了密码？</a>
         </span>
         <div class="clearfix"></div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8">
-        <center style="margin-top:100px;font-size:13px;color:#999;">腾讯云提供计算服务. 前端由 Vue.js 强力驱动</center>
-      </el-col>
-    </el-row>
+      </div>
+      <div class="copyright">
+        <center style="margin-top:100px;font-size:13px;color:#999;">腾讯云提供计算服务. Vue.js 强力驱动</center>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -106,16 +95,73 @@ export default {
 </script>
 
 <style scoped>
-.el-row {
+.logo {
+  line-height: 60px;
+  font-size: 1.2em;
+  position: relative;
+  left: 60px;
+}
+.header {
+  position: fixed;
+  display: flex;
+  height: 60px;
+  width: 100%;
+  top: 0px;
+  background: #409EFF;
+}
+.login {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  /* height: 100vh; */
+  /* height: 100%; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  width: 300px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.reg{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-start;
+}
+.register {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+.forget {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+/* .el-row {
   margin-bottom: 20px;
   &:last-child {
     margin-bottom: 0;
   }
+} */
+/* .login-box {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.login-box {
-  padding-top: 20%;
-  margin-left: 40%;
-}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+} */
 a {
   color: #555;
   text-decoration: none;
@@ -123,8 +169,5 @@ a {
 a:visited {
   color: #555;
   text-decoration: none;
-}
-#app {
-  /* background-image: url(../assets/login_background.png); */
 }
 </style>

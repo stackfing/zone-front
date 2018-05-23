@@ -39,7 +39,7 @@
 
 <template>
   <div style="padding-top:20px;">
-    <el-upload action='http://localhost:8080/api/api/photos/upload' list-type="picture-card" :on-preview="handlePictureCardPreview" @click="imgClick" :on-success="successMethod" :on-remove="handleRemove">
+    <el-upload :headers="headers" action='/api/photos/upload' list-type="picture-card" :on-preview="handlePictureCardPreview" @click="imgClick" :on-success="successMethod" :on-remove="handleRemove">
       <i class="el-icon-plus"></i>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
@@ -56,7 +56,10 @@ export default {
     return {
       isCl: true,
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      headers: {
+        token: localStorage.getItem('token')
+      }
     };
   },
   methods: {

@@ -33,11 +33,15 @@ export default {
   margin: 0px;
   padding: 0px;
 }
+li {
+  list-style: none;  
+}
+img {
+  object-fit: cover;  
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  /* margin-top: 60px; */
 }
 </style>

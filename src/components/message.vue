@@ -28,35 +28,22 @@
         </div>
       </div>
       <div class="content">
-        <p class="content_P">{{content}}</p>
-        <template v-if="images != null">
-          <div class="img_one" v-if="images.length==1">
-            <!-- <img v-img style="width:90%;height:320px;margin-left:10px;" v-for="item in images" :src="item" />
-             -->
-            <img v-img style="max-width:100%" v-for="item in images" :src="item" />
+        <p class="message_content">{{content}}</p>
 
-          </div>
-          <div v-else-if="images.length==2">
-            <div class="img_two">
-              <!-- <img v-img style="width:270px;height:220px;margin-left:5px;" v-for="item in images" :src="item" /> -->
-              <img v-img style="padding: 3px;max-width:48%" v-for="item in images" :src="item" />
-            </div>
-          </div>
-          <div v-else-if="images.length>=3&&images.leng<=9">
-            <div class="img_more">
-              <!-- <img v-img style="width:160px;height:120px;margin-left:3px;margin-bottom:-1px !important;" v-for="item in images" :src="item" /> -->
-              <img v-img style="max-width:32%;padding:2px;" v-for="item in images" :src="item" />
-            </div>
-          </div>
+        <!-- 这里开始 -->
 
-          <div class="img_more" v-else-if="images.length>9">
-            <template v-for="(item,index) in images">
-              <img v-img style="max-width:32%;padding:2px;" :src="item" v-if="index <= 7" />
-            </template>
-            <img style="max-width:30%;padding:2px;" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526534584432&di=cdf8cc286ce2068a9d35efc317be62b5&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180508%2Fdbd23d6048a6425bbc520ff1eeec321b.jpeg" />
-          </div>
-        </template>
+        <div class="one_img_container">
+          <template v-for="add in 1">
+            <!-- <img src="https://img-blog.csdn.net/20160706133938957"/> -->
+            <img src="../assets/userdetail.jpg" />
+            <!-- <img src="../assets/userdetail.jpg"/> -->
+            <!-- <img src="../assets/userdetail.jpg"/> -->
+          </template>
+        </div>
 
+        
+
+        <!-- 这里结束 -->
         <div class="clearfix"> </div>
       </div>
       <div class="star" v-show="showStar">
@@ -212,7 +199,12 @@ export default {
     "index"
     // "friendList"
   ],
-  mounted() {},
+  mounted() {
+      const childNodes = this.$refs.imgs
+      for(var i = 0; i < childNodes.childNodes.length; i++) {
+        childNodes.childNodes[i].style.height = childNodes.childNodes[i].width + 'px';
+      }
+  },
   methods: {
     clickphotos(url) {
       alert(url);
@@ -352,9 +344,11 @@ a:visited {
   align-items: flex-start;
   /* background-color: rgb(181, 216, 168); */
 }
-.content_P {
-  margin-left: 10px;
-  margin-bottom: 20px;
+.message_content {
+  padding: 5px;
+  padding-bottom: 20px;
+  /* margin-left: 10px; */
+  /* margin-bottom: 20px; */
 }
 .img_flex {
   float: left;
@@ -406,15 +400,45 @@ img {
   /* background-position: -458px -260px; */
   background-position: -458px -260px;
 }
-.img_2 {
+
+.img_container {
+  display: flex;
+  justify-content: center;
 }
-.img_one {
-  margin: 0 auto;
-  /* margin-left: 5%; */
+
+.one_img_container img {
+  object-fit: cover;
+  max-height: 600px;
+  overflow: hidden;
+  display: flex;
 }
-.img_two {
+
+.two_img_container {
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: row;
 }
-.img_more {
+.two_img_container img {
+  display: flex;
+  object-fit: cover;
+  width: 50%;
+  margin-left: 2px;
+}
+.more_container {
+  display: flex;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.more_container img {
+  display: flex;
+  flex: 1;
+  object-fit: cover;
+  height: 180px;
+  width: 180px;
+  margin-left: 2px;
+  margin-bottom: 2px;
 }
 .comment_item {
   margin-top: 10px;
