@@ -92,6 +92,7 @@ export default {
     border-radius: 7px;
     padding: 30px; */
   width: 100%;
+  height: 600px;
   /* margin-top: 50px; */
   -webkit-box-shadow: 0px 0px 20px rgb(214, 214, 214);
   box-shadow: 0px 0px 20px rgb(214, 214, 214);

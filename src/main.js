@@ -25,11 +25,9 @@ axios.interceptors.request.use(function (config) {
 
 router.beforeEach((to, from, next) => {
   if (localStorage.getItem("token") != null) {
-    if (store.state.userInfo.nickname == null || store.state.userInfo.nickname == undefined) {
-      axios.get('/api/user/userInfo').then(res => {
-          store.commit("setUserInfo", res.data.data)
-      })
-    }
+    axios.get('/api/user/userInfo').then(res => {
+      store.commit("setUserInfo", res.data.data)
+    })
   }
   if (to.meta.title) {
     document.title = to.meta.title + '- Zone'

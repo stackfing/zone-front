@@ -99,13 +99,16 @@ export default {
     }
   },
   created() {
+    
+  },
+  mounted() {
     var mid = this.$route.query.mid;
     if (mid != null && mid != undefined) {
       this.$http
         .get({ BASE_URL }.BASE_URL + "/api/user/register?id=" + mid)
         .then(res => {
           // console.log(res.body.data == false)
-          if (res.data.data == true) {
+          if (res.data.data == false) {
             console.log("没有验证");
             this.active = 2;
             // this.active = 2;

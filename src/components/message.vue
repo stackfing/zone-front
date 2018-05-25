@@ -212,14 +212,15 @@ export default {
     "index"
     // "friendList"
   ],
-  mounted() {
-    const childNodes = this.$refs.imgs;
-    const nodes = this.$refs.moreimgs;
-    if (this.$refs.imgs != null || this.$refs.imgs != undefined) this.changeImgSize(childNodes);
-    if (this.$refs.moreimgs != null || this.$refs.moreimgs != undefined) this.changeImgSize(nodes);
-
+  created() {
+    const two = this.$refs.imgs;
+    const more = this.$refs.moreimgs;
+    var _this = this;
     window.addEventListener("resize", function() {
-      console.log("asdf");
+      if (two != null || two != undefined)
+        _this.changeImgSize(two);
+      if (more != null || more != undefined)
+        _this.changeImgSize(more);
     });
   },
   methods: {
@@ -227,7 +228,6 @@ export default {
       alert(url);
     },
     star() {
-      this.$emit("sendmsg", this.messageId);
       if (this.starE == false) {
         this.$http
           .post("/api/message/star?tag=1&id=" + this.messageId)
@@ -271,10 +271,12 @@ export default {
       this.commentList.push(data);
     },
     changeImgSize(nodes) {
+      // console.log(nodes)
       for (var i = 0; i < nodes.childNodes.length; i++) {
-        if(i <= 8) {
+        // if (i <= 8) {
           nodes.childNodes[i].style.height = nodes.childNodes[i].width + "px";
-        }
+          console.log(nodes.childNodes[i].width)
+        // }
       }
     }
   }
@@ -282,9 +284,6 @@ export default {
 </script>
 
 <style>
-.box-card {
-  /* margin-top: 20px; */
-}
 a {
   color: #000000;
   vertical-align: middle;

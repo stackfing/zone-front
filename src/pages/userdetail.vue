@@ -31,7 +31,9 @@ export default {
     return {
       nickname: "",
       mydata: [],
-      detailInfo: {}
+      detailInfo: {},
+      nowPage: 1,
+      nowMessageSize: 10,
     };
   },
   components: {

@@ -16,6 +16,16 @@ export default {
   name: "App",
   data() {
     return {};
+  },
+  created() {
+    try {
+        document.body.removeChild(document.getElementById('appLoading'))
+        setTimeout(function() {
+          document.getElementById('app').style.display = 'block';
+        }, 500)
+      } catch (e) {
+
+      }
   }
 };
 </script>

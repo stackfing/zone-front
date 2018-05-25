@@ -15,9 +15,8 @@
             <img class="small_img" width="27" height="27" :src="s.item.avatar">
             <span style="margin-left:5px;" v-text="s.item.nickname"></span>
           </template>
-          <textarea v-model="message" @click="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
+          <textarea v-model="message" @focus="clickTextArea" @blur="textblur" class="el-textarea__inner" contenteditable></textarea>
         </at-ta>
-
         <transition name="el-zoom-in-top">
           <div v-show="submitshow" class="transition-box">
             <div class="transition_left">
@@ -32,10 +31,10 @@
         <div class="clearfix"></div>
         <ul style="margin-top:20px">
           <li v-for="(item, index) of mydata" ref="list" style="transition: all .4s;list-style:none;margin-bottom:20px">
-            <message :key="index" :index="index" @delete="deleteMessageContainer" @sendmsg="shows" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+            <message :key="index" :index="index" @delete="deleteMessageContainer" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
           </li>
         </ul>
-        </ul>
+        <div class="bottom_tip" onselectstart="return false" @click="cases == true ? getMessages(++nowPage, nowMessageSize) : false">{{more}}</div>
       </div>
     </div>
   </div>
@@ -55,7 +54,11 @@ export default {
       mydata: [],
       friendList: [],
       dass: "message",
-      photos: []
+      photos: [],
+      more: "点击加载更多",
+      nowPage: 1,
+      nowMessageSize: 10,
+      cases: true
     };
   },
   components: {
@@ -109,16 +112,6 @@ export default {
       this.photos = "";
       this.message = "";
     },
-    shows(data) {
-      // this.$http
-      //   .post("/api/message/star?tag=1&id=" + data)
-      //   .then(res => {
-      //     if (res.body.data == true) {
-      //       // this.starnum++;
-      //       // this.starE = !this.starE;
-      //     }
-      //   });
-    },
     deleteMessageContainer(data) {
       const childNodes = this.$refs.list;
       const el = childNodes[data];
@@ -135,6 +128,7 @@ export default {
       }px)`;
       el.style.opacity = "0";
       setTimeout(() => {
+        // this.mydata.splice(data, 1);
         for (let i = data + 1; i < childNodes.length; i++) {
           if (childNodes[i].style.transform) {
             const matrix = this.getTransformMatrix(childNodes[i]);
@@ -145,30 +139,61 @@ export default {
           }
         }
       }, 500);
-      // this.mydata.splice(data, 1);
     },
     getTransformMatrix(el) {
       if (!el) return false;
       return el.style.transform.replace(/[^0-9\-.,]/g, "").split(",");
+    },
+    getMessages(page, size) {
+      this.more = "数据拼命加载中...";
+      this.$http
+        .get("/api/message?page=" + page + "&size=" + size)
+        .then(res => {
+          console.log(res.data.data);
+          if (res.data.data == false) {
+            this.cases = false;
+          } else {
+            for (var i = 0; i < res.data.data.length; i++) {
+              this.mydata.push(res.data.data[i]);
+            }
+          }
+        });
+    },
+    textblur() {
+      this.submitshow = false;
     }
   },
   created() {
     if (this.$store.state.userInfo != null) {
       this.$http
-        .get({ BASE_URL }.BASE_URL + "/api/message")
+        .get(
+          { BASE_URL }.BASE_URL +
+            "/api/message?page=" +
+            this.nowPage +
+            "&size=" +
+            this.nowMessageSize
+        )
         .then(res => {
           this.mydata = res.data.data;
         })
         .catch(res => {});
-      this.$http
-        .get({ BASE_URL }.BASE_URL + "/api/user/friendList")
-        .then(res => {
-          if (res.ok == true) {
-            // this.members = res.body.data;
-            // console.log(res.body.data)
+
+      var _this = this;
+      window.addEventListener("scroll", function() {
+        if (
+          document.documentElement.clientHeight +
+            200 +
+            document.documentElement.scrollTop >=
+          document.body.scrollHeight
+        ) {
+          //分页
+          if (_this.cases == true) {
+            _this.getMessages(++_this.nowPage, _this.nowMessageSize);
+          } else {
+            _this.more = "没有更多啦！";
           }
-        })
-        .catch(res => {});
+        }
+      });
     }
   }
 };
@@ -176,7 +201,6 @@ export default {
 
 <style scoped>
 .list-leave-active {
-  /* transition: all 0.5s; */
   transition: all 0.8s;
   transform: translate3d(0, 0, 0);
 }
@@ -193,7 +217,6 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
-  /* background-color: #e2e8ee; */
   background-color: #87ceff;
 }
 .row-bg {
@@ -209,26 +232,29 @@ export default {
   clear: both;
 }
 
+.bottom_tip {
+  line-height: 13px;
+  padding-bottom: 15px;
+  cursor: pointer;
+  width: 150px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: #b2b2b2;
+  text-align: center;
+}
+
 .transition-box {
-  display: flex;
   background-color: white;
-  width: 100%;
-  /* width: 592px; */
-  /* width: 100%; */
+  position: relative;
 }
 .transition_left {
-  width: 800px;
   padding-bottom: 20px;
   padding-left: 30px;
 }
 .transition_right {
-  width: 200px;
-  float: left;
-  position: relative;
+  background-color: #87ceff;
 }
 .send_message_box {
-  /* width: 592px; */
-  /* width: 100%; */
   margin: 0 auto;
 }
 .btn_upload {

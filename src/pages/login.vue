@@ -1,9 +1,13 @@
 <template>
   <div class="login">
     <div class="header">
-      <div class="logo"><span> ZONE </span></div>
+      <div class="logo">
+        <span> ZONE </span>
+      </div>
     </div>
+    <div class="out_form">
     <div class="form">
+      <center> 目前提供测试账号:1 密码:1 </center>
       <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
         <template slot="prepend">帐号</template>
       </el-input>
@@ -24,6 +28,9 @@
         <center style="margin-top:100px;font-size:13px;color:#999;">腾讯云提供计算服务. Vue.js 强力驱动</center>
       </div>
     </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -32,8 +39,8 @@ import { BASE_URL } from "@/components/api";
 export default {
   data() {
     return {
-      account: "",
-      password: ""
+      account: "1",
+      password: "1"
     };
   },
   methods: {
@@ -95,6 +102,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .logo {
   line-height: 60px;
   font-size: 1.2em;
@@ -107,8 +117,24 @@ export default {
   height: 60px;
   width: 100%;
   top: 0px;
-  background: #409EFF;
+  background: #409eff;
+  z-index: 1000;
 }
+
+
+.out_form{
+  /* position: fixed; */
+  /* left: 10%; */
+  /* top: 10%; */
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 100%;
+  height: 100vh; 
+  z-index: 0;
+  /* background-color: #409eff; */
+}
+
 .login {
   display: flex;
   flex: 1;
@@ -126,9 +152,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
-.reg{
+.reg {
   display: flex;
   flex-direction: row;
   width: 100%;

@@ -74,7 +74,7 @@ export default new Router({
       component: Login,
       meta: {
         requiredAuths: false,
-        title: '关于'
+        title: '登录'
       }
     },
     {
@@ -82,7 +82,7 @@ export default new Router({
       component: Register,
       meta: {
         requiredAuths: false,
-        title: '关于'
+        title: '注册'
       }
     },
     {
@@ -90,7 +90,7 @@ export default new Router({
       component: Doc,
       meta: {
         requiredAuths: false,
-        title: '关于'
+        title: 'ZONE - Doc'
       }
     },
     {
@@ -120,9 +120,6 @@ export default new Router({
     {
       path: '/find',
       component: Find,
-      // meta: {
-      //   requiredAuths: true
-      // }
     },
   ]
 })

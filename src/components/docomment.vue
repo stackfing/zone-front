@@ -1,45 +1,3 @@
-<style>
-.comment {
-  margin-top: 15px;
-  /* border-top: 1px solid #ebeef5; */
-  display: flex;
-  flex-direction: row;
-}
-.comment_left {
-  min-width: 85%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  /* background-color: aquamarine; */
-  transition: all 0.3s;
-}
-.comment_left_active {
-  min-width: 95%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  /* background-color: aquamarine; */
-}
-.comment_right {
-  min-width: 80px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: rgb(209, 87, 193); */
-  margin-left: 10px;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 <template>
   <div class="comment">
     <div class="comment_left" :class="{'comment_left_active':!animate_false}">
@@ -91,3 +49,45 @@ export default {
   }
 };
 </script>
+<style>
+.comment {
+  margin-top: 15px;
+  /* border-top: 1px solid #ebeef5; */
+  display: flex;
+  flex-direction: row;
+}
+.comment_left {
+  min-width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  /* background-color: aquamarine; */
+  transition: all 0.3s;
+}
+.comment_left_active {
+  min-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  /* background-color: aquamarine; */
+}
+.comment_right {
+  min-width: 80px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(209, 87, 193); */
+  margin-left: 10px;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
