@@ -23,6 +23,17 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
+axios.interceptors.response.use(response => {
+  return response
+}, error => {
+  switch(error.response.status) {
+    case 401://token失效，需要重新登录
+      router.replace({path: '/login'});
+    break;
+  }
+  return Promise.resolve(error.response)
+})
+
 router.beforeEach((to, from, next) => {
   if (localStorage.getItem("token") != null) {
     axios.get('/api/user/userInfo').then(res => {
@@ -32,6 +43,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title + '- Zone'
   }
+
   if (to.meta.requiredAuths) { // 判断该路由是否需要登录权限
     if (localStorage.getItem("token") != null) {
       next();

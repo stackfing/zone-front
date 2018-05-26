@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="header" @dblclick="backtotop" onselectstart="return false">
-      <el-dropdown trigger="click" style="float:right" @command="handleTopCommand">
+      <div class="logo"><span@click="$router.push('/trend')">ZONE</span></div>
+      <div class="toptips">Tips: 双击可以回到顶部哦~</div>
+      <el-dropdown trigger="click" class="self_dropdown" @command="handleTopCommand">
         <span class="el-dropdown-link" style="line-height:40px">
           {{$store.state.userInfo.nickname}}
           <i class="el-icon-arrow-down el-icon--right"></i>
@@ -22,6 +24,15 @@
         <div class="head_avatar">
           <img class="head_avatar_img" width="128px" height="128px" :src="$store.state.userInfo.avatar" />
         </div>
+        <div class="top_userinfo_container">
+          <div class="top_userinfo_nickname">
+            <!-- <a href="/"> -->
+              <span style="font-size:1.5em;font-weight:bold;">{{$store.state.userInfo.nickname}}</span>
+            <!-- </a> -->
+          </div>
+          <div class="top_userinfo_signature">个性签名：{{$store.state.userInfo.signature}}</div>
+        </div>
+
       </div>
       <div class="body_bottom">
         <div class="body_container">
@@ -53,7 +64,7 @@
               <center>好友列表</center>
             </div>
             <div class="friend_list_body">
-              <ul>
+              <ul style="min-height:100%;">
                 <!-- <router-link tag="li" to="/trend"></router-link> -->
                 <div v-for="item in $store.state.friendInfo">
                   <router-link tag="li" :to="{path: '/user/' + item.nickname}" class="friend_li">
@@ -66,7 +77,7 @@
                           <span>{{item.nickname}}</span>
                         </div>
                         <div class="friend_list_item_personsign">
-                          <span style="overflow:hidden;">个性签名即将上线，敬请期待!</span>
+                          <span style="overflow:hidden;padding-left:5px;">{{item.signature}}</span>
                         </div>
                       </div>
                     </div>
@@ -202,7 +213,7 @@ export default {
 
 <style scoped>
 .body {
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-image: url(../assets/background.jpg);
@@ -275,16 +286,17 @@ export default {
 
 .body_container {
   display: flex;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   color: #2c3e50;
   /* padding-top: 250px; */
+  flex: 1;
   justify-content: center;
   min-width: 1160px;
 }
 
 .right_slide_container {
   margin-left: 30px;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .fade-enter-active,
@@ -303,12 +315,32 @@ export default {
 
 .header {
   position: fixed;
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: 40px;
   background-color: #87ceff;
   z-index: 3;
 }
-
+.logo {
+  line-height: 40px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;  
+  flex: 1;
+}
+.logo span {
+  cursor: pointer;
+}
+.toptips {
+  display: flex;
+  line-height: 40px;  
+  flex: 1;
+  justify-content: center;
+  font-size: 10px;
+  color: gray;
+  overflow: hidden;
+}
 .friend_list_header {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -318,7 +350,8 @@ export default {
 }
 
 .friend_list_body {
-  min-height: 270px;
+  height: 400px;
+  /* overflow-y: scroll; */
 }
 
 .friend_list_item {
@@ -363,25 +396,50 @@ export default {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .body_top {
-  padding-top: 80px;
-  padding-bottom: 40px;
+  padding-top: 60px;
+  padding-bottom: 20px;
   /* padding-top: 40px; */
   min-width: 1160px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
 }
 .body_bottom {
   flex-direction: column;
   display: flex;
-  min-height: 100vh;
+  flex: 1;
+  min-height: 100%;
 }
 .head_avatar {
-  margin-left: 280px;
+  margin-left: 63px;
   border-radius: 3px;
 }
 .head_avatar_img {
   border-radius: 2px;
   border: #fff 3px solid;
 }
+
+.top_userinfo_container {
+  display: flex;
+  margin-left: 55px;
+  flex-direction: column;
+}
+
+.top_userinfo_nickname {
+  display: flex;
+  flex: 1;
+}
+.top_userinfo_signature {
+  display: flex;
+  flex: 1;
+  font-size: 15px;
+}
+.self_dropdown {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .left_slide_container,
   .slide_container {
@@ -399,11 +457,15 @@ export default {
   }
   .head_avatar {
     margin: 0 auto;
-    /* display: flex; */
-    /* flex-direction: row; */
-    /* position: absolute; */
-    /* margin-top: -200px; */
-    /* margin-left: 33%; */
+  }
+  .top_nickname_links {
+    display: none;
+  }
+  .top_userinfo_container {
+    display: none;
+  }
+  .center_container {
+    width: 100%;
   }
 }
 </style>

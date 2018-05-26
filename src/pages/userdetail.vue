@@ -84,7 +84,7 @@ export default {
   position: absolute;
   bottom: -30px;
   left: 20px;
-  background-color: gray;
+  background-color: rgb(255, 255, 255);
   width: 100px;
   height: 100px;
   border-radius: 2px;

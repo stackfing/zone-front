@@ -51,14 +51,14 @@ export default new Router({
             title: '发现世界'
           }
         },
-        {
-          path: '/related',
-          component: Related,
-          meta: {
-            requiredAuths: true,
-            title: '与我相关'
-          }
-        },
+        // {
+        //   path: '/related',
+        //   component: Related,
+        //   meta: {
+        //     requiredAuths: true,
+        //     title: '与我相关'
+        //   }
+        // },
         {
           path: '/about',
           component: About,
@@ -120,6 +120,14 @@ export default new Router({
     {
       path: '/find',
       component: Find,
+    },
+    {
+      path: '/related',
+      component: Related,
+      meta: {
+        // requiredAuths: true,
+        title: '与我相关'
+      }
     },
   ]
 })

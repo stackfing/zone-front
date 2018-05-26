@@ -5,12 +5,11 @@
         <img src="../assets/up.jpg" alt="background" class="bg">
         <div class="desc">
           <h3>@{{$store.state.userInfo.nickname}}</h3>
-          <p>你所拥有的一切都是你吸引而来的。我们都活在过去的行为和想法造就的世界里。</p>
+          <p>{{$store.state.userInfo.signature}}</p>
         </div>
       </div>
       <div class="avatarcontainer">
-        <!-- <img :src="$store.state.userInfo.avatar" alt="avatar" class="avatar">         -->
-        <img src="../assets/photo.jpg" alt="avatar" class="avatar">
+        <img :src="$store.state.userInfo.avatar" alt="avatar" class="avatar">
         <div class="hover">
           <div class="icon-twitter"></div>
         </div>
@@ -136,12 +135,10 @@ body {
   height: 70px;
   display: block;
 }
-.avatarcontainer:hover > .hover {
-  opacity: 1;
-}
 
 .avatar {
-  width: 100%;
+  width: 70px;
+  height: 70px;
   border: 3px solid #5cc0ff;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;

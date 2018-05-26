@@ -126,65 +126,28 @@ Vue.filter("myDate", function(time) {
   var seconds = Math.round(leave3 / 1000);
   var oDate = new Date(time);
 
-  var Y = oDate.getFullYear() + "-";
+  var Y = oDate.getFullYear();
   var M =
-    (oDate.getMonth() + 1 < 10
+    oDate.getMonth() + 1 < 10
       ? "0" + (oDate.getMonth() + 1)
-      : oDate.getMonth() + 1) + "-";
-  var D =
-    (oDate.getDate() < 10 ? "0" + oDate.getDate() : oDate.getDate()) + " ";
-  var h =
-    (oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours()) + ":";
+      : oDate.getMonth() + 1;
+  var D = oDate.getDate() < 10 ? "0" + oDate.getDate() : oDate.getDate();
+  var h = oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours();
   var m =
-    (oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes()) +
-    ":";
+    oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes();
   var s =
     oDate.getSeconds() < 10 ? "0" + oDate.getSeconds() : oDate.getSeconds();
 
   if (days == 0) {
-    return "今天  " + h + m + s;
+    return "今天  " + h + ":" + m;
   }
 
   if (days == 1) {
-    return "昨天" + h + m + s;
+    return "昨天 " + h + ":" + m;
   }
   if (days != 1 || days != 0) {
-    return M + D + h + m + s;
+    return M + "月" + D + "日 " + h + ":" + m;
   }
-
-  // if (days == 0) {
-  //   return (
-  //     "今天" +
-  //     oDate.getHours() +
-  //     ":" +
-  //     oDate.getMinutes() +
-  //     ":" +
-  //     oDate.getSeconds()
-  //   );
-  // }
-  // if (days == 1) {
-  //   return (
-  //     "昨天" +
-  //     oDate.getHours() +
-  //     ":" +
-  //     oDate.getMinutes() +
-  //     ":" +
-  //     oDate.getSeconds()
-  //   );
-  // }
-  // if (days != 1 || days != 0) {
-  //   return (
-  //     oDate.getMonth() +
-  //     "-" +
-  //     oDate.getDate() +
-  //     "  " +
-  //     oDate.getHours() +
-  //     ":" +
-  //     oDate.getMinutes() +
-  //     ":" +
-  //     oDate.getSeconds()
-  //   );
-  // }
 });
 
 export default {
@@ -217,11 +180,21 @@ export default {
     const more = this.$refs.moreimgs;
     var _this = this;
     window.addEventListener("resize", function() {
-      if (two != null || two != undefined)
-        _this.changeImgSize(two);
-      if (more != null || more != undefined)
-        _this.changeImgSize(more);
+      if (_this.$refs.moreimgs != null || _this.$refs.moreimgs != undefined) {
+        _this.changeImgSize(_this.$refs.moreimgs);
+      }
+      if (_this.$refs.imgs != null || _this.$refs.imgs != undefined) {
+        _this.changeImgSize(_this.$refs.imgs);
+      }
     });
+  },
+  mounted() {
+    if (this.$refs.moreimgs != null) {
+      this.changeImgSize(this.$refs.moreimgs);
+    }
+    if (this.$refs.imgs != null) {
+      this.changeImgSize(this.$refs.imgs);
+    }
   },
   methods: {
     clickphotos(url) {
@@ -271,12 +244,10 @@ export default {
       this.commentList.push(data);
     },
     changeImgSize(nodes) {
-      // console.log(nodes)
       for (var i = 0; i < nodes.childNodes.length; i++) {
-        // if (i <= 8) {
+        if (nodes.childNodes[i].style.height != undefined) {
           nodes.childNodes[i].style.height = nodes.childNodes[i].width + "px";
-          console.log(nodes.childNodes[i].width)
-        // }
+        }
       }
     }
   }
@@ -366,38 +337,8 @@ a:visited {
 .message_content {
   padding: 5px;
   padding-bottom: 20px;
-  /* margin-left: 10px; */
-  /* margin-bottom: 20px; */
-}
-/* .img_flex {
-  float: left;
-  width: 100%;
-}
-.img_conten {
-  width: 32%;
-  height: 34%;
-}
-.onephoto img {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.twophoto img {
-  margin-right: 2%;
-  width: 48%;
-}
-.morephoto img {
-  width: 180px;
-  margin-left: 3px;
 }
 
-img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-} */
 .fui-icon {
   width: 24px;
   height: 24px;

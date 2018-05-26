@@ -2,34 +2,34 @@
   <div class="login">
     <div class="header">
       <div class="logo">
-        <span> ZONE </span>
+        <span>ZONE</span>
       </div>
     </div>
     <div class="out_form">
-    <div class="form">
-      <center> 目前提供测试账号:1 密码:1 </center>
-      <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
-        <template slot="prepend">帐号</template>
-      </el-input>
-      <el-input style="margin-bottom:20px;" id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">
-        <template slot="prepend">密码</template>
-      </el-input>
-      <el-button id="login" @click="login" style="width:100%;margin-bottom:20px;" type="primary">登录</el-button>
-      <div class="reg">
-        <span style="font-size:12px" class="register">
-          <a href="/register">立即注册</a>
-        </span>
-        <span style="font-size:12px" class="forget">
-          <a href="/">忘了密码？</a>
-        </span>
-        <div class="clearfix"></div>
-      </div>
-      <div class="copyright">
-        <center style="margin-top:100px;font-size:13px;color:#999;">腾讯云提供计算服务. Vue.js 强力驱动</center>
-      </div>
-    </div>
-    </div>
+      <div class="form">
+        <!-- <center> 目前提供测试账号:1 密码:1 </center> -->
+        <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
+          <template slot="prepend">帐号</template>
+        </el-input>
+        <el-input style="margin-bottom:20px;" id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">
+          <template slot="prepend">密码</template>
+        </el-input>
+        <el-button id="login" @click="login" style="width:100%;margin-bottom:20px;" type="primary">登录</el-button>
+        <div class="reg">
+          <span style="font-size:12px" class="register">
+            <a href="/register">立即注册</a>
+          </span>
+          <span style="font-size:12px" class="forget">
+            <a href="/">忘了密码？</a>
+          </span>
+          <div class="clearfix"></div>
+        </div>
+        <div class="copyright">
+          <center style="">腾讯云提供计算服务. Vue.js 强力驱动.</center>
+        </div>
 
+      </div>
+    </div>
 
   </div>
 </template>
@@ -97,19 +97,19 @@ export default {
           }
         });
     }
+  },
+  activated() {
+    console.log("sadfsdf");
   }
 };
 </script>
 
 <style scoped>
-
-
-
 .logo {
   line-height: 60px;
   font-size: 1.2em;
   position: relative;
-  left: 60px;
+  left: 35px;
 }
 .header {
   position: fixed;
@@ -121,16 +121,13 @@ export default {
   z-index: 1000;
 }
 
-
-.out_form{
-  /* position: fixed; */
-  /* left: 10%; */
-  /* top: 10%; */
+.out_form {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  height: 100vh; 
+  height: 100vh;
   z-index: 0;
   /* background-color: #409eff; */
 }
@@ -146,6 +143,7 @@ export default {
   align-items: center;
 }
 .form {
+  margin-top: 60px;
   width: 300px;
   height: 500px;
   display: flex;
@@ -168,6 +166,12 @@ export default {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+}
+.copyright {
+  padding-top: 80px;
+  /* margin-top: 30px; */
+  font-size: 13px;
+  color: #999;
 }
 /* .el-row {
   margin-bottom: 20px;

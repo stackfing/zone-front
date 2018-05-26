@@ -1,41 +1,40 @@
 <template>
   <div class="trend">
     <div class="clearfix"></div>
-    <div>
-      <div class="send_message_box">
+    <div class="send_message_box">
 
-        <div class="grid-content bg-purple">
-          <center>
-            <span style="line-height:36px">写下你现在的心情吧</span>
-          </center>
-        </div>
-
-        <at-ta :members="$store.state.friendInfo" name-key="nickname">
-          <template slot="item" slot-scope="s">
-            <img class="small_img" width="27" height="27" :src="s.item.avatar">
-            <span style="margin-left:5px;" v-text="s.item.nickname"></span>
-          </template>
-          <textarea v-model="message" @focus="clickTextArea" @blur="textblur" class="el-textarea__inner" contenteditable></textarea>
-        </at-ta>
-        <transition name="el-zoom-in-top">
-          <div v-show="submitshow" class="transition-box">
-            <div class="transition_left">
-              <upload @getURL="getPhotoUrl"></upload>
-            </div>
-            <div class="transition_right">
-              <el-button class="btn_upload" v-show="submitshow" @click="submitmessage">提交</el-button>
-            </div>
-          </div>
-        </transition>
-
-        <div class="clearfix"></div>
-        <ul style="margin-top:20px">
-          <li v-for="(item, index) of mydata" ref="list" style="transition: all .4s;list-style:none;margin-bottom:20px">
-            <message :key="index" :index="index" @delete="deleteMessageContainer" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
-          </li>
-        </ul>
-        <div class="bottom_tip" onselectstart="return false" @click="cases == true ? getMessages(++nowPage, nowMessageSize) : false">{{more}}</div>
+      <div class="grid-content bg-purple">
+        <center>
+          <span style="line-height:36px">写下你现在的心情吧</span>
+        </center>
       </div>
+
+      <at-ta :members="$store.state.friendInfo" name-key="nickname">
+        <template slot="item" slot-scope="s">
+          <img class="small_img" width="27" height="27" :src="s.item.avatar">
+          <span style="margin-left:5px;" v-text="s.item.nickname"></span>
+        </template>
+        <textarea v-model="message" @focus="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
+      </at-ta>
+      <transition name="el-zoom-in-top">
+        <div v-show="submitshow" class="transition-box">
+          <div class="transition_left">
+            <upload @getURL="getPhotoUrl"></upload>
+          </div>
+          <div class="transition_right">
+            <el-button class="btn_upload" v-show="submitshow" @click="submitmessage">提交</el-button>
+          </div>
+        </div>
+      </transition>
+
+      <div class="clearfix"></div>
+      <ul style="margin-top:20px">
+        <li v-for="(item, index) of mydata" ref="list" style="transition: all .4s;list-style:none;margin-bottom:20px">
+          <message :key="index" :index="index" @delete="deleteMessageContainer" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
+        </li>
+      </ul>
+
+      <div class="bottom_tip" onselectstart="return false" @click="cases == true ? getMessages(++nowPage, nowMessageSize) : false">{{more}}</div>
     </div>
   </div>
 </template>
@@ -149,7 +148,7 @@ export default {
       this.$http
         .get("/api/message?page=" + page + "&size=" + size)
         .then(res => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           if (res.data.data == false) {
             this.cases = false;
           } else {
@@ -182,7 +181,6 @@ export default {
       window.addEventListener("scroll", function() {
         if (
           document.documentElement.clientHeight +
-            200 +
             document.documentElement.scrollTop >=
           document.body.scrollHeight
         ) {
@@ -200,6 +198,9 @@ export default {
 </script>
 
 <style scoped>
+.trend {
+  width: 100%;
+}
 .list-leave-active {
   transition: all 0.8s;
   transform: translate3d(0, 0, 0);
