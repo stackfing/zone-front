@@ -17,10 +17,10 @@
         <el-button id="login" @click="login" style="width:100%;margin-bottom:20px;" type="primary">登录</el-button>
         <div class="reg">
           <span style="font-size:12px" class="register">
-            <a href="/register">立即注册</a>
+            <router-link to="/register">立即注册</router-link>
           </span>
           <span style="font-size:12px" class="forget">
-            <a href="/">忘了密码？</a>
+            <router-link to="/">立即注册</router-link>
           </span>
           <div class="clearfix"></div>
         </div>

@@ -1,45 +1,130 @@
+<style scoped>
+.container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  background: #409eff;
+  z-index: 1000;
+}
+.logo {
+  line-height: 60px;
+  font-size: 1.2em;
+  position: relative;
+  left: 35px;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.form {
+  display: flex;
+  padding-top: 30px;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  background: #f4f4f4;
+}
+.tips {
+  height: 250px;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.tips h1 {
+  margin: 0 auto;
+  text-align: center;
+  color: #acacac;
+}
+
+.process_tip {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  .tips {
+    display: none;
+  }
+  .body {
+    background: #f4f4f4;
+  }
+  .el-form {
+    margin-top: 0px;
+  }
+}
+</style>
 <template>
-  <div class="grid_content">
-    <el-steps :active="active" finish-status="success">
-      <el-step title="填写基本信息"></el-step>
-      <el-step title="邮箱验证"></el-step>
-      <el-step title="注册成功"></el-step>
-    </el-steps>
-    <div v-if="active == 0">
-      <el-form class="form_box" label-width="100px" :rules="rules" :model="form" label-position="right">
-        <span>请填写您的基本信息</span>
-        <el-form-item label="用户名" prop="account">
-          <el-input v-model="form.account"></el-input>
-        </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="form.nickName"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" type="email"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" type="password"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkpassword">
-          <el-input type="password"></el-input>
-        </el-form-item>
-        <el-button style="float:right" @click="next">下一步</el-button>
-        <div class="clearfix"></div>
-      </el-form>
-    </div>
-    <div v-if="active == 1">
-      <div class="sendEmail_container">
-        <p style="margin-top:30px;">我们已经发送邮件在您的邮箱，请进入邮箱点击链接以激活您的账号。</p>
-        <el-button style="margin-top:30px;" @click="toEmail">点击进入邮箱</el-button>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <span @click="toHome">ZONE</span>
       </div>
     </div>
-    <div v-if="active == 2">
-      <p style="margin-top:30px;">您的邮箱已经验证通过</p>
-      <el-button style="margin-top:30px;float:right" @click="next">下一步</el-button>
+    <div class="body">
+      <div class="tips">
+        <div class="process_tip">
+          <h1>完成注册需要 3 个步骤</h1>
+        </div>
+        <el-steps :active="2" align-center>
+          <el-step title="步骤1" description="这是一段很长很长很长的描述性文字"></el-step>
+          <el-step title="步骤2" description="这是一段很长很长很长的描述性文字"></el-step>
+          <el-step title="步骤3" description="这是一段很长很长很长的描述性文字"></el-step>
+        </el-steps>
+      </div>
+      <div class="form">
+        <el-form ref="form" label-width="80px">
+          <el-form-item label="用户名">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="昵称">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="密码">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio-group>
+              <el-radio label="男"></el-radio>
+              <el-radio label="女"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="空间开放" prop="region">
+          <el-select placeholder="请选择">
+            <el-option label="只对好友开放" value="1"></el-option>
+            <el-option label="对所有人开放" value="2"></el-option>
+            <el-option label="关闭" value="0"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="可见性" prop="region">
+          <el-select placeholder="请选择">
+            <el-option label="只允许通过昵称查找" value="1"></el-option>
+            <el-option label="只允许通过账号查找" value="2"></el-option>
+            <el-option label="关闭" value="0"></el-option>
+          </el-select>
+        </el-form-item>
+          <el-form-item label="即时配送">
+            <el-switch>啊</el-switch>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary">立即创建</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
-    <div v-if="active == 3">
-      <p style="margin-top:30px;">注册成功，后台正在紧张的为您生成初始化数据，生成完毕即将跳转至首页</p>
-    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -47,94 +132,12 @@
 import { BASE_URL } from "@/components/api";
 export default {
   data() {
-    return {
-      active: 0,
-      nickname: "2",
-      username: "",
-      form: {},
-      rules: {
-        account: [{ required: true, trigger: "blur", message: "请输入用户名" }],
-        password: [{ required: true, trigger: "blur", message: "请输入密码" }],
-        email: [
-          { required: true, message: "请输入邮箱地址", trigger: "blur" },
-          {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: "blur"
-          }
-        ],
-        nickname: [{ required: true, trigger: "blur", message: "请输入用户名" }]
-        // nickname: [{ required: true, trigger: "blur", message: "请输入昵称" }],
-        // checkpassword: [
-        //   { required: true, trigger: "blur", message: "密码输入一直" }
-        // ]
-      }
-    };
+    return {};
   },
-  // props: ['active'],
   methods: {
-    next() {
-      if (this.active == 0) {
-        this.register();
-        return;
-      }
-      if (this.nickname === "") {
-      } else {
-        if (this.active++ > 2) this.active = 0;
-      }
-      if (this.username) {
-      }
-    },
-    toEmail() {
-      open("http://mail.qq.com");
-    },
-    register() {
-      this.$http
-        .post({ BASE_URL }.BASE_URL + "/api/user/register", this.form)
-        .then(res => {
-          if (res.data.data == true) {
-            this.active++;
-          }
-        });
-    }
-  },
-  created() {
-    
-  },
-  mounted() {
-    var mid = this.$route.query.mid;
-    if (mid != null && mid != undefined) {
-      this.$http
-        .get({ BASE_URL }.BASE_URL + "/api/user/register?id=" + mid)
-        .then(res => {
-          // console.log(res.body.data == false)
-          if (res.data.data == false) {
-            console.log("没有验证");
-            this.active = 2;
-            // this.active = 2;
-          } else {
-            console.log("已经验证过");
-            this.active = 3;
-          }
-        });
+    toHome() {
+      this.$router.push("/");
     }
   }
 };
 </script>
-
-<style scoped>
-.grid_content {
-  padding-bottom: 100px;
-  width: 592px;
-  margin: 0 auto;
-  padding-top: 100px;
-}
-.form_box {
-  margin-top: 50px;
-  box-shadow: 0px 0px 30px rgb(214, 214, 214);
-  background-color: #f9f9f9;
-  padding: 50px;
-  border-radius: 7px;
-  border: 1px solid #eee;
-}
-</style>

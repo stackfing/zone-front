@@ -5,7 +5,7 @@
   "author": "stackfing <stackfing@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host=10.102.48.16",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js  --host=10.102.64.135",
     "start": "npm run dev",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run e2e",

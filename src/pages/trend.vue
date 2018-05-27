@@ -14,7 +14,7 @@
           <img class="small_img" width="27" height="27" :src="s.item.avatar">
           <span style="margin-left:5px;" v-text="s.item.nickname"></span>
         </template>
-        <textarea v-model="message" @focus="clickTextArea" class="el-textarea__inner" contenteditable></textarea>
+        <textarea v-model="message" @focus="clickTextArea" placeholder="写下你现在的心情吧" class="el-textarea__inner" contenteditable></textarea>
       </at-ta>
       <transition name="el-zoom-in-top">
         <div v-show="submitshow" class="transition-box">
@@ -112,32 +112,33 @@ export default {
       this.message = "";
     },
     deleteMessageContainer(data) {
-      const childNodes = this.$refs.list;
-      const el = childNodes[data];
-      const offsetHeight = window
-        .getComputedStyle(el)
-        .getPropertyValue("height");
-      const marginBottom = window
-        .getComputedStyle(el)
-        .getPropertyValue("margin-bottom");
-      const totalHeight = parseInt(offsetHeight) + parseInt(marginBottom);
-      const matrix = this.getTransformMatrix(el);
-      el.style.transform = `translate(100%, ${
-        matrix[1] ? Number(matrix[1]) : 0
-      }px)`;
-      el.style.opacity = "0";
-      setTimeout(() => {
-        // this.mydata.splice(data, 1);
-        for (let i = data + 1; i < childNodes.length; i++) {
-          if (childNodes[i].style.transform) {
-            const matrix = this.getTransformMatrix(childNodes[i]);
-            childNodes[i].style.transform = `translate(0, ${Number(matrix[1]) -
-              totalHeight}px)`;
-          } else {
-            childNodes[i].style.transform = `translate(0, -${totalHeight}px)`;
-          }
-        }
-      }, 500);
+      // const childNodes = this.$refs.list;
+      // const el = childNodes[data];
+      // const offsetHeight = window
+      //   .getComputedStyle(el)
+      //   .getPropertyValue("height");
+      // const marginBottom = window
+      //   .getComputedStyle(el)
+      //   .getPropertyValue("margin-bottom");
+      // const totalHeight = parseInt(offsetHeight) + parseInt(marginBottom);
+      // const matrix = this.getTransformMatrix(el);
+      // el.style.transform = `translate(100%, ${
+      //   matrix[1] ? Number(matrix[1]) : 0
+      // }px)`;
+      // el.style.opacity = "0";
+      // setTimeout(() => {
+      //   // this.mydata.splice(data, 1);
+      //   for (let i = data + 1; i < childNodes.length; i++) {
+      //     if (childNodes[i].style.transform) {
+      //       const matrix = this.getTransformMatrix(childNodes[i]);
+      //       childNodes[i].style.transform = `translate(0, ${Number(matrix[1]) -
+      //         totalHeight}px)`;
+      //     } else {
+      //       childNodes[i].style.transform = `translate(0, -${totalHeight}px)`;
+      //     }
+      //   }
+      // }, 500);
+      this.mydata.splice(data, 1);
     },
     getTransformMatrix(el) {
       if (!el) return false;

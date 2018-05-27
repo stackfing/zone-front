@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <div class="header" @dblclick="backtotop" onselectstart="return false">
-      <div class="logo"><span@click="$router.push('/trend')">ZONE</span></div>
-      <div class="toptips">Tips: 双击可以回到顶部哦~</div>
+    <div class="header" :class="scrolled ? 'scrolled' : ''" @dblclick="backtotop" onselectstart="return false">
+      <div class="logo">
+        <span@click="$router.push('/trend')">ZONE</span>
+      </div>
+      <div class="toptips"></div>
+      <!-- <div class="toptips">Tips: 双击可以回到顶部哦~</div> -->
       <el-dropdown trigger="click" class="self_dropdown" @command="handleTopCommand">
         <span class="el-dropdown-link" style="line-height:40px">
           {{$store.state.userInfo.nickname}}
@@ -27,7 +30,7 @@
         <div class="top_userinfo_container">
           <div class="top_userinfo_nickname">
             <!-- <a href="/"> -->
-              <span style="font-size:1.5em;font-weight:bold;">{{$store.state.userInfo.nickname}}</span>
+            <span style="font-size:1.5em;font-weight:bold;">{{$store.state.userInfo.nickname}}</span>
             <!-- </a> -->
           </div>
           <div class="top_userinfo_signature">个性签名：{{$store.state.userInfo.signature}}</div>
@@ -111,7 +114,8 @@ export default {
       // friendList: {},
       badgeHidden: false,
       isFindWord: true,
-      isfindword: true
+      isfindword: true,
+      scrolled: false
     };
   },
   components: {
@@ -201,12 +205,19 @@ export default {
           this.findWord();
           break;
       }
+    },
+    handleScroll() {
+      if (window.scrollY > 0) this.scrolled = true;
+      else this.scrolled = false;
     }
   },
   created() {
     this.getUserInfo();
     this.getFriendList();
     this.handleRoute();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  ready() {
   }
 };
 </script>
@@ -322,11 +333,15 @@ export default {
   background-color: #87ceff;
   z-index: 3;
 }
+.scrolled {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  transition: all 0.4s;
+}
 .logo {
   line-height: 40px;
   font-size: 18px;
   display: flex;
-  justify-content: center;  
+  justify-content: center;
   flex: 1;
 }
 .logo span {
@@ -334,7 +349,7 @@ export default {
 }
 .toptips {
   display: flex;
-  line-height: 40px;  
+  line-height: 40px;
   flex: 1;
   justify-content: center;
   font-size: 10px;
@@ -457,6 +472,7 @@ export default {
   }
   .head_avatar {
     margin: 0 auto;
+    display: none;
   }
   .top_nickname_links {
     display: none;
@@ -466,6 +482,17 @@ export default {
   }
   .center_container {
     width: 100%;
+  }
+  .body {
+    background-color: white;
+    background-image: none;
+  }
+  .body_top {
+    margin-top: 40px;
+    height: 140px;
+    background-image: url(../assets/userdetail.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
   }
 }
 </style>
