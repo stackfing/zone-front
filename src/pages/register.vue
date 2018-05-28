@@ -24,12 +24,13 @@
   flex-direction: column;
   height: 100%;
 }
-.form {
+.form_container {
   display: flex;
   padding-top: 30px;
-  justify-content: center;
+  /* justify-content: center; */
   flex: 1;
   width: 100%;
+  min-height: 100vh;
   background: #f4f4f4;
 }
 .tips {
@@ -48,15 +49,20 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+.form {
+  margin: 0 auto;
+  width: 500px;
+}
+
 @media screen and (min-width: 320px) and (max-width: 480px) {
   .tips {
     display: none;
   }
-  .body {
-    background: #f4f4f4;
-  }
   .el-form {
     margin-top: 0px;
+  }
+  .form {
+    width: 300px;
   }
 }
 </style>
@@ -78,9 +84,9 @@
           <el-step title="步骤3" description="这是一段很长很长很长的描述性文字"></el-step>
         </el-steps>
       </div>
-      <div class="form">
-        <el-form ref="form" label-width="80px">
-          <el-form-item label="用户名">
+      <div class="form_container">
+        <el-form class="form" ref="form" label-width="80px">
+          <el-form-item label="账号">
             <el-input></el-input>
           </el-form-item>
           <el-form-item label="昵称">
@@ -101,22 +107,22 @@
               <el-radio label="女"></el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="空间开放" prop="region">
-          <el-select placeholder="请选择">
-            <el-option label="只对好友开放" value="1"></el-option>
-            <el-option label="对所有人开放" value="2"></el-option>
-            <el-option label="关闭" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="可见性" prop="region">
-          <el-select placeholder="请选择">
-            <el-option label="只允许通过昵称查找" value="1"></el-option>
-            <el-option label="只允许通过账号查找" value="2"></el-option>
-            <el-option label="关闭" value="0"></el-option>
-          </el-select>
-        </el-form-item>
+          <el-form-item label="开放性" prop="region">
+            <el-select placeholder="请选择">
+              <el-option label="只对好友开放" value="1"></el-option>
+              <el-option label="对所有人开放" value="2"></el-option>
+              <el-option label="关闭" value="0"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="可见性" prop="region">
+            <el-select placeholder="请选择">
+              <el-option label="只允许通过昵称查找" value="1"></el-option>
+              <el-option label="只允许通过账号查找" value="2"></el-option>
+              <el-option label="关闭" value="0"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="即时配送">
-            <el-switch>啊</el-switch>
+            <el-switch></el-switch>
           </el-form-item>
           <el-form-item>
             <el-button type="primary">立即创建</el-button>

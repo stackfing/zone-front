@@ -9,7 +9,8 @@
           <div class="username_and_time">
             <div class="b_contant">
               <span>
-                <a :href="'/user/' + nickName" class="username">{{nickName}}</a>
+                <!-- <a :href="'/user/' + nickName" class="username">{{nickName}}</a> -->
+                <router-link :to="'/user/'+nickName" class="username">{{nickName}}</router-link>
               </span>
               <span class="time">{{createTime|myDate}}</span>
             </div>
@@ -33,7 +34,7 @@
         <!-- 这里开始 -->
 
         <template v-if="images.length == 1">
-          <div class="one_img_container">
+          <div class="one_img_container" ref="oneimg">
             <img v-img :src="images[0]" />
           </div>
         </template>
@@ -176,10 +177,14 @@ export default {
     // "friendList"
   ],
   created() {
+    const one = this.$refs.oneimg;
     const two = this.$refs.imgs;
     const more = this.$refs.moreimgs;
     var _this = this;
     window.addEventListener("resize", function() {
+      if (_this.$refs.oneimg != null || _this.$refs.oneimg != undefined) {
+        _this.changeImgSize(_this.$refs.oneimg);
+      }
       if (_this.$refs.moreimgs != null || _this.$refs.moreimgs != undefined) {
         _this.changeImgSize(_this.$refs.moreimgs);
       }
@@ -351,18 +356,15 @@ a:visited {
 .feed-v9,
 .icon-op-praise {
   background-image: url(../assets/jpgs.png);
-  /* background-position: -458px -260px; */
   background-position: -458px -286px;
 }
 .icon-op-praise-hidden {
   background-image: url(../assets/jpgs.png);
-  /* background-position: -458px -260px; */
   background-position: -458px -260px;
 }
 
 .img_container {
   display: flex;
-  justify-content: center;
 }
 
 .img_container img {

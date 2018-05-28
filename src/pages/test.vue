@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="header">
-
+            {{message}}
         </div>
         <div class="body">
             <div class="left">
@@ -16,80 +16,46 @@
             </div>
         </div>
     </div>
-    <!-- <div class="container">
-      <div class="header">
-
-      </div>
-      <div class="body">
-          <div class="slide a">
-              <div class="slide_left">
-                  <div class="slide_left_a">
-                      4444
-                  </div>
-                  <div class="slide_left_b">
-                      454
-                  </div>
-              </div>
-          </div>
-          <div class="slide b">421124</div>
-          <div class="slide c">4121124</div>
-      </div>
-  </div> -->
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+        names: '',
+        message: 0
+    };
+  },
+  methods: {
+      websocket () {
+         let ws = new WebSocket('ws://10.102.191.83:8888/websocket/' + localStorage.getItem('token'))
+         ws.onopen = () => {
+            // Web Socket 已连接上，使用 send() 方法发送数据
+              ws.send('Holle')
+            //   console.log('数据发送中...')
+          }
+          ws.onmessage = evt => {
+              console.log(evt.data)
+              var obj = JSON.parse(evt.data)
+              console.log(obj.fun)
+          }
+          ws.onclose = function () {
+            // 关闭 websocket
+            // console.log('连接已关闭...')
+          }
+           // 组件销毁时调用，中断websocket链接
+          this.over = () => {
+            ws.close()
+          }
+    },
+  },
+  created() {
+      this.websocket();
   }
 };
 </script>
 
 <style scoped>
-/* .container {
-}
-.header {
-    background-color: red;
-    width: 100%;
-    height: 3rem;
-}
-.body {
-    display: flex;
-    flex-direction: row;
-}
-.slide {
-    display: flex;
-    
-    justify-content: center;
-    background-color: rgb(148, 142, 142);
-    height: 5rem;
-}
-.a{ 
-    background-color: aqua;
-    flex: 1;
-}
-.b{ 
-    background-color: rgb(134, 226, 111);
-    flex: 2;
-}
-.c{ 
-    background-color: rgb(231, 117, 231);
-    flex: 1;
-}
-.slide_left{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-}
-.slide_left_a{
-   background-color: rgb(67, 202, 33);
-    flex: 1;  
-}
-.slide_left_b{
-   background-color: rgb(83, 81, 194);
-    flex: 1;  
-} */
 .header {
   width: 100%;
   background-color: red;

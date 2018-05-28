@@ -14,7 +14,7 @@
           <img class="small_img" width="27" height="27" :src="s.item.avatar">
           <span style="margin-left:5px;" v-text="s.item.nickname"></span>
         </template>
-        <textarea v-model="message" @focus="clickTextArea" placeholder="写下你现在的心情吧" class="el-textarea__inner" contenteditable></textarea>
+        <textarea @change="handleAtChange" v-model="message" @focus="clickTextArea" placeholder="写下你现在的心情吧" class="el-textarea__inner" contenteditable></textarea>
       </at-ta>
       <transition name="el-zoom-in-top">
         <div v-show="submitshow" class="transition-box">
@@ -33,7 +33,6 @@
           <message :key="index" :index="index" @delete="deleteMessageContainer" :messageId=item.id :createTime=item.createTime :avatar=item.avatar :content=item.content :nickName=item.nickName :images=item.images :starnum=item.starnum :commentList=item.commentList :friendList=friendList />
         </li>
       </ul>
-
       <div class="bottom_tip" onselectstart="return false" @click="cases == true ? getMessages(++nowPage, nowMessageSize) : false">{{more}}</div>
     </div>
   </div>
@@ -57,7 +56,8 @@ export default {
       more: "点击加载更多",
       nowPage: 1,
       nowMessageSize: 10,
-      cases: true
+      cases: true,
+      atList: []
     };
   },
   components: {
@@ -66,6 +66,10 @@ export default {
     upload
   },
   methods: {
+    handleAtChange(data) {
+      console.log(data)
+      console.log(data.srcElement.value)
+    },
     submitmessage() {
       if (this.message === "") {
         this.submitshow = true;

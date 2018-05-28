@@ -75,6 +75,9 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (min-width: 320px) and (max-width: 480px) {
+  
+}
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

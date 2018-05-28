@@ -46,7 +46,7 @@ li {
   list-style: none;  
 }
 img {
-  object-fit: cover;  
+  object-fit: cover;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

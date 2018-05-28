@@ -12,9 +12,11 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="related">评论</el-dropdown-item>
-          <el-dropdown-item command="related">我的消息</el-dropdown-item>
-          <el-dropdown-item command="settings">设置</el-dropdown-item>
+          <el-dropdown-item :command="'/user/' + $store.state.userInfo.nickname" >我的圈子</el-dropdown-item>
+          <el-badge :value="messageNumber" :max="3" :hidden="messageNumber==0">
+            <el-dropdown-item command="related">消息通知</el-dropdown-item>
+          </el-badge>
+          <el-dropdown-item command="settings">系统设置</el-dropdown-item>
           <el-dropdown-item divided @click.native="exit">
             <span>注销</span>
           </el-dropdown-item>
@@ -43,7 +45,7 @@
             <ul class="action_list">
               <router-link tag="li" to="/trend" @click.native="friendDongtai">朋友动态</router-link>
               <router-link tag="li" to="/related" @click.native="cancelBadge">
-                <el-badge :value="12" :max="3" :hidden="badgeHidden">
+                <el-badge :value="messageNumber" :max="3" :hidden="messageNumber==0">
                   <!-- <el-button size="small">评论</el-button> -->
                   <span>与我相关</span>
                 </el-badge>
@@ -112,10 +114,11 @@ export default {
     return {
       // userInfo: {},
       // friendList: {},
-      badgeHidden: false,
+      badgeHidden: true,
       isFindWord: true,
       isfindword: true,
-      scrolled: false
+      scrolled: false,
+      messageNumber: 0
     };
   },
   components: {
@@ -128,6 +131,7 @@ export default {
   },
   methods: {
     backtotop() {
+      console.log("asfdsdf");
       var scrollToTop = window.setInterval(function() {
         var pos = window.pageYOffset;
         if (pos > 0) {
@@ -187,13 +191,13 @@ export default {
       });
     },
     cancelBadge() {
-      this.badgeHidden = true;
+      this.messageNumber = 0;
     },
     handleTopCommand(command) {
-      this.$router.push({ path: "/" + command });
+      this.$router.push({ path: command });
     },
     handleRoute() {
-      console.log(this.$route.path);
+      // console.log(this.$route.path);
       switch (this.$route.path) {
         case "/trend":
         case "/about":
@@ -209,15 +213,48 @@ export default {
     handleScroll() {
       if (window.scrollY > 0) this.scrolled = true;
       else this.scrolled = false;
+    },
+    websocket() {
+      let ws = new WebSocket(
+        "ws://10.102.191.83:8888/websocket/" + localStorage.getItem("token")
+      );
+      ws.onopen = () => {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        ws.send("Holle");
+        //   console.log('数据发送中...')
+      };
+      ws.onmessage = evt => {
+        this.handlerMessage(evt);
+      };
+      ws.onclose = function() {
+        // 关闭 websocket
+        // console.log('连接已关闭...')
+      };
+      // 组件销毁时调用，中断websocket链接
+      this.over = () => {
+        ws.close();
+      };
+    },
+    handlerMessage(evt) {
+      this.messageNumber++;
+      // this.messageNumber = JSON.parse(evt.data).fun
+      console.log(evt.data);
+      this.$notify({
+        title: "提示",
+        message: "有一条与您相关的消息",
+        position: "top-right"
+      });
     }
   },
   created() {
     this.getUserInfo();
     this.getFriendList();
     this.handleRoute();
+    this.websocket();
     window.addEventListener("scroll", this.handleScroll);
   },
-  ready() {
+  watch: {
+    $route: "handleRoute"
   }
 };
 </script>

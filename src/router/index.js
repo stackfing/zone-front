@@ -12,6 +12,7 @@ import About from '@/pages/about'
 import Doc from '@/pages/doc'
 import test from '@/pages/test'
 import UserDetail from '@/pages/userdetail'
+import NotFound from '@/pages/notfound'
 
 Vue.use(Router)
 
@@ -51,14 +52,14 @@ export default new Router({
             title: '发现世界'
           }
         },
-        // {
-        //   path: '/related',
-        //   component: Related,
-        //   meta: {
-        //     requiredAuths: true,
-        //     title: '与我相关'
-        //   }
-        // },
+        {
+          path: '/related',
+          component: Related,
+          meta: {
+            requiredAuths: true,
+            title: '与我相关'
+          }
+        },
         {
           path: '/about',
           component: About,
@@ -122,12 +123,8 @@ export default new Router({
       component: Find,
     },
     {
-      path: '/related',
-      component: Related,
-      meta: {
-        // requiredAuths: true,
-        title: '与我相关'
-      }
-    },
+      path: '*',
+      component: NotFound
+    }
   ]
 })

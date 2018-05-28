@@ -1,55 +1,33 @@
 <template>
-<div class="container">
-  <scroller style="top: 44px"
-      :on-refresh="refresh"
-      :on-infinite="infinite">
-      <div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
-        {{ item }}
-      </div>
-    </scroller>
-</div>
+  <div class="related">
+    <template v-for="item in 40">
+      <el-card class="box-card">
+        <div class="content">
+          中文中文中文中文中文中文中文中文中文中文中文中文中文中文中文
+        </div>
+      </el-card>
+    </template>
+  </div>
 </template>
-<style>
-</style>
 <script>
-  import Vue from 'vue'
-  import VueScroller from 'vue-scroller'
-  Vue.use(VueScroller)
-  export default {
-    data() {
-      return {
-        items: []
-      }
-    },
-    
-    mounted() {
-    	for (var i = 1; i <= 20; i++) {
-        this.items.push(i + ' - keep walking, be 2 with you.')
-      }
-      this.top = 1
-      this.bottom = 20
-    },
-    methods: {
-      refresh (done) {
-        setTimeout(() => {
-          var start = this.top - 1
-          for (var i = start; i > start - 10; i--) {
-            this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
-          }
-          this.top = this.top - 10
-          done()
-        }, 1500)
-      },
-      infinite (done) {
-        setTimeout(() => {
-          var start = this.bottom + 1
-          for (var i = start; i < start + 10; i++) {
-            this.items.push(i + ' - keep walking, be 2 with you.')
-          }
-          this.bottom = this.bottom + 10
-          done()
-        }, 1500)
-      }
-    }
+export default {
+  data() {
+    return {
+
+    };
   }
+};
 </script>
+
+<style scoped>
+.related {
+  width: 100%;
+  margin-top: 30px;
+}
+.box-card {
+  margin-bottom: 15px;
+}
+.content {
+  
+}
+</style>

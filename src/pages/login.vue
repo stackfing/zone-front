@@ -7,11 +7,11 @@
     </div>
     <div class="out_form">
       <div class="form">
-        <!-- <center> 目前提供测试账号:1 密码:1 </center> -->
-        <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入帐号" @keyup.native.enter="login">
+        <center style="color: #b2b2b2"> 目前提供测试账号:1 密码:1 </center>
+        <el-input style="margin-bottom:20px;" id="account" v-model="account" placeholder="请输入您的帐号" @keyup.native.enter="login">
           <template slot="prepend">帐号</template>
         </el-input>
-        <el-input style="margin-bottom:20px;" id="password" v-model="password" type="password" placeholder="请输入密码" @keyup.native.enter="login">
+        <el-input style="margin-bottom:20px;" id="password" v-model="password" type="password" placeholder="请输入您的密码" @keyup.native.enter="login">
           <template slot="prepend">密码</template>
         </el-input>
         <el-button id="login" @click="login" style="width:100%;margin-bottom:20px;" type="primary">登录</el-button>
@@ -20,14 +20,13 @@
             <router-link to="/register">立即注册</router-link>
           </span>
           <span style="font-size:12px" class="forget">
-            <router-link to="/">立即注册</router-link>
+            <router-link to="/">忘了密码？</router-link>
           </span>
           <div class="clearfix"></div>
         </div>
         <div class="copyright">
           <center style="">腾讯云提供计算服务. Vue.js 强力驱动.</center>
         </div>
-
       </div>
     </div>
 
@@ -171,7 +170,7 @@ export default {
   padding-top: 80px;
   /* margin-top: 30px; */
   font-size: 13px;
-  color: #999;
+  color: #b2b2b2;
 }
 /* .el-row {
   margin-bottom: 20px;
