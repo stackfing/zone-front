@@ -1,20 +1,17 @@
 <template>
   <div class="trend">
-    <div class="clearfix"></div>
     <div class="send_message_box">
-
       <div class="grid-content bg-purple">
         <center>
           <span style="line-height:36px">写下你现在的心情吧</span>
         </center>
       </div>
-
-      <at-ta :members="$store.state.friendInfo" name-key="nickname">
+      <at-ta @insert="handleAtChange" :members="$store.state.friendInfo" name-key="nickname">
         <template slot="item" slot-scope="s">
           <img class="small_img" width="27" height="27" :src="s.item.avatar">
           <span style="margin-left:5px;" v-text="s.item.nickname"></span>
         </template>
-        <textarea @change="handleAtChange" v-model="message" @focus="clickTextArea" placeholder="写下你现在的心情吧" class="el-textarea__inner" contenteditable></textarea>
+        <textarea v-model="message" @focus="clickTextArea" placeholder="写下你现在的心情吧" class="el-textarea__inner" contenteditable></textarea>
       </at-ta>
       <transition name="el-zoom-in-top">
         <div v-show="submitshow" class="transition-box">
@@ -63,12 +60,11 @@ export default {
   components: {
     message,
     AtTa,
-    upload
+    upload,
   },
   methods: {
-    handleAtChange(data) {
-      console.log(data)
-      console.log(data.srcElement.value)
+    handleAtChange(item) {
+      this.atList.push(item.id)
     },
     submitmessage() {
       if (this.message === "") {
@@ -97,7 +93,8 @@ export default {
       this.$http
         .post({ BASE_URL }.BASE_URL + "api/message/sendMessage", {
           content: this.message,
-          photos: this.photos
+          photos: this.photos,
+          atlist: this.atList
         })
         .then(res => {
           console.log(res.data.data);
@@ -108,11 +105,14 @@ export default {
               message: "发表成功",
               type: "success"
             });
+            this.message = null;
+            this.photos = null;
+            this.atList = null;
           }
         });
     },
     cleanForm() {
-      this.photos = "";
+      this.photos = null;
       this.message = "";
     },
     deleteMessageContainer(data) {

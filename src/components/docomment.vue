@@ -1,12 +1,10 @@
 <template>
   <div class="comment">
-    <div class="comment_left" :class="{'comment_left_active':!animate_false}">
-      <el-input class="commentInput" @focus="inputfocus" @blur="inputblur" v-model="commentData" placeholder="评论"></el-input>
+    <div class="comment_left" :class="isfocus? 'isfocus' : ''">
+      <el-input class="commentInput" @focus="isfocus = true" v-model="commentData" placeholder="评论"></el-input>
     </div>
     <div class="comment_right">
-      <transition name="fade">
-        <el-button type="primary" v-show="animate_false" plain>评论</el-button>
-      </transition>
+      <el-button type="primary" @click="inputblur" v-show="isfocus" plain>评论</el-button>
     </div>
   </div>
 </template>
@@ -16,17 +14,17 @@ export default {
   data() {
     return {
       commentData: "",
-      animate_false: false
+      isfocus: false
     };
   },
   props: ["messageId"],
   methods: {
     inputfocus() {
-      this.animate_false = true;
+      this.isfocus = true;
     },
     inputblur() {
       if (this.commentData === "" || this.commentData == null) {
-        this.animate_false = false;
+        // this.animate_false = false;
       } else {
         //提交评论
         this.$http
@@ -35,8 +33,8 @@ export default {
             comment: this.commentData
           })
           .then(res => {
-            this.$emit('updateComment', res.data.data)
-            if (res.data.data == true) {
+            this.$emit("updateComment", res.data.data);
+            if (res.data.data != undefined || res.data.data != null) {
               this.commentData = "";
               this.$message({
                 message: "评论成功",
@@ -44,6 +42,7 @@ export default {
               });
             }
           });
+          
       }
     }
   }
@@ -52,12 +51,15 @@ export default {
 <style>
 .comment {
   margin-top: 15px;
-  /* border-top: 1px solid #ebeef5; */
   display: flex;
   flex-direction: row;
 }
+.isfocus {
+  min-width: 80%!important;
+}
 .comment_left {
-  min-width: 85%;
+  min-width: 100%;
+  /* min-width: 85%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +76,7 @@ export default {
   /* background-color: aquamarine; */
 }
 .comment_right {
-  min-width: 80px;
+  min-width: 15%;
   height: 50px;
   display: flex;
   justify-content: center;

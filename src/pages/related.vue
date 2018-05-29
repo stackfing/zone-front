@@ -2,7 +2,8 @@
   <div class="related">
     <template v-for="item in 40">
       <el-card class="box-card">
-        <div class="content">
+        <div class="title">asdasd</div>
+        <div class="content" v-html="test">
           中文中文中文中文中文中文中文中文中文中文中文中文中文中文中文
         </div>
       </el-card>
@@ -13,8 +14,11 @@
 export default {
   data() {
     return {
-
+      test: ''
     };
+  },
+  mounted() {
+    this.test = '<a href="#">asdfsfs</a>'
   }
 };
 </script>
@@ -27,7 +31,19 @@ export default {
 .box-card {
   margin-bottom: 15px;
 }
+.title {
+
+}
 .content {
   
+}
+
+>>>a {
+  color: #555;
+  text-decoration: none;
+}
+>>>a:visited {
+  color: #555;
+  text-decoration: none;
 }
 </style>

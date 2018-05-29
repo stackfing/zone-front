@@ -112,8 +112,6 @@ import userInfo from "../store/userInfo";
 export default {
   data() {
     return {
-      // userInfo: {},
-      // friendList: {},
       badgeHidden: true,
       isFindWord: true,
       isfindword: true,
@@ -185,9 +183,8 @@ export default {
       }
     },
     getFriendList() {
-      this.$http.get("/api/user/friendList").then(res => {
-        this.friendList = res.data.data;
-        this.$store.commit("setFriendInfo", this.friendList);
+      this.$http.get("/api/user/friendInfo").then(res => {
+        this.$store.commit("setFriendInfo", res.data.data);
       });
     },
     cancelBadge() {
@@ -216,7 +213,7 @@ export default {
     },
     websocket() {
       let ws = new WebSocket(
-        "ws://10.102.191.83:8888/websocket/" + localStorage.getItem("token")
+        "ws://" + window.location.hostname + ":8888/websocket/" + localStorage.getItem("token")
       );
       ws.onopen = () => {
         // Web Socket 已连接上，使用 send() 方法发送数据

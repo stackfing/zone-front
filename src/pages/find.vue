@@ -59,28 +59,24 @@ export default {
 };
 </script>
 
-<style lang="scss">
-// html,
-// body,
-// #app {
-//   height: 100%; // 父元素必须要有高度
-//   width: 100%; // 如果已经是block元素，则可以忽略
-// }
-a {
+<style scoped>
+
+>>>a {
   color: #000;
   text-decoration: none;
-  &:active {
-    color: #000;
-  }
-  &:hover {
-    text-decoration: none;
-  }
+}
+
+>>>a:hover {
+  text-decoration: none;
+}
+
+>>>a:visited {
+  color: #000;
+  text-decoration: none;
 }
 .test {
   width: 100%;
   height: 100%;
-  // width: 592px;
-  // height: 800px;
 }
 ::-webkit-scrollbar{
   display:none;
@@ -92,7 +88,6 @@ a {
   background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  // position: relative;
   
 }
 .name_span{
